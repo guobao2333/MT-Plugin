@@ -14,14 +14,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/packer" />
-            <option value="$PROJECT_DIR$/translator-baidu" />
-            <option value="$PROJECT_DIR$/translator-baidu-api" />
-            <option value="$PROJECT_DIR$/translator-bing" />
-            <option value="$PROJECT_DIR$/translator-fanjian" />
-            <option value="$PROJECT_DIR$/translator-google" />
-            <option value="$PROJECT_DIR$/translator-google-cn" />
-            <option value="$PROJECT_DIR$/translator-yandex" />
-            <option value="$PROJECT_DIR$/translator-youdao" />
+            <option value="$PROJECT_DIR$/translator-ai" />
           </set>
         </option>
       </GradleProjectSettings>

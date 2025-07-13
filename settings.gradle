@@ -11,21 +11,14 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-            name "repo.jenkins-ci.org"
-            url "https://repo.jenkins-ci.org/public"
+            name = "repo.jenkins-ci.org"
+            url = "https://repo.jenkins-ci.org/public"
         }
     }
 }
 
-rootProject.name = "MT-Translation-Plugin"
+rootProject.name = "MT-Plugin"
 
 include ':packer'
 include ':common'
-include ':translator-baidu'
-include ':translator-baidu-api'
-include ':translator-google'
-include ':translator-google-cn'
-include ':translator-yandex'
-include ':translator-youdao'
-include ':translator-fanjian'
-include ':translator-bing'
+include ':translator-ai'
