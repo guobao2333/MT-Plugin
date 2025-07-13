@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8">
-      <module name="MT-Translation-Plugin.common" target="17" />
-      <module name="MT-Translation-Plugin.translator-baidu" target="17" />
-      <module name="MT-Translation-Plugin.translator-baidu-api" target="17" />
-      <module name="MT-Translation-Plugin.translator-bing" target="17" />
-      <module name="MT-Translation-Plugin.translator-fanjian" target="17" />
-      <module name="MT-Translation-Plugin.translator-google" target="17" />
-      <module name="MT-Translation-Plugin.translator-google-cn" target="17" />
-      <module name="MT-Translation-Plugin.translator-yandex" target="17" />
-      <module name="MT-Translation-Plugin.translator-youdao" target="17" />
+    <bytecodeTargetLevel target="11">
+      <module name="MT-Plugin.common" target="17" />
+      <module name="MT-Plugin.translator-ai" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
