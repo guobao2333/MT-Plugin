@@ -2,7 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11">
-      <module name="MT-Plugin.common" target="17" />
       <module name="MT-Plugin.translator-ai" target="17" />
     </bytecodeTargetLevel>
   </component>
