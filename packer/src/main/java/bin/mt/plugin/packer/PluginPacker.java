@@ -1,9 +1,10 @@
-package bin.mt.plugin.packer;
+package bin.mt.plugin;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,15 +27,14 @@ public class PluginPacker {
     public static void main(String[] args) throws Exception {
         // 获取配置
         ObjectMapper mapper = new ObjectMapper();
-        PluginPacker config = mapper.readValue(new File("../config.json"), PluginPacker.class);
+        PluginPacker config = mapper.readValue(new File("config.json"), PluginPacker.class);
         
         // 检查配置非法
-        if (config.TARGET_DIR == null || TARGET_DIR.isEmpty()) {
+        if (config.TARGET_DIR == null || config.TARGET_DIR.isEmpty()) {
             throw new IllegalArgumentException("TARGET_DIR cannot be empty!");
-        } else if (!TARGET_DIR.endsWith("/")) {
+        } else if (!config.TARGET_DIR.endsWith("/")) {
             config.TARGET_DIR += "/";
         }
-        System.out.println("PLUGIN_ROOT_DIR: "+config.PLUGIN_ROOT_DIR);
 
         List<File> outList = new ArrayList<>();
         File rootDir = new File(config.PLUGIN_ROOT_DIR).getAbsoluteFile();
@@ -46,48 +46,49 @@ public class PluginPacker {
             }
         }
 
-    if (config.PUSH_MTP_TO_DEVICE) {
-        System.out.println("Pushing...");
-        for (File outFile : outList) {
-            if (config.LOCAL_DEV) {
-                // 本机开发，直接移动
-                File target = new File(config.TARGET_DIR, outFile.getName());
-                Files.move(outFile.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("Pushed to " + outFile.getName());
-            } else {
-                // 非本机开发，必须有adb
-                File adbFile = new File(config.ADB_PATH);
-                if (!adbFile.exists()) {
-                    System.err.println("adb not found at: " + config.ADB_PATH);
-                    System.exit(1);
-                }
-                String[] commands = {
-                    config.ADB_PATH,
-                    "push",
-                    outFile.getAbsolutePath(),
-                    config.TARGET_DIR + outFile.getName()
-                };
-                Process process = Runtime.getRuntime().exec(commands);
-                int exitCode = process.waitFor();
-                if (exitCode != 0) {
-                    System.err.println("Push failed.");
-                    System.exit(exitCode);
+        if (config.PUSH_MTP_TO_DEVICE) {
+            System.out.println("Pushing...");
+            for (File outFile : outList) {
+                if (config.LOCAL_DEV) {
+                    // 本机开发，直接移动
+                    File target = new File(config.TARGET_DIR, outFile.getName());
+                    Files.move(outFile.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Pushed to " + outFile.getName());
+                } else {
+                    // 非本机开发，必须有adb
+                    File adbFile = new File(config.ADB_PATH);
+                    if (!adbFile.exists()) {
+                        System.err.println("adb not found at: " + config.ADB_PATH);
+                        System.exit(1);
+                    }
+                    String[] commands = {
+                        config.ADB_PATH,
+                        "push",
+                        outFile.getAbsolutePath(),
+                        config.TARGET_DIR + outFile.getName()
+                    };
+                    Process process = Runtime.getRuntime().exec(commands);
+                    int exitCode = process.waitFor();
+                    if (exitCode != 0) {
+                        System.err.println("Push failed.");
+                        System.exit(exitCode);
+                    }
                 }
             }
         }
+        System.out.println("Done.");
     }
 
     public static File pack(File rootDir, String moduleName) throws Exception {
         System.out.println(">> " + moduleName);
         File srcDir = new File(rootDir, moduleName + "/src/main/java");
-        File commonSrcDir = new File(rootDir, "common/src/main/java");
         File gradleFile = new File(rootDir, moduleName + "/build.gradle");
         File assetsDir = new File(rootDir, moduleName + "/src/main/assets");
         File manifestFile = new File(rootDir, moduleName + "/src/main/resources/manifest.json");
-        File iconFile1 = new File(moduleName + "/src/main/resources/icon.png");
-        File iconFile2 = new File(moduleName + "/src/main/resources/icon.jpg");
-        File libsDir = new File(rootDir, "libs");
-        File outFile = new File(rootDir, "out/" + moduleName + ".mtp");
+        File iconFile1 = new File(rootDir, moduleName + "/src/main/resources/icon.png");
+        File iconFile2 = new File(rootDir, moduleName + "/src/main/resources/icon.jpg");
+        File libsDir = new File("libs");
+        File outFile = new File("out/" + moduleName + ".mtp");
 
         //noinspection ResultOfMethodCallIgnored
         outFile.getParentFile().mkdirs();
@@ -98,11 +99,8 @@ public class PluginPacker {
             zos.setLevel(Deflater.BEST_COMPRESSION);
             zos.setMethod(ZipOutputStream.DEFLATED);
             addDirectory(zos, srcDir, "src/", true);
-            if (gradleText.contains("implementation project(':common')")) {
-                addDirectory(zos, commonSrcDir, "src/", true);
-            }
             addDirectory(zos, assetsDir, "assets/", false);
-            if (gradleText.contains("implementation fileTree(dir: '../libs', include: ['*.jar'])") && libsDir.isDirectory()) {
+            if (gradleText.contains("implementation fileTree(dir: './libs', include: ['*.jar'])") && libsDir.isDirectory()) {
                 File[] files = libsDir.listFiles((pathname) -> {
                     if (!pathname.isFile()) {
                         return false;
@@ -152,7 +150,7 @@ public class PluginPacker {
                     addDirectory(zos, file, parentPathInZip + file.getName() + "/", onlyJava);
                 } else {
                     String name = file.getName();
-                    if (!name.equals(".DS_Store") && (!onlyJava || name.toLowerCase().endsWith(".java"))) {
+                    if (!name.equals(".DS_Store") && !name.toLowerCase().endsWith(".bak") && (!onlyJava || name.toLowerCase().endsWith(".java"))) {
                         addFile(zos, file, parentPathInZip);
                     }
                 }
