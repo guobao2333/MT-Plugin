@@ -1,5 +1,5 @@
 plugins {
-    id 'java-library'
+    id 'java'
 }
 
 java {
@@ -7,9 +7,25 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
+task run(type: JavaExec) {
+    group = 'Packer'
+    description = '运行打包程序'
+    mainClass = 'bin.mt.plugin.PluginPacker'
+    classpath = sourceSets.main.runtimeClasspath
+
+    workingDir = project.rootDir
+
+    // 可选：传递参数给打包程序
+    // args = ['--output', 'build/dist']
+
+    // 可选：设置系统属性
+    // systemProperty 'config.path', 'packer-config.json'
+
+    // 确保在常规构建完成后执行
+    mustRunAfter(tasks.build)
+}
+
 dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.19.1'
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    // implementation 'com.google.code.gson:gson:2.13.1'
 }
