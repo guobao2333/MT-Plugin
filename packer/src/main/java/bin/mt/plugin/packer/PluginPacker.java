@@ -18,10 +18,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SuppressWarnings("SdCardPath")
 public class PluginPacker {
 
-    public String ADB_PATH;
     public boolean PUSH_MTP_TO_DEVICE;
-    public String PLUGIN_ROOT_DIR;
     public boolean LOCAL_DEV;
+    public String ADB_PATH;
+    public String PLUGIN_ROOT_DIR;
     public String TARGET_DIR;
 
     public static void main(String[] args) throws Exception {
