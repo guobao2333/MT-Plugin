@@ -88,7 +88,7 @@ public class PluginPacker {
         File iconFile1 = new File(rootDir, moduleName + "/src/main/resources/icon.png");
         File iconFile2 = new File(rootDir, moduleName + "/src/main/resources/icon.jpg");
         File libsDir = new File("libs");
-        File outFile = new File("out/" + moduleName + ".mtp");
+        File outFile = new File("outputs/" + moduleName + ".mtp");
 
         //noinspection ResultOfMethodCallIgnored
         outFile.getParentFile().mkdirs();
