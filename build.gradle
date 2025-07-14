@@ -4,3 +4,25 @@ plugins {
     id 'com.android.application' version '8.0.2' apply false
     id 'com.android.library' version '8.0.2' apply false
 }
+
+// subprojects {
+
+    // repositories {
+        // mavenCentral()
+    // }
+
+    // // sourceCompatibility = JavaVersion.VERSION_11
+    // // targetCompatibility = JavaVersion.VERSION_11
+
+    // test {
+        // useJUnitPlatform()
+    // }
+// }
+
+task buildPlugin {
+    group = 'Build'
+    description = '检查并打包插件'
+
+    // dependsOn subprojects.build
+    finalizedBy ':packer:run'
+}

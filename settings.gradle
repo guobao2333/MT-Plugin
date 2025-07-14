@@ -20,5 +20,6 @@ dependencyResolutionManagement {
 rootProject.name = "MT-Plugin"
 
 include ':packer'
-include ':common'
-include ':translator-ai'
+file("plugins").eachDir { subDir ->
+    include ":plugins:${subDir.name}"
+}
