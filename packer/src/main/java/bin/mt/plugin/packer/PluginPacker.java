@@ -12,38 +12,60 @@ import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @SuppressWarnings("SdCardPath")
 public class PluginPacker {
-    /**
-     * adb所在路径
-     */
-    public static final String ADB_PATH = "/Users/linjinbin/Library/Android/sdk/platform-tools/adb";
 
-    /**
-     * 打包完成后是否将插件安装包推送到手机
-     */
-    public static final boolean PUSH_MTP_TO_DEVICE = true;
+    public String ADB_PATH;
+    public boolean PUSH_MTP_TO_DEVICE;
+    public String PLUGIN_ROOT_DIR;
+    public boolean LOCAL_DEV;
+    public String TARGET_DIR;
 
     public static void main(String[] args) throws Exception {
+        // 获取配置
+        ObjectMapper mapper = new ObjectMapper();
+        PluginPacker config = mapper.readValue(new File("../config.json"), PluginPacker.class);
+        
+        // 检查配置非法
+        if (config.TARGET_DIR == null || TARGET_DIR.isEmpty()) {
+            throw new IllegalArgumentException("TARGET_DIR cannot be empty!");
+        } else if (!TARGET_DIR.endsWith("/")) {
+            config.TARGET_DIR += "/";
+        }
+        System.out.println("PLUGIN_ROOT_DIR: "+config.PLUGIN_ROOT_DIR);
+
         List<File> outList = new ArrayList<>();
-        File rootDir = new File("").getAbsoluteFile();
+        File rootDir = new File(config.PLUGIN_ROOT_DIR).getAbsoluteFile();
 
         System.out.println("Packing... ");
         for (File file : Objects.requireNonNull(rootDir.listFiles())) {
-            if (file.isDirectory() && file.getName().startsWith("translator-")) {
+            if (file.isDirectory()) {
                 outList.add(pack(rootDir, file.getName()));
             }
         }
 
-        if (PUSH_MTP_TO_DEVICE) {
-            System.out.println("Pushing...");
-            for (File outFile : outList) {
-                System.out.println(">> /sdcard/MT2/plugin/" + outFile.getName());
+    if (config.PUSH_MTP_TO_DEVICE) {
+        System.out.println("Pushing...");
+        for (File outFile : outList) {
+            if (config.LOCAL_DEV) {
+                // 本机开发，直接移动
+                File target = new File(config.TARGET_DIR, outFile.getName());
+                Files.move(outFile.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Pushed to " + outFile.getName());
+            } else {
+                // 非本机开发，必须有adb
+                File adbFile = new File(config.ADB_PATH);
+                if (!adbFile.exists()) {
+                    System.err.println("adb not found at: " + config.ADB_PATH);
+                    System.exit(1);
+                }
                 String[] commands = {
-                        ADB_PATH,
-                        "push",
-                        outFile.getAbsolutePath(),
-                        "/sdcard/MT2/plugin/" + outFile.getName()
+                    config.ADB_PATH,
+                    "push",
+                    outFile.getAbsolutePath(),
+                    config.TARGET_DIR + outFile.getName()
                 };
                 Process process = Runtime.getRuntime().exec(commands);
                 int exitCode = process.waitFor();
@@ -53,7 +75,6 @@ public class PluginPacker {
                 }
             }
         }
-        System.out.println("Done.");
     }
 
     public static File pack(File rootDir, String moduleName) throws Exception {
@@ -66,7 +87,7 @@ public class PluginPacker {
         File iconFile1 = new File(moduleName + "/src/main/resources/icon.png");
         File iconFile2 = new File(moduleName + "/src/main/resources/icon.jpg");
         File libsDir = new File(rootDir, "libs");
-        File outFile = new File(rootDir, "out/" + moduleName.substring("translator-".length()) + ".mtp");
+        File outFile = new File(rootDir, "out/" + moduleName + ".mtp");
 
         //noinspection ResultOfMethodCallIgnored
         outFile.getParentFile().mkdirs();

@@ -1,0 +1,7 @@
+{
+  "ADB_PATH": "/Users/linjinbin/Library/Android/sdk/platform-tools/adb",
+  "PUSH_MTP_TO_DEVICE": false,
+  "PLUGIN_ROOT_DIR": "plugins/",
+  "LOCAL_DEV": true,
+  "TARGET_DIR": "/sdcard/MT2/plugin/"
+}
