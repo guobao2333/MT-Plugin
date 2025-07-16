@@ -3,13 +3,18 @@
 适用于[MT管理器](https://mt2.cn)的插件，为MT添加更多扩展功能。
 > MT目前仅支持翻译接口，所以只有翻译插件。
 
-基于官方项目修改而来，但由于修改的太多~~*面目全非了*~~，所以几乎可以算脱离了吧 (?)
+基于[官方项目](https://github.com/L-JINBIN/MT-Translation-Plugin)修改而来，但由于修改的太多 ~~*改的面目全非了*~~，所以几乎可以算脱离了吧 (?)
 
 ## Develop | 开发
+所有插件都在 `plugins` 这个目录下，要增加新的插件直接丢进去就行了，不需要动任何项目级配置。
+
 按照下列方式执行后，将自动打包文件到 `outputs/` 这个目录中。
 
-### Android Studio (Win/Mac/Linux)
-在 Android Studio 上方选择 `BuildPlugin` 并点击运行按钮，也可以在项目根目录运行 `./gradlew buildPlugin`
+### Android Studio
+在 Android Studio 上方选择 `BuildPlugin` 并点击运行按钮，也可以在项目根目录运行
+```bash
+./gradlew buildPlugin
+```
 
 ### termux (Android)
 你需要安装依赖 `pkg install openjdk-17` 并在项目根目录运行：
