@@ -1,0 +1,32 @@
+plugin_name: Strings Converter
+plugin_info: This plugin can convert some formats/encodes that are not too common, but you may need. \n\nCurrently supported: \n\t1. Case conversion\n\t2. zsh history codec\n\nFor more information, please looking in Preferences setting.
+
+decode: Decode
+encode: Encode
+decrypt: Decrypt
+encrypt: Encrypt
+
+warning: WARNING: This function is dangerous operation!\nData is priceless, remember to backup!
+error_nff: The file does't exist or the path is wrong.
+
+############ Functions ############
+title: Functional introduction
+title_2: Instructions for use
+
+case: Case
+upper: Upper
+lower: Lower
+
+zshh: Zsh History Codec
+metafy: Metafy
+unmetafy: Unmetafy
+zshh_info: To avoid compatibility issues, zsh uses an encoding method called "metafy" to escape Unicode characters in the .zsh_history file as unconventional characters. This function can "unmetafy" as original characters or "metafy" as a format that zsh can read.\n\nIMPORTANT: If you modify it before decoding, file will be corrupted!
+zshh_info_2: Zsh history codec requires inputting the full file path. Since the local storage directory of termux is currently not accessible, it is necessary to place the zshh file in other places where MT has permission to access. (If you have ROOT permissions, you can ignore it)
+zshh_out: Done! File has been exported to:\n
+
+########### Abouts ###########
+about: About Plugin
+
+github: Github Repository
+github_info: Here you can feedback issues, request features, or contribute code.
+github_url: https://github.com/guobao2333/MT-Plugin
