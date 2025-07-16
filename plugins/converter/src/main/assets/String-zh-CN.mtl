@@ -1,0 +1,32 @@
+plugin_name: 字符转换
+plugin_info: 本插件可以转换一些不太常见，但你可能需要的格式/编码。\n\n当前支持：\n\t1. 大小写互转\n\t2. zsh历史记录编解码\n\n更多信息请在设置界面查看。
+
+decode: 解码
+encode: 编码
+decrypt: 解密
+encrypt: 加密
+
+warning: 警告：本功能危险系数较高\n数据无价，记得备份！
+error_nff: 文件不存在或路径错误。
+
+############ Functions ############
+title: 功能介绍
+title_2: 使用说明
+
+case: 大小写转换
+upper: 大写
+lower: 小写
+
+zshh: zsh history 编解码
+metafy: 编码
+unmetafy: 解码
+zshh_info: 为避免兼容性问题，zsh使用一种名为“metafy”的编码方式，将 .zsh_history 文件中的 Unicode 字符转义为非常规字符，本功能可以将它解码为原始字符或编码为zsh能够读取的格式。\n\n注意：如果您在解码前修改将会损坏文件！
+zshh_info_2: zshh编解码需要输入完整文件路径，由于目前暂时无法访问termux的本地存储目录，因此需要将zshh文件放到其他MT有权限访问的地方。(授予了Root权限可以无视)
+zshh_out: 操作完成！文件已输出至：\n
+
+########### Abouts ###########
+about: 关于插件
+
+github: Github仓库
+github_info: 您可以在此反馈问题、请求功能或贡献代码
+github_url: https://github.com/guobao2333/MT-Plugin

@@ -1,0 +1,17 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace = 'guobao.plugin'
+    compileSdkVersion = 30
+    defaultConfig { minSdkVersion = 14 }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: '../../libs-base', include: ['*.jar'])
+}
