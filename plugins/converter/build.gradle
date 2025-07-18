@@ -4,14 +4,16 @@ plugins {
 
 android {
     namespace = 'guobao.plugin'
-    compileSdkVersion = 30
+    compileSdkVersion = 28
     defaultConfig { minSdkVersion = 14 }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     implementation fileTree(dir: '../../libs-base', include: ['*.jar'])
+    // implementation group: 'org.commonmark', name: 'commonmark', version: '0.25.0'
+    // implementation group: 'org.commonmark', name: 'commonmark-ext-gfm-strikethrough', version: '0.25.0'
 }

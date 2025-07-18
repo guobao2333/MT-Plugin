@@ -17,8 +17,9 @@ public class ConvertEngine extends BaseTranslationEngine {
     private MTPluginContext context;
 
     private final List<String> tools = Arrays.asList("case", "zshh");
-    private final List<String> CASE = Arrays.asList("upper", "lower");
-    private final List<String> common = Arrays.asList("decode", "encode");
+
+    private final List<String> CASE = Arrays.asList("upper", "lower", "snake", "camel");
+    private final List<String> COMMON = Arrays.asList("decode", "encode");
 
     public ConvertEngine() {
         super(new ConfigurationBuilder()
@@ -38,7 +39,7 @@ public class ConvertEngine extends BaseTranslationEngine {
     @NonNull
     @Override
     public String name() {
-        return string.get("plugin_name");
+        return string.get("name");
     }
 
     @NonNull
@@ -55,7 +56,7 @@ public class ConvertEngine extends BaseTranslationEngine {
             case "zshh":
                 context.showToastL(string.get("warning"));
             default:
-                return common;
+                return COMMON;
         }
     }
 

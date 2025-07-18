@@ -11,18 +11,28 @@ public class Setting implements PluginPreference {
     SharedPreferences settings = context.getPreferences();
     builder.setLocalString(context.getLocalString());
 
+    builder.addHeader("{case}");
+    builder.addHeader("{camel_info}");
+    builder.addSwitch("{camel_upper}", "camel_upper")
+      .defaultValue(false)
+      .summaryOn("{on}")
+      .summaryOff("{off}");
+
+    builder.addHeader("{snake_info}");
+    builder.addSwitch("{snake_nb}", "snake_number")
+      .defaultValue(false)
+      .summaryOn("{on_1}")
+      .summaryOff("{off_1}");
+    builder.addSwitch("{snake_up_c}", "snake_upper_continuous")
+      .defaultValue(false)
+      .summaryOn("{snake_up_c_on}")
+      .summaryOff("{off_1}");
+
     builder.addHeader("{zshh}");
     builder.addText("{title}").summary("{zshh_info}");
     builder.addText("{title_2}").summary("{zshh_info_2}");
-    
-    /*builder.addSwitch("{}", "key_switch")
-      .defaultValue(true)
-      .summaryOn("开")
-      .summaryOff("关");
-    if (settings.getBoolean("key_switch", false)) {
-    
-    }*/
-      
+
+
     builder.addHeader("{about}");
     builder.addText("{github}").summary("{github_info}").url("{github_url}");
   }
