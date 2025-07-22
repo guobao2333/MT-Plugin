@@ -1,5 +1,5 @@
 plugin_name: Strings Converter
-plugin_info: This plugin can convert some formats/encodes that are not too common, but you may need. \n\nCurrently supported: \n\t1. Case conversion\n\t\t1.1 Caps.\n\t\t1.2 Camel and Snake.\n\t2. zsh history codec\n\nFor more information, please looking in Preferences setting.
+plugin_info: This plugin can convert some formats/encodes that are not too common, but you may need. \n\nCurrently supported: \n\t1. Case conversion\n\t\t1.1 Caps.\n\t\t1.2 Camel and Snake.\n\t2. Unicode codec\n\t3. ZSH history codec\n\nFor more information, please looking in Preferences setting.
 
 decode: Decode
 encode: Encode
@@ -29,6 +29,8 @@ snake_info: ------When converting to Snake------
 snake_nb: Split Numbers
 snake_up_c: Includes Capital Words (beta)
 snake_up_c_on: Auto processing (Probably unexpected)
+
+unicode: Unicode
 
 zshh: Zsh History Codec
 metafy: Metafy

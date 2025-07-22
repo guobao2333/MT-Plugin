@@ -16,7 +16,7 @@ public class ConvertEngine extends BaseTranslationEngine {
     private LocalString string;
     private MTPluginContext context;
 
-    private final List<String> tools = Arrays.asList("case", "zshh");
+    private final List<String> tools = Arrays.asList("case", "unicode", "zshh");
 
     private final List<String> CASE = Arrays.asList("upper", "lower", "snake", "camel");
     private final List<String> COMMON = Arrays.asList("decode", "encode");

@@ -33,18 +33,46 @@ public class Converter {
                 return "ubb".equals(to) ? toUBB(t) : toMarkdown(t); */
 
             case "case": return strCase(t, to);
+            case "unicode": return unicode(t, to);
             case "zshh": return zshh(t, to);
         }
         return "ERROR";
     }
 
-    /*public String toMarkdown(String str) throws IOException {
-
+    public String md_ubb(String str) throws IOException {
+    		return "";
     }
 
-    public String toUBB(String str) throws IOException {
+		public static String unicode(String str, String to) {
+		    if (str.isEmpty()) return str;
 
-    }*/
+		    if ("encode".equals(to)) {
+		        // 字符转unicode
+		        StringBuilder sb = new StringBuilder();
+		        for (int i = 0; i < str.length(); i++) {
+		            char c = str.charAt(i);
+		            if (c < 128) {
+		                // 保留ASCII
+		                sb.append(c);
+		            } else {
+		                sb.append(String.format("\\u%04X", (int) c));
+		            }
+		        }
+		        return sb.toString();
+		    } else {
+		        // unicode转字符
+		        Pattern p = Pattern.compile("\\\\u([0-9A-Fa-f]{1,4})");
+		        Matcher m = p.matcher(str);
+		        StringBuffer sb = new StringBuffer();
+		        while (m.find()) {
+		            String hex = m.group(1);
+		            int codePoint = Integer.parseInt(hex, 16);
+		            m.appendReplacement(sb, new String(Character.toChars(codePoint)));
+		        }
+		        m.appendTail(sb);
+		        return sb.toString();
+		    }
+		}
 
     public String zshh(String source, String target) throws IOException {
         ZshHist zsh = new ZshHist(context);

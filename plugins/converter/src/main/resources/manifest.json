@@ -1,8 +1,8 @@
 {
   pluginSdkVersion: 2,
   pluginID: "guobao.plugin.converter",
-  versionCode: 2,
-  versionName: "v1.1",
+  versionCode: 3,
+  versionName: "v1.2",
   name: "{name}",
   description: "{info}",
   interfaces: [ "guobao.plugin.converter.ConvertEngine" ],
