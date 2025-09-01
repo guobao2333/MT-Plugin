@@ -1,11 +1,16 @@
-plugin_name: Strings Converter
-plugin_info: This plugin can convert some formats/encodes that are not too common, but you may need. \n\nCurrently supported: \n\t1. Case conversion\n\t\t1.1 Caps.\n\t\t1.2 Camel and Snake.\n\t2. Unicode codec\n\t3. ZSH history codec\n\nFor more information, please looking in Preferences setting.
+name: Strings Converter
+info: This plugin can convert some formats/encodes that are not too common, but you may need.\n\nCurrently supported: \n\t1. Case conversion.\n\t\t1.1 Caps.\n\t\t1.2 Reversal order.\n\t\t1.3 Camel and Snake.\n\t2. Unicode codec.\n\t3. (In development🚧) Markdown and UBB convert.\n\t4. ZSH history codec\n\nFor more information, please looking in Preferences setting.
 
 decode: Decode
 encode: Encode
 decrypt: Decrypt
 encrypt: Encrypt
 
+toast_show_lv: toast tip level
+toast_show_lv_0: Close (not show)
+# lv1 暂未使用 OvO
+toast_show_lv_1: Debug
+toast_show_lv_2: Warning (default)
 warning: WARNING: This function is dangerous operation!\nData is priceless, remember to backup!
 error_nff: The file does't exist or the path is wrong.
 
@@ -21,6 +26,7 @@ off_1: OFF (default)
 case: Case
 upper: Upper
 lower: Lower
+reverse: Reverse
 camel: Camel
 camel_info: ------When converting to Camel------
 camel_upper: Upper Camel (Pascal)
@@ -29,6 +35,10 @@ snake_info: ------When converting to Snake------
 snake_nb: Split Numbers
 snake_up_c: Includes Capital Words (beta)
 snake_up_c_on: Auto processing (Probably unexpected)
+
+md_ubb: Markdown and UBB convert
+ubb: UBB (BBCode)
+md: Markdown
 
 unicode: Unicode
 

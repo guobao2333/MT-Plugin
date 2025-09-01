@@ -1,13 +1,7 @@
 package guobao.plugin.converter.util;
 
-import android.content.SharedPreferences;
-
 import java.io.*;
 import java.util.Arrays;
-
-import bin.mt.plugin.api.LocalString;
-import bin.mt.plugin.api.MTPluginContext;
-import bin.mt.plugin.api.preference.PluginPreference;
 
 public class ZshHist {
     private static final byte NULL = (byte) 0x00;
@@ -16,20 +10,12 @@ public class ZshHist {
     private static final boolean[] isMeta = new boolean[256];
     private static final int BUFFER_SIZE = 8192; // 8KB 缓冲区
 
-    private LocalString string;
-    private MTPluginContext context;
-
     static {
         // 初始化特殊字符标记数组
         isMeta[NULL & 0xFF] = true;
         for (int b = META & 0xFF; b <= (MARKER & 0xFF); b++) {
             isMeta[b] = true;
         }
-    }
-
-    public ZshHist(MTPluginContext context) {
-        this.context = context;
-        this.string = context.getAssetLocalString("String");
     }
 
     public static void main(String[] args) {}
@@ -86,7 +72,7 @@ public class ZshHist {
     public void process(String inputPath, String outputPath, boolean doMetafy) throws IOException {
         File inFile = new File(inputPath);
         // if (!inFile.exists() || outputPath.isEmpty())
-        if (!inFile.exists()) throw new FileNotFoundException(string.get("error_nff"));
+        if (!inFile.exists()) throw new FileNotFoundException("error_nff");
         File outFile = new File(outputPath);
         InputStream in = new FileInputStream(inputPath);
         OutputStream out = new FileOutputStream(outFile);

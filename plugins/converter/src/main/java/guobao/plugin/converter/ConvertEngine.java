@@ -16,10 +16,11 @@ public class ConvertEngine extends BaseTranslationEngine {
     private LocalString string;
     private MTPluginContext context;
 
-    private final List<String> tools = Arrays.asList("case", "unicode", "zshh");
+    private final List<String> tools = Arrays.asList("case", "md_ubb", "unicode", "zshh");
 
-    private final List<String> CASE = Arrays.asList("upper", "lower", "snake", "camel");
     private final List<String> COMMON = Arrays.asList("decode", "encode");
+    private final List<String> MD_UBB = Arrays.asList("ubb", "md");
+    private final List<String> CASE = Arrays.asList("upper", "lower", "reverse", "snake", "camel");
 
     public ConvertEngine() {
         super(new ConfigurationBuilder()
@@ -53,6 +54,7 @@ public class ConvertEngine extends BaseTranslationEngine {
     public List<String> loadTargetLanguages(String sourceLanguage) {
         switch (sourceLanguage) {
             case "case": return CASE;
+            case "md_ubb": return MD_UBB;
             case "zshh":
                 context.showToastL(string.get("warning"));
             default:
