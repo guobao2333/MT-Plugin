@@ -1,0 +1,40 @@
+plugin_name: AI Translator
+plugin_description: Translate using any model compatible with OpenAI specification.
+
+########### Settings ###########
+chatgpt: ChatGPT
+chatgpt_long: OpenAI ChatGPT
+chatgpt_1: gpt-4o
+chatgpt_api: Get ChatGPT API Key
+chatgpt_api_url: https://platform.openai.com/settings/organization/api-keys
+
+deepseek: DeepSeek
+deepseek_long: DeepSeek
+deepseek_1: V3
+deepseek_2: R1
+deepseek_api: Get DeepSeek API Key
+deepseek_api_url: https://platform.deepseek.com/api_keys
+
+gemini: Gemini
+gemini_long: Google Gemini
+gemini_1: 2.5-flash-lite
+gemini_2: 2.5-flash
+gemini_3: 2.5-Pro
+gemini_api: 获取 Gemini API Key
+gemini_api_url: https://aistudio.google.com/app/apikey
+
+qwen: Qwen
+qwen_long: Aliyun Qwen
+qwen_1: 
+qwen_api: Get Qwen API Key
+qwen_api_url: https://bailian.console.aliyun.com/?tab=model#/api-key
+
+key: API key
+key_long: You need to configure the apikey to use.
+
+########### Abouts ###########
+about: About Plugin
+
+github: Github Repository
+github_text: Here you can feedback issues, request features, or contribute code.
+github_url: https://github.com/guobao2333/MT-Plugin

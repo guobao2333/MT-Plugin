@@ -1,0 +1,38 @@
+plugin_name: AI翻译
+plugin_description: 使用任何兼容OpenAI规范的模型进行翻译。
+
+########### Settings ###########
+chatgpt: ChatGPT
+chatgpt_long: OpenAI ChatGPT
+chatgpt_1: gpt-4o
+chatgpt_2: 
+chatgpt_api: 获取 ChatGPT API Key
+
+deepseek: DeepSeek
+deepseek_long: 深度求索 DeepSeek
+deepseek_1: V3-普通模型
+deepseek_2: R1-深思模型
+deepseek_api: 获取 DeepSeek API Key
+
+gemini: Gemini
+gemini_long: Google Gemini
+gemini_1: 2.5-flash-lite 快速模型
+gemini_2: 2.5-flash 普通模型
+gemini_3: 2.5-Pro 深思模型
+gemini_api: 获取 Gemini API Key
+
+qwen: Qwen(通义千问)
+qwen_long: 阿里云 通义千问
+qwen_1: 
+qwen_api: 获取 Qwen API Key
+
+key: API令牌
+key_long: 请配置apikey
+key_long: 你需要配置apikey才能使用！
+
+########### Abouts ###########
+about: 关于插件
+
+github: Github仓库
+github_text: 您可以在此反馈问题、请求功能或贡献代码
+github_url: https://github.com/guobao2333/MT-Plugin
