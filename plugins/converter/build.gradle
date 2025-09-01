@@ -1,10 +1,11 @@
 plugins {
+    // id 'java-library'
     id 'com.android.library'
 }
 
 android {
     namespace = 'guobao.plugin'
-    compileSdkVersion = 28
+    compileSdkVersion = 21
     defaultConfig { minSdkVersion = 14 }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -12,8 +13,18 @@ android {
     }
 }
 
+task compile(type: JavaCompile) {
+    source = file('src/main/java')
+    classpath = sourceSets.main.compileClasspath
+    destinationDir = file('build/classes')
+}
+
 dependencies {
+    // mt内置依赖
     implementation fileTree(dir: '../../libs-base', include: ['*.jar'])
-    // implementation group: 'org.commonmark', name: 'commonmark', version: '0.25.0'
-    // implementation group: 'org.commonmark', name: 'commonmark-ext-gfm-strikethrough', version: '0.25.0'
+    // 外部依赖
+    implementation fileTree(dir: './libs', include: ['*.jar'])
+    /*implementation group: 'org.commonmark', name: 'commonmark', version: '0.21.0'
+    implementation group: 'org.commonmark', name: 'commonmark-ext-gfm-strikethrough', version: '0.21.0'
+    implementation group: 'org.commonmark', name: 'commonmark-ext-gfm-tables', version: '0.21.0'*/
 }
