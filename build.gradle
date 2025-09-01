@@ -5,9 +5,13 @@ plugins {
     id 'com.android.library' version '8.0.2' apply false
 }
 
-task buildPlugin {
+task buildPlugin(type: JavaCompile) {
     group = 'Build'
     description = '检查并打包插件'
 
+    doFirst {
+        println "开始检查插件..."
+        useJUnitPlatform()
+    }
     finalizedBy ':packer:run'
 }
