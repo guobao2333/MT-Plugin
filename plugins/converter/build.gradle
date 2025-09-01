@@ -14,8 +14,12 @@ android {
 }
 
 task compile(type: JavaCompile) {
-    source = file('src/main/java')
-    classpath = sourceSets.main.compileClasspath
+    source = android.sourceSets.main.java.srcDirs
+    classpath = files(android.bootClasspath)
+    // 添加项目依赖到类路径
+    android.libraryVariants.all { variant ->
+        classpath += variant.javaCompileProvider.get().classpath
+    }
     destinationDir = file('build/classes')
 }
 

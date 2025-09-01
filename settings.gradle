@@ -20,6 +20,9 @@ dependencyResolutionManagement {
 rootProject.name = "MT-Plugin"
 
 include ':packer'
-file("plugins").eachDir { subDir ->
-    include ":plugins:${subDir.name}"
+file("plugins").listFiles()?.findAll { 
+    it.isDirectory() && file("$it/build.gradle").exists() 
+}?.each {
+    include ":plugins:${it.name}"
+    project(":plugins:${it.name}").projectDir = it
 }
