@@ -29,55 +29,64 @@ public class Converter {
 
     public String convert(String t, String tool, String to) throws IOException {
         switch (tool) {
-            /* case "md_ubb":
-                return "ubb".equals(to) ? toUBB(t) : toMarkdown(t); */
-
+            case "md_ubb": return md_ubb(t, to);
             case "case": return strCase(t, to);
             case "unicode": return unicode(t, to);
             case "zshh": return zshh(t, to);
         }
-        return "ERROR";
+        return "ERROR: 功能开发中";
     }
 
-    public String md_ubb(String str) throws IOException {
-    		return "";
+    public String md_ubb(String str, String to) throws IOException {
+        MarkdownUbbConverter cvt = new MarkdownUbbConverter();
+        // if ("ubb".equals(to)) {
+            // return cvt.toUBB(str);
+        // } else {
+            // return cvt.toMarkdown(str);
+        // }
+        return "ubb".equals(to) ? cvt.toUBB(str) : cvt.toMarkdown(str);
+        // return "Development work is still in progress...";
     }
 
-		public static String unicode(String str, String to) {
-		    if (str.isEmpty()) return str;
+    public static String unicode(String str, String to) {
+        if (str.isEmpty()) return str;
 
-		    if ("encode".equals(to)) {
-		        // 字符转unicode
-		        StringBuilder sb = new StringBuilder();
-		        for (int i = 0; i < str.length(); i++) {
-		            char c = str.charAt(i);
-		            if (c < 128) {
-		                // 保留ASCII
-		                sb.append(c);
-		            } else {
-		                sb.append(String.format("\\u%04X", (int) c));
-		            }
-		        }
-		        return sb.toString();
-		    } else {
-		        // unicode转字符
-		        Pattern p = Pattern.compile("\\\\u([0-9A-Fa-f]{1,4})");
-		        Matcher m = p.matcher(str);
-		        StringBuffer sb = new StringBuffer();
-		        while (m.find()) {
-		            String hex = m.group(1);
-		            int codePoint = Integer.parseInt(hex, 16);
-		            m.appendReplacement(sb, new String(Character.toChars(codePoint)));
-		        }
-		        m.appendTail(sb);
-		        return sb.toString();
-		    }
-		}
+        if ("encode".equals(to)) {
+            // 字符转unicode
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < str.length(); i++) {
+                char c = str.charAt(i);
+                if (c < 128) {
+                    // 保留ASCII
+                    sb.append(c);
+                } else {
+                    sb.append(String.format("\\u%04X", (int) c));
+                }
+            }
+            return sb.toString();
+        } else {
+            // unicode转字符
+            Pattern p = Pattern.compile("\\\\u([0-9A-Fa-f]{1,4})");
+            Matcher m = p.matcher(str);
+            StringBuffer sb = new StringBuffer();
+            while (m.find()) {
+                String hex = m.group(1);
+                int codePoint = Integer.parseInt(hex, 16);
+                m.appendReplacement(sb, new String(Character.toChars(codePoint)));
+            }
+            m.appendTail(sb);
+            return sb.toString();
+        }
+    }
 
     public String zshh(String source, String target) throws IOException {
-        ZshHist zsh = new ZshHist(context);
-        String outputPath = source + "_new";
-        zsh.process(source, outputPath, "encode".equals(target));
+        ZshHist zsh = new ZshHist();
+        String outputPath = source + "_" + target;
+        try {
+            zsh.process(source, outputPath, "encode".equals(target));
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException(string.get(e.getMessage()));
+        }
 
         return string.get(target) + string.get("zshh_out") + outputPath;
     }
@@ -88,6 +97,7 @@ public class Converter {
         switch (to) {
             case "upper": return str.toUpperCase();
             case "lower": return str.toLowerCase();
+            case "reverse": return new StringBuilder(str).reverse().toString();
 
             case "snake": // 驼峰转蛇形
                 String regex = "(?<=[a-z])(?=[A-Z])" 
