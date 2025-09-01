@@ -368,7 +368,7 @@ public class MarkdownUbbConverter {
                 // out.append('\n').append("#".repeat(level)).append(' ').append(content).append('\n\n');
                 out.append('\n');
                 for (int j = 0; j < level; j++) out.append('#');
-                out.append(' ').append(content).append('\n\n');
+                out.append(' ').append(content).append("\n\n");
                 return;
             }
             out.append("<span style=\"font-size:").append(primary == null ? "" : primary).append("\">" ).append(renderToString(node.children)).append("</span>");
