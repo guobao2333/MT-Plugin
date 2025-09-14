@@ -1,0 +1,34 @@
+plugins {
+    alias(libs.plugins.android.application)
+    id 'bin.mt.plugin'
+}
+
+android {
+    namespace = 'bin.mt.plugin.demo'
+    //noinspection GradleDependency
+    compileSdk = 21
+
+    defaultConfig {
+        //noinspection ExpiredTargetSdkVersion
+        targetSdk = 28
+        minSdk = 21
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+//java {
+//    // 默认的 JDK 编译时会触发 Java 1.8 已过时的警告
+//    // 这里使用 JDK 11 来编译以消除警告，可以删掉或者换成其它版本
+//    toolchain {
+//        languageVersion = JavaLanguageVersion.of(11)
+//    }
+//}
+
+dependencies {
+    implementation libs.plugin.api
+    implementation libs.plugin.pusher
+}

@@ -1,0 +1,17 @@
+find_and_replace: 查找替换
+find_content: 查找内容
+replace_content: 替换内容
+match_case: 区分大小写
+regex: 正则表达式
+replace_count: 替换次数
+replace_count_hint: 留空表示替换全部
+text_range: 文本范围
+selected_text: 选中的文本
+current_line_text: 当前行文本
+text_before_cursor: 光标前的文本
+text_after_cursor: 光标后的文本
+full_text: 全部文本
+enter_content: 请输入内容
+no_text_selected: 未选中任何文本
+replace_result: 共替换了 %d 次
+text_not_found: 找不到文本
