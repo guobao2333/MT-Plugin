@@ -81,7 +81,8 @@ v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v
 <img src="./img/demo_preferences.webp" alt="gradle" width="270">
 
 进入 `文本编辑器` > `设置` > `功能分组` > `编辑快捷功能栏`，添加或者编辑一个功能，展开功能选项列表，点击
-`插件功能` > `参数设置` 即可看到插件提供的相关功能
+`插件功能` > `参数设置` 即可看到插件提供的功能，相关代码在文件
+`app/src/main/java/bin/mt/plugin/demo/TextEditorFunctionDemo.java`
 
 <img src="./img/demo_text_function.webp" alt="function" width="270">
 
