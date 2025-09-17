@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    id 'bin.mt.plugin'
+    alias(libs.plugins.mt.plugin.packer)
 }
 
 android {
