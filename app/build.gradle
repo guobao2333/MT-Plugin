@@ -29,6 +29,6 @@ android {
 //}
 
 dependencies {
-    implementation libs.plugin.api
-    implementation libs.plugin.pusher
+    implementation libs.mt.plugin.api
+    implementation libs.mt.plugin.pusher
 }

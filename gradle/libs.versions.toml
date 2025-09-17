@@ -1,14 +1,14 @@
 [versions]
 agp = "8.13.0"
-plugin-api = "3.0.0-alpha"
-plugin-packer = "1.0.0-alpha"
-plugin-pusher = "1.0.0-alpha"
+mt-plugin-api = "3.0.0-alpha"
+mt-plugin-packer = "1.0.0-alpha"
+mt-plugin-pusher = "1.0.0-alpha"
 
 [libraries]
-plugin-api = { group = "bin.mt.plugin", name = "api", version.ref = "plugin-api" }
-plugin-packer = { group = "bin.mt.plugin", name = "packer", version.ref = "plugin-packer" }
-plugin-pusher = { group = "bin.mt.plugin", name = "pusher", version.ref = "plugin-pusher" }
+mt-plugin-api = { group = "bin.mt.plugin", name = "api", version.ref = "mt-plugin-api" }
+mt-plugin-packer = { group = "bin.mt.plugin", name = "packer", version.ref = "mt-plugin-packer" }
+mt-plugin-pusher = { group = "bin.mt.plugin", name = "pusher", version.ref = "mt-plugin-pusher" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-
+mt-plugin-packer = { id = "bin.mt.plugin", version.ref = "mt-plugin-packer" }
