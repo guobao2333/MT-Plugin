@@ -1,9 +1,7 @@
-# MT Plugin
-<p align="center">
-<a href="https://github.com/guobao2333/MT-Plugin"><img alt="Repository" src="https://img.shields.io/badge/Github-%230A0A0A.svg?&style=flat-square&logo=Github&logoColor=white"/></a>
-</p>
-
+# MT Plugin[![Repo](https://img.shields.io/badge/Github-%230A0A0A.svg?&style=flat-square&logo=Github&logoColor=white.)](https://github.com/guobao2333/MT-Plugin)
 适用于[MT管理器](https://mt2.cn)的插件，为MT添加更多扩展功能。
+
+> [!IMPORTANT]
 > MT目前仅支持翻译接口，所以只有翻译插件。  
 > 好消息是 MT 2.19.1 提供了更多接口，但目前处于开发状态，正式版暂时无福消受 |･_･`)
 
@@ -17,7 +15,8 @@
 
 ## Prerequisites | 基本要求
 1. Java 8 (可以但不推荐更旧版本)
-2. Gradle 14 (按需选择，推荐最新版)
+2. (可选) Gradle 14 (推荐最新版)
+   > 直接运行gradlew脚本则不需要提前安装
 
 按照以下方式运行命令后，将自动打包文件到 `outputs/` 这个目录中。
 
