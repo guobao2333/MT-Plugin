@@ -77,23 +77,31 @@ public class ExampleUI implements PluginPreference {
         );
 
         add(builder, "对齐方式", "设置线性布局对齐方式和单独指定对齐方式", pluginUI -> pluginUI
+                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                    @Override
+                    protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
+                        super.handleTextView(pluginUI, builder);
+                        builder.textColor(0xFF000000).backgroundColor(0xFFAAAAAA);
+                    }
+                })
                 .buildVerticalLayout()
                 .gravity(Gravity.CENTER_HORIZONTAL)
-                .addTextView().text("第一行").backgroundColor(0xFFAAAAAA)
-                .addTextView().text("第二行").backgroundColor(0xFFAAAAAA).layoutGravity(Gravity.START)
-                .addTextView().text("第三行").backgroundColor(0xFFAAAAAA)
-                .addTextView().text("第四行").backgroundColor(0xFFAAAAAA).layoutGravity(Gravity.END)
+                .addTextView().text("第一行")
+                .addTextView().text("第二行").layoutGravity(Gravity.START)
+                .addTextView().text("第三行")
+                .addTextView().text("第四行").layoutGravity(Gravity.END)
                 .build()
         );
 
         add(builder, "组合布局", "垂直布局嵌套水平布局", pluginUI -> pluginUI
-                .defaultStyle(new PluginUI.StyleWrapper(pluginUI.getStyle()) {
+                .defaultStyle(pluginUI.getStyle().new Modifier() {
                     @Override
                     protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
                         super.handleTextView(pluginUI, builder);
                         builder.textGravity(Gravity.CENTER) // 文字局中
                                 .width(0).layoutWeight(1) // 均匀分配宽度
-                                .paddingDp(16); // 设置内边距
+                                .paddingDp(16) // 设置内边距
+                                .textColor(0xFF000000);
                     }
                 })
                 .buildVerticalLayout()
@@ -123,31 +131,38 @@ public class ExampleUI implements PluginPreference {
         );
 
         add(builder, "统一宽度", "让多个 View 保持一样的宽度（以最宽者为准）", pluginUI -> pluginUI
+                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                    @Override
+                    protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
+                        super.handleTextView(pluginUI, builder);
+                        builder.textColor(0xFF000000).backgroundColor(0xFFAAAAAA);
+                    }
+                })
                 .buildVerticalLayout()
                 .addTextView().text("原本的效果").bold()
                 .addHorizontalLayout().children(subBuilder -> subBuilder
-                        .addTextView("text1").backgroundColor(0xFFAAAAAA).text("用户名")
+                        .addTextView("text1").text("用户名")
                         .addEditText()
                 )
                 .addHorizontalLayout().children(subBuilder -> subBuilder
-                        .addTextView("text2").backgroundColor(0xFFAAAAAA).text("密码")
+                        .addTextView("text2").text("密码")
                         .addEditText()
                 )
                 .addHorizontalLayout().children(subBuilder -> subBuilder
-                        .addTextView("text3").backgroundColor(0xFFAAAAAA).text("电子邮箱")
+                        .addTextView("text3").text("电子邮箱")
                         .addEditText()
                 )
                 .addTextView().text("使用 unifyWidth() 统一宽度的效果").bold()
                 .addHorizontalLayout().children(subBuilder -> subBuilder
-                        .addTextView("text4").backgroundColor(0xFFAAAAAA).text("用户名")
+                        .addTextView("text4").text("用户名")
                         .addEditText()
                 )
                 .addHorizontalLayout().children(subBuilder -> subBuilder
-                        .addTextView("text5").backgroundColor(0xFFAAAAAA).text("密码")
+                        .addTextView("text5").text("密码")
                         .addEditText()
                 )
                 .addHorizontalLayout().children(subBuilder -> subBuilder
-                        .addTextView("text6").backgroundColor(0xFFAAAAAA).text("电子邮箱")
+                        .addTextView("text6").text("电子邮箱")
                         .addEditText()
                 )
                 .unifyWidth("text4", "text5", "text6")
@@ -156,12 +171,12 @@ public class ExampleUI implements PluginPreference {
 
         add(builder, "桢布局", "一种将子View叠加显示的布局，可指定对齐方式", pluginUI -> pluginUI
                 .buildFrameLayout()
-                .addTextView().text("默认")
-                .addTextView().text("|　|　|").textColor(Color.RED)
-                .addTextView().text("局中").layoutGravity(Gravity.CENTER)
-                .addTextView().text("|　|　|").layoutGravity(Gravity.CENTER).textColor(Color.RED)
-                .addTextView().text("靠右").layoutGravity(Gravity.END)
-                .addTextView().text("|　|　|").layoutGravity(Gravity.END).textColor(Color.RED)
+                .addTextView().text("默认").textSize(30)
+                .addTextView().text("默认").textColor(pluginUI.colorAccent()).bold()
+                .addTextView().text("局中").layoutGravity(Gravity.CENTER).textSize(30)
+                .addTextView().text("局中").layoutGravity(Gravity.CENTER).textColor(pluginUI.colorAccent()).bold()
+                .addTextView().text("靠右").layoutGravity(Gravity.END).textSize(30)
+                .addTextView().text("靠右").layoutGravity(Gravity.END).textColor(pluginUI.colorAccent()).bold()
                 .build()
         );
 
@@ -173,11 +188,11 @@ public class ExampleUI implements PluginPreference {
                     .addTextView().text("① 这是一个文本")
                     .addTextView().text("② 设置了字体颜色和背景色").textColor(Color.WHITE).backgroundColor(Color.BLACK)
                     .addTextView().text("③ 文本右对齐").textGravity(Gravity.END).widthMatchParent().textColor(Color.WHITE).backgroundColor(Color.DKGRAY).marginVerticalDp(5)
-                    .addTextView().height(1).widthMatchParent().backgroundColor(pluginUI.colorTextSecondary()) // 分割线
-                    .addTextView().text("④ 设置了内边距").backgroundColor(0xFFAAAAAA).paddingDp(24)
-                    .addTextView().height(1).widthMatchParent().backgroundColor(pluginUI.colorTextSecondary()) // 分割线
-                    .addTextView().text("⑤ 设置了外边距").backgroundColor(0xFFAAAAAA).marginDp(24)
-                    .addTextView().height(1).widthMatchParent().backgroundColor(pluginUI.colorTextSecondary()) // 分割线
+                    .addTextView().height(1).widthMatchParent().backgroundColor(pluginUI.colorDivider()) // 分割线
+                    .addTextView().text("④ 设置了内边距").paddingDp(24).textColor(0xFF000000).backgroundColor(0xFFAAAAAA)
+                    .addTextView().height(1).widthMatchParent().backgroundColor(pluginUI.colorDivider()) // 分割线
+                    .addTextView().text("⑤ 设置了外边距").marginDp(24).textColor(0xFF000000).backgroundColor(0xFFAAAAAA)
+                    .addTextView().height(1).widthMatchParent().backgroundColor(pluginUI.colorDivider()) // 分割线
                     .addTextView().text("⑥ 字号48").textSize(48)
                     .addTextView().text("⑦ 字号12").textSize(12)
                     .addTextView().text("⑧ 粗斜体").textStyle(true, true)
@@ -185,11 +200,11 @@ public class ExampleUI implements PluginPreference {
                     .addTextView().text(new SpannableString("⑩ 富文本") {{ // 这种写法会创建匿名内部类，这边只是为了演示方便，正常不推荐
                         // 设置下富文本属性
                         setSpan(new RelativeSizeSpan(2), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        setSpan(new ForegroundColorSpan(Color.RED), 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        setSpan(new ForegroundColorSpan(pluginUI.colorError()), 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                         setSpan(new StyleSpan(Typeface.BOLD), 3, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     }})
                     .addTextView().text("⑪ 点我试试").paddingVerticalDp(8).background(pluginUI.selectableItemBackground()).onClick(view -> {
-                        pluginUI.getContext().setClipboardText(((PluginTextView) view).getText().toString());
+                        pluginUI.getContext().setClipboardText(((PluginTextView) view).getText());
                     })
                     .build();
             // 测试下是否支持等宽字体
@@ -206,13 +221,14 @@ public class ExampleUI implements PluginPreference {
         });
 
         add(builder, "多行文本", "PluginTextView 多行文本相关演示", pluginUI -> pluginUI
-                .defaultStyle(new PluginUI.StyleWrapper(pluginUI.getStyle()) {
+                .defaultStyle(pluginUI.getStyle().new Modifier() {
                     int i = 0;
 
                     @Override
                     protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
                         super.handleTextView(pluginUI, builder);
-                        builder.widthMatchParent().backgroundColor((i++ % 2) == 0 ? 0xFFDDDDDD : 0xFFAAAAAA);
+                        builder.widthMatchParent().textColor(0xFF000000)
+                                .backgroundColor((i++ % 2) == 0 ? 0xFFDDDDDD : 0xFFAAAAAA);
                     }
                 })
                 .buildVerticalLayout()
@@ -229,7 +245,7 @@ public class ExampleUI implements PluginPreference {
         );
 
         add(builder, "普通按钮", "PluginButton", pluginUI -> pluginUI
-                .defaultStyle(new PluginUI.StyleWrapper(pluginUI.getStyle()) {
+                .defaultStyle(pluginUI.getStyle().new Modifier() {
                     @Override
                     protected void handleButton(PluginUI pluginUI, PluginButtonBuilder builder) {
                         super.handleButton(pluginUI, builder);
@@ -321,7 +337,7 @@ public class ExampleUI implements PluginPreference {
                     }
                 }
                 sb.append("③ 选中了 ").append(radioButtonToString(checkedButton));
-                context.showToastL(sb.toString());
+                context.showToastL(sb);
             });
             return pluginView;
         });
@@ -391,7 +407,7 @@ public class ExampleUI implements PluginPreference {
     }
 
     private void addEditText(PluginContext context, Builder builder) {
-        PluginUI.Style style = new PluginUI.StyleWrapper(STYLE) {
+        PluginUI.Style style = STYLE.new Modifier() {
             boolean first = true;
 
             @Override
@@ -584,6 +600,68 @@ public class ExampleUI implements PluginPreference {
     private static JSONObject data;
 
     private void addOthers(PluginContext context, Builder builder) {
+        add(builder, "内置颜色", "PluginUI提供的一些颜色值", pluginUI -> pluginUI
+                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                    @Override
+                    protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
+                        super.handleTextView(pluginUI, builder);
+                        if (builder.getId() == null) {
+                            builder.heightMatchParent().widthMatchParent();
+                        } else {
+                            builder.paddingRight(8);
+                        }
+                    }
+
+                    @Override
+                    protected void handleButton(PluginUI pluginUI, PluginButtonBuilder builder) {
+                        super.handleButton(pluginUI, builder);
+                        builder.allCaps(false).widthMatchParent();
+                    }
+                })
+                .buildVerticalLayout()
+                .addTextView().text("当前是否为深色主题（夜间模式）= " + pluginUI.isDarkTheme())
+                // 来一条分割线
+                .addTextView().widthMatchParent().height(1).backgroundColor(pluginUI.colorDivider()).marginVertical(12)
+                //
+                .addHorizontalLayout().children(subBuilder -> subBuilder
+                        .addTextView("h1").text("colorPrimary")
+                        .addTextView().backgroundColor(pluginUI.colorPrimary())
+                )
+                .addHorizontalLayout().children(subBuilder -> subBuilder
+                        .addTextView("h2").text("colorAccent")
+                        .addTextView().backgroundColor(pluginUI.colorAccent())
+                )
+                .addHorizontalLayout().children(subBuilder -> subBuilder
+                        .addTextView("h3").text("colorDivider")
+                        .addTextView().backgroundColor(pluginUI.colorDivider())
+                )
+                .addHorizontalLayout().children(subBuilder -> subBuilder
+                        .addTextView("h4").text("colorError")
+                        .addTextView().backgroundColor(pluginUI.colorError())
+                )
+                .addHorizontalLayout().children(subBuilder -> subBuilder
+                        .addTextView("h5").text("colorWarning")
+                        .addTextView().backgroundColor(pluginUI.colorWarning())
+                )
+                .addHorizontalLayout().children(subBuilder -> subBuilder
+                        .addTextView("h6").text("colorText")
+                        .addTextView().backgroundColor(pluginUI.colorText())
+                )
+                .addHorizontalLayout().children(subBuilder -> subBuilder
+                        .addTextView("h7").text("colorTextSecondary")
+                        .addTextView().backgroundColor(pluginUI.colorTextSecondary())
+                )
+                .unifyWidth("h1", "h2", "h3", "h4", "h5", "h6", "h7")
+                // 来一条分割线
+                .addTextView().widthMatchParent().height(1).backgroundColor(pluginUI.colorDivider()).marginVertical(12)
+                //
+                .addButton().text("colorTextStateList 启用").textColor(pluginUI.colorTextStateList())
+                .addButton().text("colorTextStateList 禁用").textColor(pluginUI.colorTextStateList()).enable(false)
+                .addButton().text("colorTextSecondaryStateList 启用").textColor(pluginUI.colorTextSecondaryStateList())
+                .addButton().text("colorTextSecondaryStateList 禁用").textColor(pluginUI.colorTextSecondaryStateList()).enable(false)
+                .build()
+        );
+
         add(builder, "本地化文本1", "PluginViewBuilder中引用本地化文本", pluginUI -> pluginUI
                 .buildVerticalLayout()
                 .addTextView().text("请结合代码和界面效果一起看").bold().paddingBottomDp(12)
@@ -657,7 +735,7 @@ public class ExampleUI implements PluginPreference {
 
         add(builder, "JSON 数据转换", "快速将 JSON 数据赋值给 UI 组件以及保存回 JSON", pluginUI -> {
             PluginView pluginView = pluginUI
-                    .defaultStyle(new PluginUI.StyleWrapper(STYLE) {
+                    .defaultStyle(STYLE.new Modifier() {
                         @Override
                         protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
                             super.handleTextView(pluginUI, builder);
@@ -778,7 +856,7 @@ public class ExampleUI implements PluginPreference {
         return button == null ? "null" : button.getText().toString();
     }
 
-    private static final PluginUI.Style STYLE = new PluginUI.StyleWrapper(PluginUI.DEFAULT_STYLE) {
+    private static final PluginUI.Style STYLE = PluginUI.DEFAULT_STYLE.new Modifier() {
         @Override
         protected void handleRootLayout(PluginUI pluginUI, PluginRootLayoutBuilder builder) {
             super.handleRootLayout(pluginUI, builder);

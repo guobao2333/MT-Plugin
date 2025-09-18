@@ -41,6 +41,29 @@ v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v
 - `app/src/main/java/bin/mt/plugin/demo/preference/ExamplePreference.java`
 - `app/src/main/java/bin/mt/plugin/demo/preference/ExampleMain.java`
 
+## 更新记录
+
+### plugin-api alpha2
+
+对应 MT 管理器版本号需大于 **25091900**
+
+- `BufferedText` 类源码注释增加关于换行符的说明
+- `Regex` 类源码注释增加关于 MT 正则表达式库的说明
+- `PluginContext` 中剪贴板方法的文本类型改为 `CharSequence`
+- `PluginContext` 新增 `openLogViewer()` 方法用于打开插件日志查看器
+- `PluginContext` 和 `PluginUI` 的显示 Toast 方法的消息参数类型改为 `CharSequence`
+- `PluginContext` 和 `PluginUI` 新增 `cancelToast()` 方法用于取消当前正在显示的 Toast
+- `PluginUI` 的 `isStrictIdModeEnabled()` 方法注释补充**默认开启** ID 严格模式的说明
+- `PluginUI` 新增多个获取颜色方法：
+  - 错误颜色：`colorError()`
+  - 警告颜色：`colorWarning()`
+  - 分割线颜色：`colorDivider()`
+  - 带状态的主要文本颜色：`colorTextStateList()`
+  - 带状态的次要文本颜色：`colorTextSecondaryStateList()`
+- 去除 `PluginUI.StyleWrapper` 新增 `PluginUI.Style.Modifier`，对于修改已有Style：
+  - 旧写法：`new PluginUI.StyleWrapper(pluginUi.getStyle()) { ... }`
+  - 新写法：`pluginUi.getStyle().new Modifier() { ... }`
+
 ## 如何运行本项目
 
 在这之前请安装正确版本的 MT 管理器

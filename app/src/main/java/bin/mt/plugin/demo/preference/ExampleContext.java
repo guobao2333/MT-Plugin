@@ -70,10 +70,10 @@ public class ExampleContext implements PluginPreference {
         builder.addText("剪贴板操作").summary("has/get/setClipboardText").onClick((pluginUI, item) -> {
             PluginView pluginView = pluginUI.buildVerticalLayout().paddingHorizontal(pluginUI.dialogPaddingHorizontal()).paddingTopDp(8)
                     .addButton().widthMatchParent().text("hasClipboardText()").allCaps(false).onClick(view -> {
-                        pluginUI.showToast(String.valueOf(context.hasClipboardText()));
+                        context.showToast(String.valueOf(context.hasClipboardText()));
                     })
                     .addButton().widthMatchParent().text("getClipboardText()").allCaps(false).onClick(view -> {
-                        pluginUI.showToast(context.getClipboardText());
+                        context.showToast(context.getClipboardText());
                     })
                     .addButton().widthMatchParent().text("setClipboardText(\"abc\")").allCaps(false).onClick(view -> {
                         context.setClipboardText("abc");
@@ -86,25 +86,32 @@ public class ExampleContext implements PluginPreference {
                     .show();
 
         });
-        builder.addText("弹出Toast").summary("showToast").onClick((pluginUI, item) -> {
+        // PluginContext 和 PluginUI 中均有 toast 方法，两者没有区别，哪个调用方便就用哪个
+        builder.addText("Toast消息").summary("showToast").onClick((pluginUI, item) -> {
             PluginView pluginView = pluginUI.buildVerticalLayout().paddingHorizontal(pluginUI.dialogPaddingHorizontal()).paddingTopDp(8)
                     .addButton().widthMatchParent().text("showToast()").allCaps(false).onClick(view -> {
-                        pluginUI.showToast("{key}");
+                        context.showToast("{key}");
                     })
                     .addButton().widthMatchParent().text("showToastL()").allCaps(false).onClick(view -> {
-                        pluginUI.showToastL("{key}");
+                        context.showToastL("{key}");
+                    })
+                    .addButton().widthMatchParent().text("cancelToast()").allCaps(false).onClick(view -> {
+                        context.cancelToast();
                     })
                     .build();
             pluginUI.buildDialog()
-                    .setTitle("弹出Toast")
+                    .setTitle("Toast消息")
                     .setView(pluginView)
                     .setPositiveButton("{close}", null)
                     .show();
         });
-        builder.addText("插件日志").summary("log").onClick((pluginUI, item) -> {
+        builder.addText("写出日志").summary("log").onClick((pluginUI, item) -> {
             context.log("这是一条日志");
             context.log("这是一条错误日志", new Exception());
-            pluginUI.showMessage("{notice}", "日志写出成功，请到插件管理页面点击右上角菜单查看日志");
+            pluginUI.showToast("日志写出成功");
+        });
+        builder.addText("查看日志").summary("openLogViewer").onClick((pluginUI, item) -> {
+            context.openLogViewer();
         });
     }
 }

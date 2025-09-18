@@ -66,7 +66,7 @@ public class ExampleDialog implements PluginPreference {
                             sb.append(' ').append(items[i]);
                         }
                     }
-                    context.showToast(sb.toString());
+                    context.showToast(sb);
                 })
                 .show()
         );
