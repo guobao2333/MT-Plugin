@@ -6,7 +6,6 @@ mt-plugin-pusher = "1.0.0-alpha"
 
 [libraries]
 mt-plugin-api = { group = "bin.mt.plugin", name = "api", version.ref = "mt-plugin-api" }
-mt-plugin-packer = { group = "bin.mt.plugin", name = "packer", version.ref = "mt-plugin-packer" }
 mt-plugin-pusher = { group = "bin.mt.plugin", name = "pusher", version.ref = "mt-plugin-pusher" }
 
 [plugins]
