@@ -43,6 +43,18 @@ v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v
 
 ## 更新记录
 
+### plugin-api alpha3
+
+对应 MT 管理器版本号需大于 **25092000**
+
+- 安装插件时将检测安装包的 assets 目录内所有 mtl 文件格式是否正确，检测失败将无法安装
+- 语言包 mtl 文件支持多行文本，具体请参考文件：`app/src/main/assets/example.mtl`
+- `PluginContext` 新增 `getPluginSdkVersion()` 方法用于获取插件 SDK 版本号
+- `PluginContext` 和 `PluginUI` 显示 Toast 方法的格式化参数支持自动转为本地化文本
+- `TextEditor` 的 `replace` 方法重命名为 `replaceText`
+- `TextEditor` 的 `replaceText` 和 `insertText` 方法的 text 参数类型调整为 `CharSequence`
+- `BaseTextEditorFunction` 的代码添加详细注释说明
+
 ### plugin-api alpha2
 
 对应 MT 管理器版本号需大于 **25091900**
@@ -51,7 +63,7 @@ v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v
 - `Regex` 类源码注释增加关于 MT 正则表达式库的说明
 - `PluginContext` 中剪贴板方法的文本类型改为 `CharSequence`
 - `PluginContext` 新增 `openLogViewer()` 方法用于打开插件日志查看器
-- `PluginContext` 和 `PluginUI` 的显示 Toast 方法的消息参数类型改为 `CharSequence`
+- `PluginContext` 和 `PluginUI` 显示 Toast 方法的消息参数类型改为 `CharSequence`
 - `PluginContext` 和 `PluginUI` 新增 `cancelToast()` 方法用于取消当前正在显示的 Toast
 - `PluginUI` 的 `isStrictIdModeEnabled()` 方法注释补充**默认开启** ID 严格模式的说明
 - `PluginUI` 新增多个获取颜色方法：

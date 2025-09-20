@@ -269,7 +269,7 @@ public class TextEditorFunctionDemo extends BaseTextEditorFunction {
                         for (int i = snapshots.size() - 1; i >= 0; i--) {
                             MatcherSnapshot snapshot = snapshots.get(i);
                             String replacement = regex ? snapshot.getComputedReplacement() : replace;
-                            editor.replace(snapshot.start(), snapshot.end(), replacement);
+                            editor.replaceText(snapshot.start(), snapshot.end(), replacement);
                             if (backwardReplace) {
                                 finalSelection = finalSelection - (snapshot.end() - snapshot.start()) + replacement.length();
                             }

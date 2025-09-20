@@ -21,7 +21,8 @@ public class ExampleContext implements PluginPreference {
         builder.addText("获取本地化文本").summary("getString").onClick((pluginUI, item) -> {
             String text = "getString('{key}') = '" + context.getString("{key}") + "'\n" +
                     "getString('key') = '" + context.getString("key") + "'\n" +
-                    "getString('{example:key}') = '" + context.getString("{example:key}") + "'\n";
+                    "getString('{example:key}') = '" + context.getString("{example:key}") + "'\n" +
+                    "getString('{example:multiLine}') = '" + context.getString("{example:multiLine}").replace("\n", "\\n") + "'\n";
             text = text.replace("'", "\"");
 
             PluginView pluginView = pluginUI.buildVerticalLayout()
@@ -93,7 +94,7 @@ public class ExampleContext implements PluginPreference {
                         context.showToast("{key}");
                     })
                     .addButton().widthMatchParent().text("showToastL()").allCaps(false).onClick(view -> {
-                        context.showToastL("{key}");
+                        context.showToastL("{key}=%s\ntime=%d","{key}", System.currentTimeMillis());
                     })
                     .addButton().widthMatchParent().text("cancelToast()").allCaps(false).onClick(view -> {
                         context.cancelToast();
