@@ -21,8 +21,7 @@ public class ExampleContext implements PluginPreference {
         builder.addText("获取本地化文本").summary("getString").onClick((pluginUI, item) -> {
             String text = "getString('{key}') = '" + context.getString("{key}") + "'\n" +
                     "getString('key') = '" + context.getString("key") + "'\n" +
-                    "getString('{example:key}') = '" + context.getString("{example:key}") + "'\n" +
-                    "getString('{example:multiLine}') = '" + context.getString("{example:multiLine}").replace("\n", "\\n") + "'\n";
+                    "getString('{example:key}') = '" + context.getString("{example:key}") + "'\n";
             text = text.replace("'", "\"");
 
             PluginView pluginView = pluginUI.buildVerticalLayout()

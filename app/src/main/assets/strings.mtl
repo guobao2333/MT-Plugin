@@ -1,8 +1,14 @@
 plugin_name: MT演示插件
 plugin_description: MT插件功能演示
 
-key: 这是一段来自默认语言包的文本
+key: 这是一段来自\
+默认语言包\
+的文本
+
 item0: 项目0
 item1: 项目1
 item2: 项目2
 item3: 项目3
+
+# 当 \ 放在行尾时表示续行符，作用是连接下一行的文本
+# 除此之外转义符号还支持：\\、\n、\r、\t、\uXXXX（十六进制 Unicode 编码）
