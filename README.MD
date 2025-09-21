@@ -57,7 +57,7 @@ v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v
 对应 MT 管理器版本号需大于 **25092000**
 
 - 安装插件时将检测安装包的 assets 目录内所有 mtl 文件格式是否正确，检测失败将无法安装
-- 语言包 mtl 文件支持多行文本，具体请参考文件：`app/src/main/assets/example.mtl`
+- 语言包 mtl 文件支持多行文本，具体请参考文件：`app/src/main/assets/strings.mtl`
 - `PluginContext` 新增 `getPluginSdkVersion()` 方法用于获取插件 SDK 版本号
 - `PluginContext` 和 `PluginUI` 显示 Toast 方法的格式化参数支持自动转为本地化文本
 - `TextEditor` 的 `replace` 方法重命名为 `replaceText`
