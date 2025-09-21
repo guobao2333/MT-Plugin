@@ -43,6 +43,15 @@ v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v
 
 ## 更新记录
 
+### plugin-api alpha4
+
+对应 MT 管理器版本号需大于 **25092100**
+
+- `TextEditor` 的 `pushSelectPositionToUndoBuffer` 方法重命名为 `pushSelectionToUndoBuffer`
+  - **因为这个改动，已安装的插件如果调用了此方法，需修改代码后重新安装**
+- `TextEditorFunction` 新增 `isEnabled()` 方法用于动态控制功能接口是否启用
+- 对大量注释文档进行优化，表述更加准确与清晰
+
 ### plugin-api alpha3
 
 对应 MT 管理器版本号需大于 **25092000**

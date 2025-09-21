@@ -275,7 +275,7 @@ public class TextEditorFunctionDemo extends BaseTextEditorFunction {
                             }
                         }
                         editor.setSelection(finalSelection);
-                        editor.pushSelectPositionToUndoBuffer();
+                        editor.pushSelectionToUndoBuffer();
                         editor.requestFocus();
                         editor.ensureSelectionVisible();
                     } finally {

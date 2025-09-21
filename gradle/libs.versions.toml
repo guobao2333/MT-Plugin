@@ -1,6 +1,6 @@
 [versions]
 agp = "8.13.0"
-mt-plugin-api = "3.0.0-alpha3"
+mt-plugin-api = "3.0.0-alpha4"
 mt-plugin-packer = "1.0.0-alpha"
 mt-plugin-pusher = "1.0.0-alpha"
 
