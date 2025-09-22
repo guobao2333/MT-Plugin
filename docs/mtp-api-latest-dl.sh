@@ -19,6 +19,7 @@ script_path=$0
 args=$@
 args=${args:=-sS}
 
+# 检测是否通过管道运行
 if [ "$0" = "bash" ] || [ "$0" = "sh" ]; then
   is_piped=true
 else
@@ -37,22 +38,22 @@ dl() {
     if [ "$is_piped" = false ]; then
       sed -i "/$version_var=/c $version_var=$latest" "$script_path"
     fi
-    echo "检测到新版本： $latest (旧版本： $current)"
+    echo "检测到新版本: $latest (旧版本: $current)"
   elif [[ -f $component-$latest-sources.jar ]]; then
     echo "$component 已是最新版，跳过下载"
     return 0
   fi
 
-  if [[ "$delete_previous_version" == "true" && -n "$current" && "$current" != "$latest" ]]; then
+  if [[ "$is_piped" == "false" && "$delete_previous_version" == "true" && -n "$current" && "$current" != "$latest" ]]; then
     rm -f "$component-$current-sources.jar"
-    echo "已删除旧版本： $component-$current-sources.jar"
+    echo "已删除旧版本: $component-$current"
   fi
 
-  echo "正在下载： $component 版本： $latest"
+  echo "正在下载 $component 版本: $latest"
   curl $args "https://maven.mt2.cn/bin/mt/plugin/$component/$latest/$component-$latest-sources.jar"
 
   if [[ $? -eq 0 ]]; then
-    echo "下载完成： $component-$latest-sources.jar"
+    echo "下载完成: $component-$latest-sources.jar"
   else
     echo "下载 $component 失败"
     return 1
