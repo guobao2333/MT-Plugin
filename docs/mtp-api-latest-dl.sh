@@ -50,7 +50,10 @@ dl() {
   fi
 
   echo "正在下载 $component 版本: $latest"
-  curl $args "https://maven.mt2.cn/bin/mt/plugin/$component/$latest/$component-$latest-sources.jar"
+  if [ "$is_piped" = false ]; then
+    $arg=" -o '$component-$latest-sources.jar'"
+  fi
+  curl $args${arg:=} "https://maven.mt2.cn/bin/mt/plugin/$component/$latest/$component-$latest-sources.jar"
 
   if [[ $? -eq 0 ]]; then
     echo "下载完成: $component-$latest-sources.jar"
