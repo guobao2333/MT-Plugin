@@ -13,11 +13,18 @@ pusher_version=
 packer_version=
 
 # 检测到新版是否移除旧版
-delete_previous_version=false
+delete_previous_version=true
 
-script_path="$0"
+script_path=$0
 args=$@
 args=${args:=-sS}
+
+if [ "$0" = "bash" ] || [ "$0" = "sh" ]; then
+  is_piped=true
+else
+  is_piped=false
+  script_path=$(realpath "$0")
+fi
 
 dl() {
   local component=$1
@@ -27,7 +34,9 @@ dl() {
   local latest=$(curl -sS https://maven.mt2.cn/bin/mt/plugin/$component/maven-metadata.xml | grep -oP '(?<=<latest>).*(?=</latest>)')
 
   if [[ $current != $latest ]]; then
-    sed -i "/$version_var=/c $version_var=$latest" "$script_path"
+    if [ "$is_piped" = false ]; then
+      sed -i "/$version_var=/c $version_var=$latest" "$script_path"
+    fi
     echo "检测到新版本： $latest (旧版本： $current)"
   elif [[ -f $component-$latest-sources.jar ]]; then
     echo "$component 已是最新版，跳过下载"
