@@ -1,6 +1,6 @@
 # API Jar Download Script
 ## Whats Its Use | 有啥用
-它是一个用来下载插件接口jar的shell脚本，jar中包含了api的使用方式和(部分)实现，您可以通过它更好的开发MT插件。在[此处](mtp-api-latest-dl.sh?raw=true)查看脚本代码。
+它是一个用来下载插件接口jar的shell脚本，jar中包含了api的使用方式和(部分)实现，您可以通过它更好的开发MT插件。在[此处](mtp-api-latest-dl.sh)查看脚本代码。
 
 脚本实现较为简陋，如果您有更好的想法，欢迎帮助我们改进它！
 
