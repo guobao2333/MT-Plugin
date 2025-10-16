@@ -1,17 +1,23 @@
 # MT Plugin V3 Demo
 
-当前插件 SDK 版本为 3.0.0-alpha，这是一个不稳定版，后续仍会对 API 做进一步调整，该版本插件需要在 MT 管理器
-2.19.1 上运行。
+当前插件 SDK 还在测试阶段，并非稳定版，后续仍会对 API 进行优化与调整，具体请查看下面的更新记录。
 
 ## V3 版本功能亮点
 
 v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v3 版本中我们进行了以下更新：
 
-### 一、升级至 Java 1.8
+### 一、使用 AGP 构建
 
-内置的插件 Java 编译器由 1.7 升级至 1.8，其中最重大的变化就是可以使用 Lambda 表达式，代码可以编写得更加简洁。
+v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 直接打包到 mtp 文件中，而非打包 .java 与 .jar 文件。
 
-另外现在 MT 管理器的 minSdk 是 21，因此这次也将编译器所使用系统库升级到了 Android 5.0。
+这意味着可以使用 AGP 的很多特性来进行 MT 插件开发：
+- 支持更高的 Java 版本（只要 AGP 支持）
+- 支持 coreLibraryDesugaring 核心库脱糖
+- 支持 Kotlin
+
+为此我们也专门开发了一个 gradle 插件：
+- 支持一键打包出 mtp 文件
+- 支持一键将 mtp 文件推送到手机上安装
 
 ### 二、新增 UI 组件接口
 
@@ -42,6 +48,21 @@ v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v
 - `app/src/main/java/bin/mt/plugin/demo/preference/ExampleMain.java`
 
 ## 更新记录
+
+### gradle 插件 alpha2
+
+对应 MT 管理器版本号需大于 **25101600**
+
+- **[MT管理器]** 支持 dex 打包模式与指定插件的最低安卓版本
+- **[MT管理器]** 修复 `PluginPreference.Builder` 的 `title` 和 `subtitle` 没有转为本地化文本的问题
+- **[gradle插件]** 使用 dex 打包模式生成 mtp 文件（不支持设置成之前的源码打包模式）
+- **[gradle插件]** 内置 `plugin-api:alpha4` 和 `plugin-pusher:alpha` 依赖，无需手动添加
+- **[gradle插件]** 直接在 `build.gradle` 文件中配置 `manifest.json` 和 `pusher.conf` 文件，无需手动创建
+
+使用 dex 打包模式的 mtp 文件，其内部不包含 .java 和 .jar 文件，只有一个 classes.dex 文件，因此开发方式不再受 MT
+管理器内置的 Java 编译器限制，您可以使用更高的 Java 版本甚至 Kotlin 进行开发，只要最后能生成 dex 文件即可。
+
+现在 plugin-api 依赖直接内置在 gradle 插件中，因此后续的更新标题以 gradle 插件为主，而非 plugin-api
 
 ### plugin-api alpha4
 
@@ -104,7 +125,7 @@ v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v
 
 1. 打开 Gradle 面板（一般在右上角的侧栏里）
 2. 运行 `app/Tasks/mt-plugin/packagePlugin` 任务
-3. 任务运行成功后可以在 `app/build/mt-plugin` 目录找到打包好的 mtp 插件安装包
+3. 任务运行成功后可以在 `app/build/outputs/mt-plugin` 目录找到打包好的 mtp 插件安装包
 
 <p>
   <img src="./img/gradle_pos.webp" alt="gradle" width="270">
@@ -114,7 +135,7 @@ v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v
 ### 通过命令行
 
 1. 在项目根目录执行 `./gradlew app:packagePlugin`
-2. 命令执行成功后可以在 `app/build/mt-plugin` 目录找到打包好的 mtp 插件安装包
+2. 命令执行成功后可以在 `app/build/outputs/mt-plugin` 目录找到打包好的 mtp 插件安装包
 
 ## 如何测试插件功能
 

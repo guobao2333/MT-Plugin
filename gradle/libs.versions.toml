@@ -1,13 +1,11 @@
 [versions]
 agp = "8.13.0"
-mt-plugin-api = "3.0.0-alpha4"
-mt-plugin-packer = "1.0.0-alpha"
-mt-plugin-pusher = "1.0.0-alpha"
+mt-plugin = "1.0.0-alpha2"
+desugarJdkLibs = "2.1.5"
 
 [libraries]
-mt-plugin-api = { group = "bin.mt.plugin", name = "api", version.ref = "mt-plugin-api" }
-mt-plugin-pusher = { group = "bin.mt.plugin", name = "pusher", version.ref = "mt-plugin-pusher" }
+desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-mt-plugin-packer = { id = "bin.mt.plugin", version.ref = "mt-plugin-packer" }
+mt-plugin = { id = "bin.mt.plugin", version.ref = "mt-plugin" }
