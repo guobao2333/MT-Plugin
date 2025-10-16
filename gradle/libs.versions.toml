@@ -2,10 +2,12 @@
 agp = "8.13.0"
 mt-plugin = "1.0.0-alpha2"
 desugarJdkLibs = "2.1.5"
+kotlin = "2.2.20"
 
 [libraries]
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 mt-plugin = { id = "bin.mt.plugin", version.ref = "mt-plugin" }

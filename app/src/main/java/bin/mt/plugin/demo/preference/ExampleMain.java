@@ -9,6 +9,8 @@ public class ExampleMain implements PluginPreference {
         builder.title("MT插件功能演示");
         builder.addText("插件上下文").summary("PluginContext")
                 .onClick((pluginUI, item) -> context.openPreference(ExampleContext.class));
+        builder.addText("插件上下文（Kotlin）").summary("PluginContext")
+                .onClick((pluginUI, item) -> context.openPreference(ExampleContextKotlin.class));
         builder.addText("设置界面").summary("PluginPreference")
                 .onClick((pluginUI, item) -> context.openPreference(ExamplePreference.class));
         builder.addText("UI 组件").summary("PluginUI")
