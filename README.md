@@ -35,7 +35,7 @@ chmod +x gradlew
 #### Wheres API docs | API文档在哪
 截止9月22日，官方文档暂未更新，但我们可以直接查看API接口源码，在手机端也可以获得与PC端语法补全中相同的用法文档。
 
-我们已经为您准备好了一个脚本，它用于快速下载官方插件API的jar包，您可以[查看使用教程](docs/APIDownload.md)或[下载脚本源码](mtp-api-latest-dl.sh?raw=true)。
+我们已经为您准备好了一个脚本，它用于快速下载官方插件API的jar包，您可以[查看使用教程](docs/APIDownload.md)或[下载脚本源码](https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/files/docs/mtp-api-latest-dl.sh)。
 
 ## Push to device | 推送到设备
 
