@@ -1,8 +1,15 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
+        gradlePluginPortal()
+        maven { url = 'https://maven.mt2.cn' }
     }
 }
 dependencyResolutionManagement {
@@ -10,10 +17,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
-            name = "repo.jenkins-ci.org"
-            url = "https://repo.jenkins-ci.org/public"
-        }
+        maven { url = 'https://maven.mt2.cn' }
     }
 }
 
