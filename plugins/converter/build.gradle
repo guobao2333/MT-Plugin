@@ -1,34 +1,96 @@
 plugins {
-    // id 'java-library'
-    id 'com.android.library'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android) // 如果不需要Kotlin就注释掉这行
+    alias(libs.plugins.mt.plugin)
 }
+
+// 定义 Java 版本
+def javaVersion = JavaVersion.VERSION_17
 
 android {
     namespace = 'guobao.plugin'
-    compileSdkVersion = 21
-    defaultConfig { minSdkVersion = 14 }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-}
+    compileSdk = 36
 
-task compile(type: JavaCompile) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath = files(android.bootClasspath)
-    // 添加项目依赖到类路径
-    android.libraryVariants.all { variant ->
-        classpath += variant.javaCompileProvider.get().classpath
+    defaultConfig {
+        //noinspection ExpiredTargetSdkVersion
+        targetSdk = 28
+        minSdk = 21
     }
-    destinationDir = file('build/classes')
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion
+        targetCompatibility = JavaVersion
+    }
+
+    if (project.plugins.hasPlugin(libs.plugins.kotlin.android.get().pluginId)) {
+        kotlin.jvmToolchain(javaVersion.majorVersion.toInteger())
+    }
 }
 
 dependencies {
-    // mt内置依赖
-    implementation fileTree(dir: '../../libs-base', include: ['*.jar'])
-    // 外部依赖
-    implementation fileTree(dir: './libs', include: ['*.jar'])
-    /*implementation group: 'org.commonmark', name: 'commonmark', version: '0.21.0'
-    implementation group: 'org.commonmark', name: 'commonmark-ext-gfm-strikethrough', version: '0.21.0'
-    implementation group: 'org.commonmark', name: 'commonmark-ext-gfm-tables', version: '0.21.0'*/
+    coreLibraryDesugaring libs.desugar.jdk.libs
+}
+
+/**
+ * MT 插件配置
+ */
+mtPlugin {
+    /**
+     * 插件安装包 mtp 文件会被打包到当前 app 模块生成的 apk 文件内，
+     * 当 apk 在您的设备上运行后会自动将 mtp 文件自动推送给 MT 管理器，
+     * 因此您只需在 AS 中点击右上角菜单运行当前模块，即可实现插件的快速安装。
+     *
+     * 您可在这里设置推送给哪个MT管理器：
+     * - 自动检测请填写：auto
+     * - 正式版请填写：bin.mt.plus
+     * - 测试版/共存请填写：bin.mt.plus.canary
+     * 默认为自动检测
+     */
+    pushTarget = "bin.mt.plus.canary"
+
+    /**
+     * 插件ID，插件的唯一标识，类似于packageName
+     * 只能由字母、数字、下划线和点组成
+     */
+    pluginID = "guobao.plugin.converter"
+
+    /**
+     * 插件版本号，低版本插件无法覆盖安装高版本插件
+     */
+    versionCode = 6
+
+    /**
+     * 插件版本名称
+     */
+    versionName = "v1.4"
+
+    /**
+     * 插件名称
+     */
+    name = "{name}"
+
+    /**
+     * 插件描述
+     */
+    description = "{info}"
+
+    /**
+     * 主设置界面，可不填
+     */
+    mainPreference = "guobao.plugin.converter.Setting"
+
+    /**
+     * 插件对外接口，接口类型会自动判断
+     */
+    interfaces = [
+            "guobao.plugin.converter.ConvertEngine"
+    ]
 }
