@@ -2,9 +2,13 @@
 
 当前插件 SDK 还在测试阶段，并非稳定版，后续仍会对 API 进行优化与调整，具体请查看下面的更新记录。
 
+欢迎加入 MT 插件开发 QQ 交流群：422326626
+
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=1YJW16amVeB2cxKigvz3PvKFwtWGtsGH&jump_from=webapi&authKey=JkV7Vu7fjcu39wYmgD3dMfXqW7l2tCEE1BLxSPK1NWr9x1WIRHyzQBq5kW8Gjcea"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="MT插件V3交流群" title="MT插件V3交流群"></a>
+
 ## V3 版本功能亮点
 
-v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v3 版本中我们进行了以下更新：
+v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v3 版本中我们进行了以下升级：
 
 ### 一、使用 AGP 构建
 
@@ -48,6 +52,16 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 - `app/src/main/java/bin/mt/plugin/demo/preference/ExampleMain.java`
 
 ## 更新记录
+
+### gradle 插件 alpha3
+
+对应 MT 管理器版本号需大于 **25101900**
+
+- Dex 打包模式支持多 dex 文件
+- 重构了 mtp 的打包与推送逻辑，增强与 AGP 的兼容性
+- 升级内置依赖 `plugin-pusher` 的版本到 `alpha2`
+- 打包插件的 gradle 任务 `packagePlugin` 重命名为 `packageReleaseMtp`
+- 通过 Android Studio 运行并推送到设备上安装的 mtp 文件，会被标记为 testOnly，无法二次安装，若要分享 mtp 文件给他人使用，请运行 `packageReleaseMtp` 任务
 
 ### gradle 插件 alpha2
 
@@ -110,7 +124,7 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 在这之前请安装正确版本的 MT 管理器
 
-### 通过 Android Studio（推荐）
+### 通过 Android Studio
 
 #### 一、自动打包插件并推送到设备上安装
 
@@ -119,12 +133,14 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 2. 等待 Gradle 同步完成后直接运行 app 模块，将会有一个名为 `MT Plugin Plusher` 的应用程序被安装到您的设备上并自动启动
 3. `MT Plugin Plusher` 启动后将会打开 MT 管理器的插件安装界面，点击安装即可
 
+> 该方式仅供自己测试使用，生成的 mtp 文件无法复制到其它设备安装！
+
 <img src="./img/install_mtp.webp" alt="install" width="270">
 
 #### 二、仅打包插件
 
 1. 打开 Gradle 面板（一般在右上角的侧栏里）
-2. 运行 `app/Tasks/mt-plugin/packagePlugin` 任务
+2. 运行 `app/Tasks/mt-plugin/packageReleaseMtp` 任务
 3. 任务运行成功后可以在 `app/build/outputs/mt-plugin` 目录找到打包好的 mtp 插件安装包
 
 <p>
@@ -134,7 +150,7 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 ### 通过命令行
 
-1. 在项目根目录执行 `./gradlew app:packagePlugin`
+1. 在项目根目录执行 `./gradlew app:packageReleaseMtp`
 2. 命令执行成功后可以在 `app/build/outputs/mt-plugin` 目录找到打包好的 mtp 插件安装包
 
 ## 如何测试插件功能

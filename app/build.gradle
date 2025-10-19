@@ -4,6 +4,13 @@ plugins {
     alias(libs.plugins.mt.plugin)
 }
 
+// 加快构建速度
+tasks.configureEach { task ->
+    if (task.name.contains("lint")) {
+        task.enabled = false
+    }
+}
+
 // 定义 Java 版本
 def javaVersion = JavaVersion.VERSION_17
 
