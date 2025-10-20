@@ -1,24 +1,34 @@
 plugin_name: AI翻译
-plugin_description: 使用任何兼容OpenAI规范的模型进行翻译。
+plugin_description: 使用任何兼容OpenAI规范的模型通过RESTful API进行对话或翻译。
+
+model_type_fast: 快速模型
+model_type_normal: 普通模型
+model_type_think: 深思模型
 
 ########### Settings ###########
 chatgpt: ChatGPT
 chatgpt_long: OpenAI ChatGPT
-chatgpt_1: gpt-4o
+chatgpt_1: 
 chatgpt_2: 
 chatgpt_api: 获取 ChatGPT API Key
 
+claude: Claude
+claude_long: 
+claude_1: 
+claude_2: 
+claude_api: 获取 Claude API Key
+
 deepseek: DeepSeek
 deepseek_long: 深度求索 DeepSeek
-deepseek_1: V3-普通模型
-deepseek_2: R1-深思模型
+deepseek_1: 普通模型
+deepseek_2: 深思模型
 deepseek_api: 获取 DeepSeek API Key
 
 gemini: Gemini
 gemini_long: Google Gemini
-gemini_1: 2.5-flash-lite 快速模型
-gemini_2: 2.5-flash 普通模型
-gemini_3: 2.5-Pro 深思模型
+gemini_1: 快速模型
+gemini_2: 普通模型
+gemini_3: 深思模型
 gemini_api: 获取 Gemini API Key
 
 qwen: Qwen(通义千问)

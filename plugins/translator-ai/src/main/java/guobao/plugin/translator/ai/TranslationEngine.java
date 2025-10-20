@@ -1,37 +1,46 @@
 package guobao.plugin.translator.ai;
 
-import android.support.annotation.NonNull;
-
+import androidx.annotation.NonNull;
 import android.content.SharedPreferences;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import bin.mt.plugin.api.MTPluginContext;
+import bin.mt.plugin.api.PluginContext;
 import bin.mt.plugin.api.LocalString;
 import bin.mt.plugin.api.translation.BaseTranslationEngine;
 
 public class TranslationEngine extends BaseTranslationEngine {
-    private final List<String> sourceLanguages = Arrays.asList("deepseek","chatgpt","gemini");
+
+    private PluginContext context;
+
+private final List<String> sourceLanguages = Arrays.asList("deepseek","chatgpt","gemini");
 
     private final List<String> targetLanguages = Arrays.asList(
             "zh-cn","zh-tw","en","zh","ru","ja","en-gb","en","ar","bg","cs","da",
             "de","el","es","et","fi","fr","hu","id","it","ko","lt","lv","nb","nl","pl",
             "pt","ro","sk","sl","sv","tr","uk");
 
-    private LocalString string;
-    private MTPluginContext context;
+    public TranslationEngine() {
+        super(new ConfigurationBuilder()
+        // 关闭「跳过已翻译词条」
+        .setForceNotToSkipTranslated(true)
+        // 目标语言可变
+        .setTargetLanguageMutable(true)
+        .build());
+    }
 
+    @NonNull
     @Override
     protected void init() {
         context = getContext();
-        string = context.getAssetLocalString("String");
     }
 
     @NonNull
     @Override
     public String name() {
-        return string.get("plugin_name");
+        return "{plugin_name}";
     }
 
     @NonNull
@@ -39,7 +48,7 @@ public class TranslationEngine extends BaseTranslationEngine {
     public List<String> loadSourceLanguages() {
         List<String> aiList = new java.util.ArrayList<>();
         for (String list : sourceLanguages) {
-            aiList.add(string.get(list));
+            aiList.add(context.getString(list));
         }
         return aiList;
     }
@@ -59,7 +68,4 @@ public class TranslationEngine extends BaseTranslationEngine {
         context.log(logs);
         return logs;
     }
-
-    @Override
-    public void onFinish() {}
 }
