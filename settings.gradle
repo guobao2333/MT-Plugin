@@ -23,7 +23,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "MT-Plugin"
 
-include ':packer'
+//include ':packer'
 file("plugins").listFiles()?.findAll { 
     it.isDirectory() && file("$it/build.gradle").exists() 
 }?.each {

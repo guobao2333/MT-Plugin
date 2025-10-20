@@ -6,13 +6,15 @@ plugins {
     alias(libs.plugins.mt.plugin) apply false
 }
 
-task buildPlugin(type: JavaCompile) {
+task buildPlugin {
     group = 'Build'
-    description = '检查并打包插件'
+    description = '编译并打包全部插件'
 
-    doFirst {
-        println "开始检查插件..."
-        useJUnitPlatform()
+    dependsOn subprojects.findAll { 
+        it.path.startsWith(':plugins:') 
+    }.collect { "${it.path}:packageReleaseMtp" }
+
+    doLast {
+        println "All plugins packaged successfully"
     }
-    finalizedBy ':packer:run'
 }
