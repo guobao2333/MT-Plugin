@@ -16,7 +16,7 @@ echo "如果你已经授予存储权限可以输入n"
 termux-setup-storage
 echo "正在初始化依赖..."
 pkg update -y && pkg upgrade -y
-pkg install -y curl unzip git openjdk-17
+pkg install -y curl unzip git openjdk-17 aapt2
 
 if [ ! -d "$DOWNLOAD_DIR" ]; then
   echo "错误：无法访问 $DOWNLOAD_DIR"
@@ -96,10 +96,12 @@ export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 # 输出配置
 echo 'export ANDROID_HOME="$HOME/android_sdk"' >> "$HOME/$shellrc"
 echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools' >> "$HOME/$shellrc"
+echo "\n# 覆盖 AAPT2 路径" >> ./gradle.properties
+echo "android.aapt2FromMavenOverride=$PREFIX/bin/aapt2\n" >> ./gradle.properties
 
 echo "同意所有许可并安装平台工具..."
 chmod -R 755 $ANDROID_HOME
-yes | sdkmanager --licenses "platform-tools"
+yes | sdkmanager --licenses && sdkmanager "platform-tools"
 
 # 安装adb
 echo "需要安装adb工具吗？[y/N]"
