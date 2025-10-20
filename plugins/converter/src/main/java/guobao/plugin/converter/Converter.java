@@ -21,7 +21,7 @@ public class Converter {
     public Converter(PluginContext context) {
         this.context = context;
         this.config = context.getPreferences();
-        //this.string = context.getAssetLocalString("String");
+        //this.string = string;
     }
 
     public void main(String[] args) {
