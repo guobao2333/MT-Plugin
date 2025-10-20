@@ -1,2 +1,3 @@
+*.bak
 /build
 proguard-rules-dump.pro

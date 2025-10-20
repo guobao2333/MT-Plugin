@@ -2,14 +2,12 @@ package guobao.plugin.translator.ai;
 
 import android.content.SharedPreferences;
 
-import bin.mt.plugin.api.MTPluginContext;
+import bin.mt.plugin.api.PluginContext;
 import bin.mt.plugin.api.preference.PluginPreference;
 
 public class Setting implements PluginPreference {
   @Override
-  public void onBuild(MTPluginContext context, Builder builder) {
-    SharedPreferences Settings = context.getPreferences();
-    builder.setLocalString(context.getLocalString());
+  public void onBuild(PluginContext context, Builder builder) {
 
     builder.addHeader("{chatgpt_long}");
     builder.addList("{chatgpt}", "chatgpt_model")
