@@ -1,7 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android) // 如果不需要Kotlin就注释掉这行
+    // alias(libs.plugins.kotlin.android) // 如果不需要Kotlin就注释掉这行
     alias(libs.plugins.mt.plugin)
+}
+
+// 加快构建速度
+tasks.configureEach { task ->
+    if (task.name.contains("lint")) {
+        task.enabled = false
+    }
 }
 
 // 定义 Java 版本
@@ -19,15 +26,15 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled = true
             proguardFiles 'proguard-rules.pro'
         }
     }
 
     compileOptions {
         coreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion
-        targetCompatibility = JavaVersion
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
 
     if (project.plugins.hasPlugin(libs.plugins.kotlin.android.get().pluginId)) {
@@ -36,7 +43,11 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring libs.desugar.jdk.libs
+    implementation('org.commonmark:commonmark:0.27.0')
+    implementation('org.commonmark:commonmark-ext-gfm-strikethrough:0.27.0')
+    implementation('org.commonmark:commonmark-ext-gfm-tables:0.27.0')
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
 
 /**
