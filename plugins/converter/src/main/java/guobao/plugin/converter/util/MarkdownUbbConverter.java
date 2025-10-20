@@ -50,19 +50,7 @@ public class MarkdownUbbConverter {
             @Override public void visit(IndentedCodeBlock indentedCodeBlock) { out.append("[code]"); out.append(indentedCodeBlock.getLiteral()); out.append("[/code]\n\n"); }
             @Override public void visit(Heading heading) {
                 int level = heading.getLevel();
-                // Java 8+
-                // int percent = switch (level) { case 1 -> 200; case 2 -> 170; case 3 -> 150; case 4 -> 130; case 5 -> 115; default -> 100; };
-
-                // Java 7-
-                int percent;
-                switch (level) {
-                    case 1: percent = 200; break;
-                    case 2: percent = 170; break;
-                    case 3: percent = 150; break;
-                    case 4: percent = 130; break;
-                    case 5: percent = 115; break;
-                    default: percent = 100; break;
-                }
+                int percent = switch (level) { case 1 -> 200; case 2 -> 170; case 3 -> 150; case 4 -> 130; case 5 -> 115; default -> 100; };
                 out.append("[size=").append(percent).append("%][b]"); visitChildren(heading); out.append("[/b][/size]\n\n");
             }
             @Override public void visit(ThematicBreak thematicBreak) { out.append("[hr]\n\n"); }
@@ -214,33 +202,11 @@ public class MarkdownUbbConverter {
             String tag = node.tag == null ? "" : node.tag.toLowerCase(Locale.ROOT);
             switch (tag) {
                 case "root": for (UbbNode c : node.children) renderNode(c); break;
-                // Java 8+
-                /* case "b": wrap("**", () -> renderChildren(node)); break;
+                case "b": wrap("**", () -> renderChildren(node)); break;
                 case "i": wrap("*", () -> renderChildren(node)); break;
                 case "s":
-                case "del": wrap("~~", () -> renderChildren(node)); break; */
-
-                // Java 7-
-                case "b": 
-                    wrap("**", new Runnable() {
-                        @Override
-                        public void run() { renderChildren(node); }
-                    }); 
-                    break;
-                case "i": 
-                    wrap("*", new Runnable() {
-                        @Override
-                        public void run() { renderChildren(node); }
-                    }); 
-                    break;
+                case "del": wrap("~~", () -> renderChildren(node)); break;
                 case "u": out.append("<u>"); renderChildren(node); out.append("</u>"); break;
-                case "s":
-                case "del": 
-                    wrap("~~", new Runnable() {
-                        @Override
-                        public void run() { renderChildren(node); }
-                    }); 
-                    break;
                 case "code": renderCode(node); break;
                 case "img": renderImage(node); break;
                 case "url": renderUrl(node); break;
@@ -275,22 +241,22 @@ public class MarkdownUbbConverter {
         }
 
         private void renderImage(UbbNode node) {
-            String src = attr(node.attrs, "", null);
+            String src = node.attrs.getOrDefault("", null);
             if (src == null) { String inner = renderToString(node.children).trim(); if (!inner.isEmpty()) src = inner; }
             if (src == null || src.isEmpty()) return; out.append("![](").append(src).append(")");
         }
 
         private void renderUrl(UbbNode node) {
-            String href = attr(node.attrs, "", null);
+            String href = node.attrs.getOrDefault("", null);
             String text = renderToString(node.children).trim(); if (href == null || href.isEmpty()) href = text; if (text.isEmpty()) text = href; out.append('[').append(text).append(']').append('(').append(href).append(')');
         }
 
         private void renderEmail(UbbNode node) {
-            String mail = attr(node.attrs, "", null); if (mail == null) mail = renderToString(node.children).trim(); if (mail == null || mail.isEmpty()) return; out.append('[').append(mail).append(']').append('(').append("mailto:").append(mail).append(')');
+            String mail = node.attrs.getOrDefault("", null); if (mail == null) mail = renderToString(node.children).trim(); if (mail == null || mail.isEmpty()) return; out.append('[').append(mail).append(']').append('(').append("mailto:").append(mail).append(')');
         }
 
         private void renderQuote(UbbNode node) {
-            String author = attr(node.attrs, "", null);
+            String author = node.attrs.getOrDefault("", null);
             String inner = renderToString(node.children).trim();
             String[] lines = inner.split("\n");
             out.append('\n');
@@ -305,7 +271,7 @@ public class MarkdownUbbConverter {
         }
 
         private void renderList(UbbNode node) {
-            String primary = attr(node.attrs, "", null);
+            String primary = node.attrs.getOrDefault("", null);
             boolean ordered = primary != null && !primary.isEmpty() && !"0".equals(primary);
             int idx = 1; out.append('\n');
             for (UbbNode child : node.children) {
@@ -350,7 +316,7 @@ public class MarkdownUbbConverter {
         private void renderTableCell(UbbNode node) { out.append(renderToString(node.children)); }
 
         private void renderAttach(UbbNode node) {
-            String primary = attr(node.attrs, "", null);
+            String primary = node.attrs.getOrDefault("", null);
             String inner = renderToString(node.children).trim();
             if (primary != null && !primary.isEmpty()) out.append("[附件:").append(primary).append("]");
             else if (!inner.isEmpty()) out.append("[附件] ").append(inner);
@@ -361,7 +327,7 @@ public class MarkdownUbbConverter {
         }
 
         private void renderSize(UbbNode node) {
-            String primary = attr(node.attrs, "", attr(node.attrs, "size", null));
+            String primary = node.attrs.getOrDefault("", node.attrs.getOrDefault("size", null));
             Integer level = primary == null ? null : mapSizeToHeading(primary);
             if (level != null && node.children.size() == 1 && node.children.get(0).tag != null && node.children.get(0).tag.equals("b")) {
                 String content = renderToString(node.children.get(0).children).trim();
@@ -391,9 +357,9 @@ public class MarkdownUbbConverter {
         private boolean isInlineHtmlLike(String tag) { return tag.equals("color") || tag.equals("font") || tag.equals("align"); }
 
         private String nodeToHtml(UbbNode node) {
-            if ("color".equals(node.tag)) { String v = attr(node.attrs, "", ""); return "<span style=\"color:" + v + "\">" + renderToString(node.children) + "</span>"; }
-            if ("font".equals(node.tag)) { String v = attr(node.attrs, "", ""); return "<span style=\"font-family:" + v + "\">" + renderToString(node.children) + "</span>"; }
-            if ("align".equals(node.tag)) { String v = attr(node.attrs, "", ""); return "<div align=\"" + v + "\">" + renderToString(node.children) + "</div>"; }
+            if ("color".equals(node.tag)) { String v = node.attrs.getOrDefault("", ""); return "<span style=\"color:" + v + "\">" + renderToString(node.children) + "</span>"; }
+            if ("font".equals(node.tag)) { String v = node.attrs.getOrDefault("", ""); return "<span style=\"font-family:" + v + "\">" + renderToString(node.children) + "</span>"; }
+            if ("align".equals(node.tag)) { String v = node.attrs.getOrDefault("", ""); return "<div align=\"" + v + "\">" + renderToString(node.children) + "</div>"; }
             return nodeToUbb(node);
         }
 
@@ -417,16 +383,5 @@ public class MarkdownUbbConverter {
     private static boolean endsWithNewline(StringBuilder sb) { int len = sb.length(); return len > 0 && sb.charAt(len - 1) == '\n'; }
     private static String trimExtraBlankLines(String s) { return s.replaceAll("\n{3,}", "\n\n").trim() + "\n"; }
     private static String escapeUbb(String text) { return text.replace("[", "&#91;").replace("]", "&#93;"); }
-    /** 替代 Map.getOrDefault(key, def)
-     *
-     * 更新至Java 11语法：
-     * 查找：attr\(node.attrs, (.+?)\);
-     * 替换：node.attrs.getOrDefault($1);
-     */ 
-    private static String attr(java.util.Map<String, String> map, String key, String def) {
-        if (map == null) return def;
-        String v = map.get(key);
-        return v != null ? v : def;
-    }
 
 }

@@ -28,6 +28,9 @@ case: 命名法转换
 upper: 大写
 lower: 小写
 reverse: 反转
+kebab: 烤串
+space: 单词
+constant: 常量
 camel: 驼峰
 camel_info: ------转为驼峰时------
 camel_upper: 大驼峰 (帕斯卡式)

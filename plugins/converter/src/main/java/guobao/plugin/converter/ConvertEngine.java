@@ -1,26 +1,24 @@
 package guobao.plugin.converter;
 
-import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.io.IOException;
 import java.util.List;
 
-import bin.mt.plugin.api.MTPluginContext;
-import bin.mt.plugin.api.LocalString;
+import bin.mt.plugin.api.PluginContext;
+
 import bin.mt.plugin.api.translation.BaseTranslationEngine;
 
 public class ConvertEngine extends BaseTranslationEngine {
 
-    private LocalString string;
-    private MTPluginContext context;
+    private PluginContext context;
 
     private final List<String> tools = Arrays.asList("case", "md_ubb", "unicode", "zshh");
 
     private final List<String> COMMON = Arrays.asList("decode", "encode");
     private final List<String> MD_UBB = Arrays.asList("ubb", "md");
-    private final List<String> CASE = Arrays.asList("upper", "lower", "reverse", "snake", "camel");
+    private final List<String> CASE = Arrays.asList("upper", "lower", "reverse", "constant", "snake", "camel", "kebab", "space"/*, "pascal"*/);
 
     public ConvertEngine() {
         super(new ConfigurationBuilder()
@@ -31,16 +29,16 @@ public class ConvertEngine extends BaseTranslationEngine {
         .build());
     }
 
+    @NonNull
     @Override
     protected void init() {
         context = getContext();
-        string = context.getAssetLocalString("String");
     }
 
     @NonNull
     @Override
     public String name() {
-        return string.get("name");
+        return context.getString("name");
     }
 
     @NonNull
@@ -56,7 +54,8 @@ public class ConvertEngine extends BaseTranslationEngine {
             case "case": return CASE;
             case "md_ubb": return MD_UBB;
             case "zshh":
-                context.showToastL(string.get("warning"));
+                context.showToastL(context.getString("warning"));
+                return COMMON;
             default:
                 return COMMON;
         }
@@ -65,7 +64,7 @@ public class ConvertEngine extends BaseTranslationEngine {
     @NonNull
     @Override
     public String getLanguageDisplayName(String language) {
-        return string.get(language);
+        return context.getString(language);
     }
 
     @NonNull
