@@ -1,7 +1,0 @@
-{
-  "PUSH_MTP_TO_DEVICE": false,
-  "LOCAL_DEV": true,
-  "ADB_PATH": "/Users/Android/sdk/platform-tools/adb",
-  "PLUGIN_ROOT_DIR": "plugins/",
-  "TARGET_DIR": "/sdcard/MT2/plugin/"
-}
