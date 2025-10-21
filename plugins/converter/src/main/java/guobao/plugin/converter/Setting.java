@@ -9,21 +9,21 @@ public class Setting implements PluginPreference {
   public void onBuild(PluginContext context, Builder builder) {
 
     builder.addHeader("{case}");
+    builder.addHeader("{case_info}");
+    builder.addSwitch("{upper_continuous}", "upper_continuous")
+      .defaultValue(true)
+      .summaryOn("{on_1_default}")
+      .summaryOff("{off_1}");
+    builder.addSwitch("{split_number}", "split_number")
+      .defaultValue(false)
+      .summaryOn("{on_1}")
+      .summaryOff("{off_1_default}");
+
     builder.addHeader("{camel_info}");
     builder.addSwitch("{camel_upper}", "camel_upper")
       .defaultValue(false)
       .summaryOn("{on}")
-      .summaryOff("{off}");
-
-    builder.addHeader("{snake_info}");
-    builder.addSwitch("{snake_nb}", "snake_number")
-      .defaultValue(false)
-      .summaryOn("{on_1}")
-      .summaryOff("{off_1}");
-    builder.addSwitch("{snake_up_c}", "snake_upper_continuous")
-      .defaultValue(false)
-      .summaryOn("{snake_up_c_on}")
-      .summaryOff("{off_1}");
+      .summaryOff("{off_default}");
 
     builder.addHeader("{zshh}");
     builder.addText("{title}").summary("{zshh_info}");

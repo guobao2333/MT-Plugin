@@ -1,5 +1,5 @@
 name: 字符转换
-info: 本插件可以转换一些不太常见，但你可能会用到的格式/编码。\n\n当前支持：\n\t1. 命名法互转\n\t\t1.1 大小写\n\t\t1.2 反转顺序\n\t\t1.3 驼峰蛇形\n\t2. 统一码(Unicode) 编解码\n\t3. (开发中🚧) Markdown 与 UBB 互转\n\t4. zsh历史记录编解码 (仅文件)\n\n更多信息请在设置界面查看。
+info: 本插件可以转换一些不太常见，但你可能会用到的格式/编码。\n\n当前支持：\n\t1. 命名法互转\n\t\t1.1 大小写\n\t\t1.2 反转顺序\n\t\t1.3 驼峰、蛇形、烤串、单词、常量\n\t2. 统一码(Unicode) 编解码\n\t3. (开发中🚧) Markdown 与 UBB 互转\n\t4. (开发中🚧) zsh历史记录编解码 (仅文件)\n\n更多信息请在设置界面查看。
 
 decode: 解码
 encode: 编码
@@ -20,11 +20,18 @@ title: 功能介绍
 title_2: 使用说明
 
 on: 开启
-off: 关闭 (默认)
-on_1: 处理
-off_1: 不处理 (默认)
+off: 关闭
+on_1: 自动处理
+off_1: 不处理
+on_default: 开启 (默认)
+off_default: 关闭 (默认)
+on_1_default: 自动处理 (默认)
+off_1_default: 不处理 (默认)
 
 case: 命名法转换
+case_info: 常规
+upper_continuous: 保留大写词语 (比如HTTPRequest)
+split_number: 分割数字
 upper: 大写
 lower: 小写
 reverse: 反转
@@ -32,13 +39,9 @@ kebab: 烤串
 space: 单词
 constant: 常量
 camel: 驼峰
-camel_info: ------转为驼峰时------
+camel_info: 转为驼峰时
 camel_upper: 大驼峰 (帕斯卡式)
 snake: 蛇形
-snake_info: ------转为蛇形时------
-snake_nb: 分割数字
-snake_up_c: 保留大写词语 (比如HTTPRequest)
-snake_up_c_on: 自动处理 (测试中，可能非预期效果)
 
 md_ubb: Markdown UBB 互转
 ubb: UBB (BBCode)
