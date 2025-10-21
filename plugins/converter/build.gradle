@@ -21,7 +21,7 @@ android {
     defaultConfig {
         //noinspection ExpiredTargetSdkVersion
         targetSdk = 28
-        minSdk = 21
+        minSdk = 21 // 改24加快打包速度，发布时改21
     }
 
     buildTypes {
@@ -29,6 +29,10 @@ android {
             minifyEnabled = true
             proguardFiles 'proguard-rules.pro'
         }
+    }
+
+    aaptOptions {
+        ignoreAssetsPattern = '!*.bak' // 忽略mt产生的备份文件
     }
 
     compileOptions {
@@ -102,6 +106,6 @@ mtPlugin {
      * 插件对外接口，接口类型会自动判断
      */
     interfaces = [
-            "guobao.plugin.converter.ConvertEngine"
+        "guobao.plugin.converter.ConvertEngine"
     ]
 }

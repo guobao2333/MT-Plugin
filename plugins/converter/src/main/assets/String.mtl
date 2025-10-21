@@ -1,5 +1,5 @@
 name: Strings Converter
-info: This plugin can convert some formats/encodes that are not too common, but you may need.\n\nCurrently supported: \n\t1. Case conversion.\n\t\t1.1 Caps.\n\t\t1.2 Reversal order.\n\t\t1.3 Camel and Snake.\n\t2. Unicode codec.\n\t3. (In development🚧) Markdown and UBB convert.\n\t4. ZSH history codec\n\nFor more information, please looking in Preferences setting.
+info: This plugin can convert some formats/encodes that are not too common, but you may need.\n\nCurrently supported: \n\t1. Case conversion.\n\t\t1.1 Caps.\n\t\t1.2 Reversal order.\n\t\t1.3 Camel, Snake, Kebab, Space and Constant\n\t2. Unicode codec.\n\t3. (In development🚧) Markdown and UBB convert.\n\t4.(In development🚧) ZSH history codec\n\nFor more information, please looking in Preferences setting.
 
 decode: Decode
 encode: Encode
@@ -20,25 +20,29 @@ title_2: Instructions for use
 
 on: ON
 off: OFF (default)
-on_1: ON
-off_1: OFF (default)
+on_1: Auto process
+off_1: Not processed
+on_default: ON (default)
+off_default: OFF (default)
+on_1_default: Auto process (default)
+off_1_default: Not processed (default)
 
 case: Case
+case_info: General
+upper_continuous: Includes Capital Words (eg. HTTPRequest)
+split_number: Split Numbers
 upper: Upper
 lower: Lower
 reverse: Reverse
+kebab: Kebab
+space: Space
+constant: Constant
 camel: Camel
-camel_info: ------When converting to Camel------
+camel_info: When converting to Camel
 camel_upper: Upper Camel (Pascal)
 snake: Snake
-snake_info: ------When converting to Snake------
-snake_nb: Split Numbers
-snake_up_c: Includes Capital Words (beta)
-snake_up_c_on: Auto processing (Probably unexpected)
 
-md_ubb: Markdown and UBB convert
-ubb: UBB (BBCode)
-md: Markdown
+md_ubb: Markdown and UBB converter
 
 unicode: Unicode
 
@@ -55,4 +59,3 @@ about: About Plugin
 
 github: Github Repository
 github_info: Here you can feedback issues, request features, or contribute code.
-github_url: https://github.com/guobao2333/MT-Plugin

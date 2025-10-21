@@ -1,9 +1,6 @@
 package guobao.plugin.converter;
 
 import android.content.SharedPreferences;
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
 
 import bin.mt.plugin.api.LocalString;
 import bin.mt.plugin.api.PluginContext;
@@ -11,17 +8,23 @@ import bin.mt.plugin.api.preference.PluginPreference;
 
 import guobao.plugin.converter.util.*;
 
+import java.io.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Converter {
 
-    private LocalString string;
     private PluginContext context;
     private SharedPreferences config;
+
+    private static final Pattern UNICODE_PATTERN = Pattern.compile("\\\\u([0-9a-fA-F]{4})");
 
     public Converter(PluginContext context) {
         this.context = context;
         this.config = context.getPreferences();
-        //this.string = string;
     }
 
     public void main(String[] args) {
@@ -51,34 +54,25 @@ public class Converter {
     }
 
     public static String unicode(String str, String to) {
-        if (str.isEmpty()) return str;
+        if (str == null || str.isEmpty()) return str;
 
-        if ("encode".equals(to)) {
-            // 字符转unicode
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < str.length(); i++) {
-                char c = str.charAt(i);
-                if (c < 128) {
-                    // 保留ASCII
-                    sb.append(c);
-                } else {
-                    sb.append(String.format("\\u%04X", (int) c));
-                }
+        return switch (to) {
+            case "encode" -> str.chars()
+                .mapToObj(c -> c < 128 ? String.valueOf((char) c) : String.format("\\u%04x", c))
+                .collect(Collectors.joining());
+            case "decode" -> {
+                Matcher matcher = UNICODE_PATTERN.matcher(str);
+                StringBuffer sb = new StringBuffer();
+
+                while (matcher.find()) {
+                    String hex = matcher.group(1);
+                    int codePoint = Integer.parseInt(hex, 16);
+                    matcher.appendReplacement(sb, new String(Character.toChars(codePoint)));
+                };
+                yield matcher.appendTail(sb).toString();
             }
-            return sb.toString();
-        } else {
-            // unicode转字符
-            Pattern p = Pattern.compile("\\\\u([0-9A-Fa-f]{1,4})");
-            Matcher m = p.matcher(str);
-            StringBuffer sb = new StringBuffer();
-            while (m.find()) {
-                String hex = m.group(1);
-                int codePoint = Integer.parseInt(hex, 16);
-                m.appendReplacement(sb, new String(Character.toChars(codePoint)));
-            }
-            m.appendTail(sb);
-            return sb.toString();
-        }
+            default -> str;
+        };
     }
 
     public String zshh(String source, String target) throws IOException {
@@ -87,29 +81,29 @@ public class Converter {
         try {
             zsh.process(source, outputPath, "encode".equals(target));
         } catch (FileNotFoundException e) {
-            throw new FileNotFoundException(string.get(e.getMessage()));
+            throw new FileNotFoundException(context.getString(e.getMessage()));
         }
 
-        return string.get(target) + string.get("zshh_out") + outputPath;
+        return context.getString(target) + context.getString("zshh_out") + outputPath;
     }
 
     public String strCase(String str, String to) throws IOException {
         if (str == null || str.isEmpty()) return str;
 
-        final boolean snakeUpperContinuous = config.getBoolean("snake_upper_continuous", false); // 转为蛇形是否保持大写（比如HTTPRequest）
-        final boolean snakeNumber = config.getBoolean("snake_number", false);
+        final boolean upperContinuous = config.getBoolean("upper_continuous", false); // 保持大写
+        final boolean splitNumber = config.getBoolean("split_number", false); // 分割数字
         final boolean camelUpper = config.getBoolean("camel_upper", false);
 
         switch (to) {
             case "upper": return str.toUpperCase(); // 大写
             case "lower": return str.toLowerCase(); // 小写
             case "reverse": return new StringBuilder(str).reverse().toString(); // 反转
-            case "snake": return toSnakeCase(str, snakeUpperContinuous, snakeNumber, false); // 蛇形
-            case "constant": return toSnakeCase(str, snakeUpperContinuous, snakeNumber, true); // 常量
-            case "kebab": return toKebabCase(str, snakeUpperContinuous, snakeNumber); // 烤串
-            case "space": return toSpaceCase(str, snakeUpperContinuous, snakeNumber); // 单词
-            case "camel": return toCamelCase(str, snakeUpperContinuous, snakeNumber, camelUpper, false); // 驼峰
-            // case "pascal": return toCamelCase(str, snakeUpperContinuous, snakeNumber, true, true); // 大驼峰
+            case "snake": return toSnakeCase(str, upperContinuous, splitNumber, false); // 蛇形
+            case "constant": return toSnakeCase(str, upperContinuous, splitNumber, true); // 常量
+            case "kebab": return toKebabCase(str, upperContinuous, splitNumber); // 烤串
+            case "space": return toSpaceCase(str, upperContinuous, splitNumber); // 单词
+            case "camel": return toCamelCase(str, upperContinuous, splitNumber, camelUpper, false); // 驼峰
+            // case "pascal": return toCamelCase(str, upperContinuous, splitNumber, true, true); // 大驼峰
             default: return "正在开发中……";
         }
     }

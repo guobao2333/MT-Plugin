@@ -10,7 +10,6 @@ import java.util.List;
 
 public class ConvertEngine extends BaseTranslationEngine {
 
-    private LocalString string;
     private PluginContext context;
 
     private final List<String> tools = Arrays.asList("case", "md_ubb", "unicode", "zshh");
@@ -26,7 +25,6 @@ public class ConvertEngine extends BaseTranslationEngine {
         // 目标语言可变
         .setTargetLanguageMutable(true)
         .build());
-        this.string = string;
     }
 
     public void init() {
@@ -46,13 +44,13 @@ public class ConvertEngine extends BaseTranslationEngine {
             case "case": return CASE;
             case "md_ubb": return MD_UBB;
             case "zshh":
-                context.showToastL(string.get("warning"));
+                context.showToastL(context.getString("warning"));
                 return COMMON;
             default:
                 return COMMON;
         }
     }
-    
+
     public String getLanguageDisplayName(String language) {
         return context.getString(language);
     }
