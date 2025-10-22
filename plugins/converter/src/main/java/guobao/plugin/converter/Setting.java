@@ -31,6 +31,6 @@ public class Setting implements PluginPreference {
 
 
     builder.addHeader("{about}");
-    builder.addText("{github}").summary("{github_info}").url("{github_url}");
+    builder.addText("{github}").summary("{github_info}").url(context.getString("{github_url}"));
   }
 }

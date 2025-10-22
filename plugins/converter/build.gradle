@@ -21,8 +21,23 @@ android {
     defaultConfig {
         //noinspection ExpiredTargetSdkVersion
         targetSdk = 28
-        minSdk = 21 // 改24加快打包速度，发布时改21
+        minSdk = 21 // 改24加快打包速度，发布时改21才能安装
     }
+
+    /* bin还没适配用不了
+    flavorDimensions "environment"
+    productFlavors {
+        dev {
+            dimension "environment"
+            minSdk = 24
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+        production {
+            dimension "environment"
+            minSdk = 21
+        }
+    }*/
 
     buildTypes {
         release {
