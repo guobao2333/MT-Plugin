@@ -260,12 +260,9 @@ public class TextEditorFunctionDemo extends BaseTextEditorFunction {
             @Override
             protected void afterThread() throws Exception {
                 if (!snapshots.isEmpty()) {
-                    if (snapshots.size() > 1) {
-                        // 需要进行多次替换，开启大批量编辑模式
-                        editor.startLargeBatchEditingMode();
-                    }
+                    int finalSelection = backwardReplace ? snapshots.get(snapshots.size() - 1).end() : snapshots.get(0).start();
+                    editor.startLargeBatchEditingMode();
                     try {
-                        int finalSelection = backwardReplace ? snapshots.get(snapshots.size() - 1).end() : snapshots.get(0).start();
                         for (int i = snapshots.size() - 1; i >= 0; i--) {
                             MatcherSnapshot snapshot = snapshots.get(i);
                             String replacement = regex ? snapshot.getComputedReplacement() : replace;
@@ -274,15 +271,13 @@ public class TextEditorFunctionDemo extends BaseTextEditorFunction {
                                 finalSelection = finalSelection - (snapshot.end() - snapshot.start()) + replacement.length();
                             }
                         }
-                        editor.setSelection(finalSelection);
-                        editor.pushSelectionToUndoBuffer();
-                        editor.requestFocus();
-                        editor.ensureSelectionVisible();
                     } finally {
-                        if (snapshots.size() > 1) {
-                            editor.finishLargeBatchEditingMode();
-                        }
+                        editor.finishLargeBatchEditingMode();
                     }
+                    editor.setSelection(finalSelection);
+                    editor.pushSelectionToUndoBuffer();
+                    editor.requestFocus();
+                    editor.ensureSelectionVisible();
                     pluginUI.showToast("{editor:replace_result}", snapshots.size());
                 } else {
                     pluginUI.showToast("{editor:text_not_found}");
