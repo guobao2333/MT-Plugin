@@ -53,7 +53,19 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 ## 更新记录
 
-### gradle 插件 alpha3
+### Gradle 插件 alpha4
+
+对应 MT 管理器版本号需大于 **25110300**
+
+- **[Gradle插件]** 打包 mtp 时会自动合并 dex 文件，以减少 dex 文件数量
+- **[API接口]** plugin-api 升级至 alpha5:
+  - 完成文本编辑器浮动菜单扩展接口 `TextEditorFloatingMenu`
+  - 调整 `TextEditor` 的获取选中位置方法，具体请看源码注释
+  - 新增 `MaterialIcons` 用于获取[内置 Material 图标](https://mt2.cn/icons)
+  - 新增 `VectorDrawableLoader` 用于加载外部矢量图
+  - `PluginContext` 新增 `getPluginName()` 方法
+
+### Gradle 插件 alpha3
 
 对应 MT 管理器版本号需大于 **25101900**
 
@@ -63,20 +75,20 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 - 打包插件的 gradle 任务 `packagePlugin` 重命名为 `packageReleaseMtp`
 - 通过 Android Studio 运行并推送到设备上安装的 mtp 文件，会被标记为 testOnly，无法二次安装，若要分享 mtp 文件给他人使用，请运行 `packageReleaseMtp` 任务
 
-### gradle 插件 alpha2
+### Gradle 插件 alpha2
 
 对应 MT 管理器版本号需大于 **25101600**
 
 - **[MT管理器]** 支持 dex 打包模式与指定插件的最低安卓版本
 - **[MT管理器]** 修复 `PluginPreference.Builder` 的 `title` 和 `subtitle` 没有转为本地化文本的问题
-- **[gradle插件]** 使用 dex 打包模式生成 mtp 文件（不支持设置成之前的源码打包模式）
-- **[gradle插件]** 内置 `plugin-api:alpha4` 和 `plugin-pusher:alpha` 依赖，无需手动添加
-- **[gradle插件]** 直接在 `build.gradle` 文件中配置 `manifest.json` 和 `pusher.conf` 文件，无需手动创建
+- **[Gradle插件]** 使用 dex 打包模式生成 mtp 文件（不支持设置成之前的源码打包模式）
+- **[Gradle插件]** 内置 `plugin-api:alpha4` 和 `plugin-pusher:alpha` 依赖，无需手动添加
+- **[Gradle插件]** 直接在 `build.gradle` 文件中配置 `manifest.json` 和 `pusher.conf` 文件，无需手动创建
 
 使用 dex 打包模式的 mtp 文件，其内部不包含 .java 和 .jar 文件，只有一个 classes.dex 文件，因此开发方式不再受 MT
 管理器内置的 Java 编译器限制，您可以使用更高的 Java 版本甚至 Kotlin 进行开发，只要最后能生成 dex 文件即可。
 
-现在 plugin-api 依赖直接内置在 gradle 插件中，因此后续的更新标题以 gradle 插件为主，而非 plugin-api
+现在 plugin-api 依赖直接内置在 gradle 插件中，因此后续的更新标题以 Gradle 插件为主，而非 plugin-api
 
 ### plugin-api alpha4
 

@@ -189,11 +189,6 @@ public class TextEditorFunctionDemo extends BaseTextEditorFunction {
         }
         BufferedText text = editor.getBufferedText();
         int[] selection = {editor.getSelectionStart(), editor.getSelectionEnd()};
-        if (selection[0] > selection[1]) {
-            int i = selection[0];
-            selection[0] = selection[1];
-            selection[1] = i;
-        }
         if (textRange == 0) { // 选中的文本
             if (selection[0] == selection[1]) {
                 pluginUI.showToast("{editor:no_text_selected}");
