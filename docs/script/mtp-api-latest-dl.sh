@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# 下载项
+# 下载列表
 components=(
-"api" # 3.0.0-alpha4
+"api" # 版本号：3.0.0-alpha5
 #"gradle-plugin"
 #"pusher"
-#"packer"
 )
 
 script_path=$0
@@ -13,10 +12,12 @@ args=$@
 args=${args:=-sSO}
 
 dl() {
+  local url=https://maven.mt2.cn/bin/mt/plugin
+
   local component=$1
   local version_var=$2
   local current=${!version_var:-None}
-  local latest=$(curl -sS https://maven.mt2.cn/bin/mt/plugin/$component/maven-metadata.xml | grep -oP '(?<=<latest>).*(?=</latest>)')
+  local latest=$(curl -sS $url/$component/maven-metadata.xml | grep -oP '(?<=<latest>).*(?=</latest>)')
 
   if [[ -f $component-$latest-sources.jar ]]; then
     echo "$component 已是最新版"
@@ -26,7 +27,7 @@ dl() {
   fi
 
   echo "正在下载: $component 版本: $latest"
-  curl $args "https://maven.mt2.cn/bin/mt/plugin/$component/$latest/$component-$latest-sources.jar"
+  curl $args "$url/$component/$latest/$component-$latest-sources.jar"
 
   if [[ $? -eq 0 ]]; then
     echo "下载完成: $component-$latest-sources.jar"
