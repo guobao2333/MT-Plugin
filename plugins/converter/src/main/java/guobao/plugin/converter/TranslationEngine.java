@@ -31,14 +31,20 @@ public class TranslationEngine extends BaseTranslationEngine {
         this.context = getContext();
     }
 
+    @NonNull
+    @Override
     public String name() {
         return context.getString("name");
     }
 
+    @NonNull
+    @Override
     public List<String> loadSourceLanguages() {
         return tools;
     }
 
+    @NonNull
+    @Override
     public List<String> loadTargetLanguages(String sourceLanguage) {
         switch (sourceLanguage) {
             case "case": return CASE;
@@ -51,10 +57,14 @@ public class TranslationEngine extends BaseTranslationEngine {
         }
     }
 
+    @NonNull
+    @Override
     public String getLanguageDisplayName(String language) {
         return context.getString(language);
     }
 
+    @NonNull
+    @Override
     public String translate(String text, String tool, String to) throws IOException {
         Converter cvt = new Converter(context);
         return cvt.convert(text, tool, to);

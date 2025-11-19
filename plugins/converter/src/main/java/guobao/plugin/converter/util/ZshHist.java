@@ -21,7 +21,7 @@ public class ZshHist {
     public static void main(String[] args) {}
 
     // 转义特殊字符
-    public static byte[] metafy(byte[] input) {
+    public final static byte[] metafy(byte[] input) {
         if (input == null) return new byte[0];
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -38,7 +38,7 @@ public class ZshHist {
     }
 
     // 反转义字符
-    public static byte[] unmetafy(byte[] input) {
+    public final static byte[] unmetafy(byte[] input) {
         if (input == null) return new byte[0];
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -56,7 +56,7 @@ public class ZshHist {
     }
 
     // 辅助方法
-    private static String bytesToHex(byte[] bytes) {
+    private final static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
             sb.append(String.format("%02X ", b));

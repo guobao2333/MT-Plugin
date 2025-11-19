@@ -2,7 +2,7 @@ package guobao.plugin.converter;
 
 import android.content.SharedPreferences;
 
-//import bin.mt.plugin.api.regex.*;
+import bin.mt.plugin.api.regex.*;
 import bin.mt.plugin.api.LocalString;
 import bin.mt.plugin.api.PluginContext;
 import bin.mt.plugin.api.preference.PluginPreference;
@@ -16,7 +16,7 @@ import io.github.guobao2333.bbcoeter.dom.JsoupDOMAdapter;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.regex.*;
+//import java.util.regex.*;
 import java.util.stream.Collectors;
 
 public class Converter {
@@ -24,7 +24,7 @@ public class Converter {
     private PluginContext context;
     private SharedPreferences config;
 
-    private static final Pattern UNICODE_PATTERN = Pattern.compile("\\\\u([0-9a-fA-F]{4})");
+    private static final Pattern UNICODE_PATTERN = Regex.compile("\\\\u([0-9a-fA-F]{4})");
 
     public Converter(PluginContext context) {
         this.context = context;
@@ -81,14 +81,14 @@ public class Converter {
                 .collect(Collectors.joining());
             case "decode" -> {
                 Matcher matcher = UNICODE_PATTERN.matcher(str);
-                StringBuffer sb = new StringBuffer();
+                StringBuilder sb = new StringBuilder();
 
                 while (matcher.find()) {
                     String hex = matcher.group(1);
                     int codePoint = Integer.parseInt(hex, 16);
                     matcher.appendReplacement(sb, new String(Character.toChars(codePoint)));
                 };
-                yield matcher.appendTail(sb).toString();
+                yield sb.toString();
             }
             default -> str;
         };
