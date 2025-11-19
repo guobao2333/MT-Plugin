@@ -1,5 +1,14 @@
 name: 字符转换
-info: 本插件可以转换一些不太常见，但你可能会用到的格式/编码。\n\n当前支持：\n\t1. 命名法互转\n\t\t1.1 大小写\n\t\t1.2 反转顺序\n\t\t1.3 驼峰、蛇形、烤串、单词、常量\n\t2. 统一码(Unicode) 编解码\n\t3. (开发中🚧) Markdown 与 UBB 互转\n\t4. (开发中🚧) zsh历史记录编解码 (仅文件)\n\n更多信息请在设置界面查看。
+info: 本插件可以转换一些不太常见，但你可能会用到的格式/编码。\n\n\
+当前支持：\n\
+\t1. 命名法互转\n\
+\t\t1.1 大小写\n\
+\t\t1.2 反转顺序\n\
+\t\t1.3 驼峰、蛇形、串式、链式、单词、常量\n\
+\t2. 统一码(Unicode) 编解码\n\
+\t3. (开发中🚧) Markdown 与 UBB 互转\n\
+\t4. (开发中🚧) zsh历史记录编解码 (仅文件)\n\n\
+更多信息请在设置界面查看。
 
 decode: 解码
 encode: 编码
@@ -35,7 +44,9 @@ split_number: 分割数字
 upper: 大写
 lower: 小写
 reverse: 反转
-kebab: 烤串
+path: 路径
+kebab: 串式
+chain: 链式
 space: 单词
 constant: 常量
 camel: 驼峰
@@ -45,11 +56,12 @@ snake: 蛇形
 
 md_ubb: Markdown UBB 互转
 ubb: UBB (BBCode)
-md: Markdown
+markdown: Markdown
+html: HTML
 
-unicode: 统一码 (Unicode)
+unicode: Unicode 编解码
 
-zshh: zsh history 编解码
+zshh: Zsh History 编解码
 metafy: 编码
 unmetafy: 解码
 zshh_info: zsh是一个shell程序，类似于bash。zsh使用一种名为“metafy”的编码方式来避免兼容性问题，它将 .zsh_history 文件中的 Unicode 字符转义为非常规字符，本功能可以将它解码为原始字符或编码为zsh能够读取的格式。\n\n注意：如果您在解码前修改将会损坏文件！

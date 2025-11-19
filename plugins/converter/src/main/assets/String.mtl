@@ -1,5 +1,14 @@
 name: Strings Converter
-info: This plugin can convert some formats/encodes that are not too common, but you may need.\n\nCurrently supported: \n\t1. Case conversion.\n\t\t1.1 Caps.\n\t\t1.2 Reversal order.\n\t\t1.3 Camel, Snake, Kebab, Space and Constant\n\t2. Unicode codec.\n\t3. (In development🚧) Markdown and UBB convert.\n\t4.(In development🚧) ZSH history codec\n\nFor more information, please looking in Preferences setting.
+info: This plugin can convert some formats/encodes that are not too common, but you may need.\n\n\
+Currently supported: \n\
+\t1. Case conversion.\n\
+\t\t1.1 Caps.\n\
+\t\t1.2 Reversal order.\n\
+\t\t1.3 Camel, Snake, Kebab, Chain, Space and Constant\n\
+\t2. Unicode codec.\n\
+\t3. (WIP🚧) Markdown and UBB convert.\n\
+\t4.(WIP🚧) ZSH history codec\n\n\
+For more information, please looking in Preferences setting.
 
 decode: Decode
 encode: Encode
@@ -34,7 +43,9 @@ split_number: Split Numbers
 upper: Upper
 lower: Lower
 reverse: Reverse
+path: Path
 kebab: Kebab
+chain: Chain
 space: Space
 constant: Constant
 camel: Camel
