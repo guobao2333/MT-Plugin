@@ -6,15 +6,15 @@ plugins {
     alias(libs.plugins.mt.plugin) apply false
 }
 
-task buildPlugin {
+task packageReleaseMtpAll {
     group = 'Build'
-    description = '编译并打包全部插件'
+    description = 'Generate all MT Plugin installation package file'
 
     dependsOn subprojects.findAll { 
         it.path.startsWith(':plugins:') 
     }.collect { "${it.path}:packageReleaseMtp" }
 
     doLast {
-        println "All plugins packaged successfully"
+        println "All plugins packaged successfully."
     }
 }

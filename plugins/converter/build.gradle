@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    // alias(libs.plugins.kotlin.android) // 如果不需要Kotlin就注释掉这行
+    alias(libs.plugins.kotlin.android) // 如果不需要Kotlin就注释掉这行
     alias(libs.plugins.mt.plugin)
 }
 
@@ -21,7 +21,7 @@ android {
     defaultConfig {
         //noinspection ExpiredTargetSdkVersion
         targetSdk = 28
-        minSdk = 21 // 改24加快打包速度，发布时改21才能安装
+        minSdk = 24 // 改24加快打包速度，发布时改21才能安装
     }
 
     /* bin还没适配用不了
@@ -41,6 +41,10 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled = true
+            proguardFiles 'proguard-rules.pro'
+        }
+        debug {
             minifyEnabled = true
             proguardFiles 'proguard-rules.pro'
         }
@@ -65,6 +69,8 @@ dependencies {
     implementation('org.commonmark:commonmark:0.27.0')
     implementation('org.commonmark:commonmark-ext-gfm-strikethrough:0.27.0')
     implementation('org.commonmark:commonmark-ext-gfm-tables:0.27.0')
+    // jsoup HTML parser library @ https://jsoup.org/
+    implementation('org.jsoup:jsoup:1.21.2')
 
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
@@ -95,12 +101,12 @@ mtPlugin {
     /**
      * 插件版本号，低版本插件无法覆盖安装高版本插件
      */
-    versionCode = 6
+    versionCode = 9
 
     /**
      * 插件版本名称
      */
-    versionName = "v1.4"
+    versionName = "v1.5"
 
     /**
      * 插件名称
@@ -121,6 +127,8 @@ mtPlugin {
      * 插件对外接口，接口类型会自动判断
      */
     interfaces = [
-        "guobao.plugin.converter.ConvertEngine"
+        "guobao.plugin.converter.TranslationEngine",
+        "guobao.plugin.converter.TextEditorFunction",
+        "guobao.plugin.converter.TextEditorFloatingMenu"
     ]
 }
