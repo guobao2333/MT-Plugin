@@ -1,11 +1,11 @@
-package guobao.plugin.converter;
+package guobao.plugin.converter.preference;
 
 import android.content.SharedPreferences;
 
 import bin.mt.plugin.api.PluginContext;
 import bin.mt.plugin.api.preference.PluginPreference;
 
-public class Setting implements PluginPreference {
+public class Preference implements PluginPreference {
   public void onBuild(PluginContext context, Builder builder) {
 
     builder.addHeader("{case}");
