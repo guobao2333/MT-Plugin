@@ -8,17 +8,17 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class ConvertEngine extends BaseTranslationEngine {
+public class TranslationEngine extends BaseTranslationEngine {
 
     private PluginContext context;
 
     private final List<String> tools = Arrays.asList("case", "md_ubb", "unicode", "zshh");
 
     private final List<String> COMMON = Arrays.asList("decode", "encode");
-    private final List<String> MD_UBB = Arrays.asList("ubb", "md");
-    private final List<String> CASE = Arrays.asList("upper", "lower", "reverse", "constant", "snake", "camel", "kebab", "space"/*, "pascal"*/);
+    private final List<String> MD_UBB = Arrays.asList("ubb", "html", "markdown");
+    private final List<String> CASE = Arrays.asList("upper", "lower", "reverse", "constant", "snake", "camel", "kebab", "space", "chain", "path"/*, "pascal"*/);
 
-    public ConvertEngine() {
+    public TranslationEngine() {
         super(new ConfigurationBuilder()
         // 关闭「跳过已翻译词条」
         .setForceNotToSkipTranslated(true)
