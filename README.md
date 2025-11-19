@@ -29,7 +29,7 @@
 
 还可以一次性打包所有插件：
 ```bash
-./gradlew buildPlugin
+./gradlew packageReleaseMtpAll
 ```
 
 如果使用termux，你需要先安装`JDK`:  

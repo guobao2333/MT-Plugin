@@ -121,7 +121,7 @@ mtPlugin {
     /**
      * 主设置界面，可不填
      */
-    mainPreference = "guobao.plugin.converter.Setting"
+    mainPreference = "guobao.plugin.converter.preference.Preference"
 
     /**
      * 插件对外接口，接口类型会自动判断
