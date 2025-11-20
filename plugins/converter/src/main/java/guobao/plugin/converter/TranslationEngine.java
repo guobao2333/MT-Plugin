@@ -1,5 +1,7 @@
 package guobao.plugin.converter;
 
+import androidx.annotation.NonNull;
+
 import bin.mt.plugin.api.LocalString;
 import bin.mt.plugin.api.PluginContext;
 import bin.mt.plugin.api.translation.BaseTranslationEngine;
@@ -16,7 +18,7 @@ public class TranslationEngine extends BaseTranslationEngine {
 
     private final List<String> COMMON = Arrays.asList("decode", "encode");
     private final List<String> MD_UBB = Arrays.asList("ubb", "html", "markdown");
-    private final List<String> CASE = Arrays.asList("upper", "lower", "reverse", "constant", "snake", "camel", "kebab", "space", "chain", "path"/*, "pascal"*/);
+    private final List<String> CASE = Arrays.asList("constant", "reverse", "snake", "camel", "kebab", "space", "chain", "path", "upper", "lower"/*, "pascal"*/);
 
     public TranslationEngine() {
         super(new ConfigurationBuilder()

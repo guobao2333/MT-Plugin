@@ -16,7 +16,7 @@ import io.github.guobao2333.bbcoeter.dom.JsoupDOMAdapter;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
-//import java.util.regex.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Converter {
@@ -24,7 +24,7 @@ public class Converter {
     private PluginContext context;
     private SharedPreferences config;
 
-    private static final Pattern UNICODE_PATTERN = Regex.compile("\\\\u([0-9a-fA-F]{4})");
+    private static final Pattern UNICODE_PATTERN = Pattern.compile("\\\\u([0-9a-fA-F]{4})");
 
     public Converter(PluginContext context) {
         this.context = context;
@@ -80,15 +80,12 @@ public class Converter {
                 .mapToObj(c -> c < 128 ? String.valueOf((char) c) : String.format("\\u%04x", c))
                 .collect(Collectors.joining());
             case "decode" -> {
-                Matcher matcher = UNICODE_PATTERN.matcher(str);
-                StringBuilder sb = new StringBuilder();
-
-                while (matcher.find()) {
-                    String hex = matcher.group(1);
+                // 如果有报错不用管，因为从kt调用
+                yield StringCompat.replaceAllCompat(str, UNICODE_PATTERN, matchResult -> {
+                    String hex = matchResult.group(1);
                     int codePoint = Integer.parseInt(hex, 16);
-                    matcher.appendReplacement(sb, new String(Character.toChars(codePoint)));
-                };
-                yield sb.toString();
+                    return new String(Character.toChars(codePoint));
+                });
             }
             default -> str;
         };

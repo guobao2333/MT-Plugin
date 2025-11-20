@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
 
 import bin.mt.plugin.api.drawable.MaterialIcons;
+import bin.mt.plugin.api.drawable.VectorDrawableLoader;
 import bin.mt.plugin.api.editor.BaseTextEditorFloatingMenu;
 import bin.mt.plugin.api.editor.TextEditor;
 import bin.mt.plugin.api.ui.PluginUI;
@@ -20,10 +21,9 @@ public class TextEditorFloatingMenu extends BaseTextEditorFloatingMenu {
     @Override
     public Drawable icon() {
         // 直接获取内置的Material图标：https://mt2.cn/icons
-        return MaterialIcons.get("swap_vert");
+        //return MaterialIcons.get("swap_vert");
         // 也可以加载外部数据
-//        return VectorDrawableLoader.fromVectorXml(getContext(), "case.xml");
-//        return VectorDrawableLoader.fromSvg(getContext(), "case.svg");
+        return VectorDrawableLoader.fromSvg(getContext(), "convert.svg");
     }
 
     @Override
