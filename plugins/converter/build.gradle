@@ -72,6 +72,7 @@ dependencies {
     // jsoup HTML parser library @ https://jsoup.org/
     implementation('org.jsoup:jsoup:1.21.2')
 
+    testImplementation 'junit:junit:4.13.2'
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
 
