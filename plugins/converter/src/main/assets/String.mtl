@@ -4,7 +4,7 @@ Currently supported: \n\
 \t1. Case conversion.\n\
 \t\t1.1 Caps.\n\
 \t\t1.2 Reversal order.\n\
-\t\t1.3 Camel, Snake, Kebab, Chain, Space and Constant\n\
+\t\t1.3 Camel, Snake, Kebab, Constant and more...\n\
 \t2. Unicode codec.\n\
 \t3. (WIP🚧) Markdown and UBB convert.\n\
 \t4.(WIP🚧) ZSH history codec\n\n\
@@ -61,7 +61,7 @@ zshh: Zsh History Codec
 metafy: Metafy
 unmetafy: Unmetafy
 zshh_info: To avoid compatibility issues, zsh uses an encoding method called "metafy" to escape Unicode characters in the .zsh_history file as unconventional characters. This function can "unmetafy" as original characters or "metafy" as a format that zsh can read.\n\nIMPORTANT: If you modify it before decoding, file will be corrupted!
-zshh_info_2: Zsh history codec requires inputting the full file path. Since the local storage directory of termux is currently not accessible, it is necessary to place the zshh file in other places where MT has permission to access. (If you have ROOT permissions, you can ignore it)
+zshh_info_warn: Zsh history codec requires inputting the full file path. Since the local storage directory of termux is currently not accessible, it is necessary to place the zshh file in other places where MT has permission to access. (If you have ROOT permissions, you can ignore it)
 zshh_out: Done! File has been exported to:\n
 
 

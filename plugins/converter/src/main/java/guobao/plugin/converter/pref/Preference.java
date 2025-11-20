@@ -27,7 +27,7 @@ public class Preference implements PluginPreference {
 
     builder.addHeader("{zshh}");
     builder.addText("{title}").summary("{zshh_info}");
-    builder.addText("{title_2}").summary("{zshh_info_2}");
+    builder.addText("{title_2}").summary("{zshh_info_warn}");
 
 
     builder.addHeader("{about}");
