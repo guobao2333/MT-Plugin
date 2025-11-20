@@ -79,14 +79,13 @@ public class Converter {
             case "encode" -> str.chars()
                 .mapToObj(c -> c < 128 ? String.valueOf((char) c) : String.format("\\u%04x", c))
                 .collect(Collectors.joining());
-            case "decode" -> {
+            case "decode" -> 
                 // 如果有报错不用管，因为从kt调用
-                yield StringCompat.replaceAllCompat(str, UNICODE_PATTERN, matchResult -> {
+                StringCompat.replaceAllCompat(str, UNICODE_PATTERN, matchResult -> {
                     String hex = matchResult.group(1);
                     int codePoint = Integer.parseInt(hex, 16);
                     return new String(Character.toChars(codePoint));
                 });
-            }
             default -> str;
         };
     }
@@ -109,20 +108,27 @@ public class Converter {
         final boolean upperContinuous = config.getBoolean("upper_continuous", false); // 保持大写
         final boolean splitNumber = config.getBoolean("split_number", false); // 分割数字
         final boolean camelUpper = config.getBoolean("camel_upper", false);
-        Case.TokenizerConfig defaultConfig = new Case.TokenizerConfig(upperContinuous, splitNumber);
+        //Case.TokenizerConfig defaultConfig = new Case.TokenizerConfig(upperContinuous, splitNumber);
+
+        // 使用新的 Builder 模式创建配置
+        Case.TokenizerConfig.Builder configBuilder = new Case.TokenizerConfig.Builder()
+                .splitUpperContinuous(upperContinuous)
+                .rules(Case.SplitRule.CASE, splitNumber ? Case.SplitRule.NUMBER : null);
+
+        Case.TokenizerConfig defaultConfig = configBuilder.build();
 
         switch (to) {
-            case "upper": return str.toUpperCase(); // 大写
-            case "lower": return str.toLowerCase(); // 小写
-            case "reverse": return new StringBuilder(str).reverse().toString(); // 反转
-            case "snake": return Case.toSnakeCase(str, defaultConfig, false); // 蛇形
-            case "constant": return Case.toSnakeCase(str, defaultConfig, true); // 常量
-            case "camel": return Case.toCamelCase(str, defaultConfig, camelUpper, false); // 驼峰
-            // case "pascal": return Case.toCamelCase(str, defaultConfig, true, true); // 大驼峰
-            case "path": return Case.toPathCase(str); // 路径
-            case "kebab": return Case.toKebabCase(str); // 烤串
-            case "chain": return Case.toChainCase(str); // 链式
-            case "space": return Case.toSpaceCase(str); // 单词
+            case "upper": return str.toUpperCase();
+            case "lower": return str.toLowerCase();
+            case "constant": return Case.toSnakeCase(str, defaultConfig, true);
+            case "reverse": return new StringBuilder(str).reverse().toString();
+            case "snake": return Case.toSnakeCase(str, defaultConfig, false);
+            case "camel": return Case.toCamelCase(str, defaultConfig, camelUpper, true);
+            case "pascal": return Case.toPascalCase(str); // 使用新的快捷方法
+            case "path": return Case.toPathCase(str);
+            case "kebab": return Case.toKebabCase(str);
+            case "chain": return Case.toChainCase(str);
+            case "space": return Case.toSpaceCase(str);
             default: return "正在开发中……";
         }
     }

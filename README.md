@@ -13,16 +13,21 @@
 
 ### alpha 4
 在最近更新的`v3 alpha4`版本中已经支持打包`java > 8`的插件了，可以不再依赖mt内置编译器，但插件内只能包含`.dex`而非`.java`以及`.jar`
+> 也就是说必须将java代码编译为dex才能使用
 
 ## Prerequisites | 基本要求
 1. Java 8+ (推荐Java17，可以但不推荐更旧版本)
 2. Gradle 8.14 (可选，推荐最新版)
 > 直接运行gradlew脚本则无需提前安装。
+3. Kotlin (可选，但只能使用**dex模式**打包)
+
+> [!IMPORTANT]
+> 项目要求`Java 8+`是为了使用很多高级特性，通过语法脱糖(dex模式)能够使用java8以上的语法。脱糖相关配置已包含在项目中，无需修改开箱即用。
 
 构建插件后将会自动打包文件到 `plugins/<plugin>/build/outputs/mt-plugin/` 这个目录中。
 
 ### Android Studio
-打开项目后等待 Gradle 同步完成后运行 某个插件模块，将会有一个名为 `MT Plugin Plusher` 的应用程序安装到您的设备上，这时它会自启动并打开 MT 管理器的插件安装界面，点击安装即可。
+打开项目后等待 Gradle 同步完成后运行 某个插件模块，将会有一个名为 `MT Plugin Plusher` 的应用程序安装到您的设备上，这时它会自启动并打开MT管理器的插件安装界面，点击安装即可。
 
 ### Command Line | 命令行
 在项目根目录执行 `./gradlew :plugins:PLUGIN:packageReleaseMtp` 把`PLUGIN`替换为指定插件模块即可打包该插件。
@@ -33,7 +38,9 @@
 ```
 
 如果使用termux，你需要先安装`JDK`:  
-`pkg install openjdk-17`
+```bash
+pkg install openjdk-17
+```
 
 ### Setup development environment | 设置开发环境
 如果你是一个初学者，不知道如何设置插件的开发环境，请看[这篇教程](docs/AndroidSDK.md)。不过由于针对于termux编写，它并不能适用于其他Linux系统，您需要修改或移除其中的termux特有命令和环境路径以适用您的系统。
