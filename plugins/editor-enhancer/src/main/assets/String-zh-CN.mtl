@@ -1,0 +1,17 @@
+name: 编辑器附魔台
+info: 就像Minecraft中的附魔台一样，拥有为您的编辑器附上强大编辑之力的魔法！
+
+########### Functions ###########
+reindent: 对齐缩进
+move_line_up: 上移行
+move_line_down: 下移行
+select_to_top: 上全选
+select_to_bottom: 下全选
+select_to_line: 选择至……
+
+########### Abouts ###########
+about: 关于插件
+
+github: Github仓库
+github_info: 您可以在此反馈问题、请求功能、贡献代码或改进翻译
+github_url: https://github.com/guobao2333/MT-Plugin
