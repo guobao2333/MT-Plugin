@@ -1,6 +1,8 @@
 name: Editor Enchancer
 info: Just like in Minecraft to enchanting table, add powerful editing magic to your editor!
 
+save: Save
+
 ########### Functions ###########
 reindent: Reindent
 move_line_up: Move Line Up
@@ -9,8 +11,13 @@ select_to_top: Select to Top
 select_to_bottom: Select to Bottom
 select_to_line: Select to Line...
 
+########## Preferences ##########
+pref: Preference
+common: Common
+
 ########### Abouts ###########
 about: About Plugin
 
 github: Github Repository
 github_info: Here you can report issues, request features, contribute code and improve translations.
+github_url: https://github.com/guobao2333/MT-Plugin

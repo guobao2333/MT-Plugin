@@ -20,12 +20,14 @@ import bin.mt.plugin.api.ui.PluginUI;
 
 import guobao.plugin.editor.enhancer.format.IndentationAligner;
 
-public class TextEditorFloatingMenu extends BaseTextEditorFloatingMenu {
+public class Reindent extends BaseTextEditorFloatingMenu {
+
+    public static String buttonName;
 
     @NonNull
     @Override
     public String name() {
-        return "{reindent}";
+        return buttonName == null ? "{reindent}" : buttonName;
     }
 
     @NonNull
@@ -37,7 +39,7 @@ public class TextEditorFloatingMenu extends BaseTextEditorFloatingMenu {
 
     @Override
     public boolean isEnabled() {
-        // 是否启用
+        // 是否启用，禁用后不显示在浮窗设置中
         return true;
     }
 
@@ -50,15 +52,14 @@ public class TextEditorFloatingMenu extends BaseTextEditorFloatingMenu {
     // 浮窗设置界面中的按钮
     @Override
     public void onPluginButtonClick(@NonNull PluginUI pluginUI) {
-        PluginContext context = getContext();
-        String pluginId = context.getPluginId();
+        String pluginId = getContext().getPluginId();
         int idLen = pluginId.length();
         SpannableString message = new SpannableString(pluginId + "\n\n" + getClass().getName());
         message.setSpan(new RelativeSizeSpan(0.1f), idLen + 1, idLen + 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE); // 增加行距
         message.setSpan(new ForegroundColorSpan(pluginUI.colorTextSecondary()), idLen + 2, message.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         message.setSpan(new RelativeSizeSpan(0.8f), idLen + 2, message.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         pluginUI.buildDialog()
-                .setTitle(context.getPluginName())
+                .setTitle(name())
                 .setMessage(message)
                 .setPositiveButton("{close}", null)
                 .show();
