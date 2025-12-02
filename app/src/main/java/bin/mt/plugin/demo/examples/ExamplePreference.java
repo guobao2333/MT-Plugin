@@ -1,4 +1,4 @@
-package bin.mt.plugin.demo.preference;
+package bin.mt.plugin.demo.examples;
 
 import android.content.SharedPreferences;
 

@@ -92,7 +92,7 @@ mtPlugin {
     /**
      * 主设置界面，可不填
      */
-    mainPreference = "bin.mt.plugin.demo.preference.ExampleMain"
+    mainPreference = "bin.mt.plugin.demo.examples.ExampleMain"
 
     /**
      * 插件对外接口，接口类型会自动判断
