@@ -20,6 +20,7 @@ import java.util.Arrays;
 import bin.mt.json.JSONObject;
 import bin.mt.json.WriterConfig;
 import bin.mt.plugin.api.PluginContext;
+import bin.mt.plugin.api.drawable.MaterialIcons;
 import bin.mt.plugin.api.preference.PluginPreference;
 import bin.mt.plugin.api.ui.PluginButton;
 import bin.mt.plugin.api.ui.PluginCheckBox;
@@ -35,6 +36,7 @@ import bin.mt.plugin.api.ui.PluginUI;
 import bin.mt.plugin.api.ui.PluginView;
 import bin.mt.plugin.api.ui.PluginViewGroup;
 import bin.mt.plugin.api.ui.builder.PluginButtonBuilder;
+import bin.mt.plugin.api.ui.builder.PluginImageViewBuilder;
 import bin.mt.plugin.api.ui.builder.PluginRootLayoutBuilder;
 import bin.mt.plugin.api.ui.builder.PluginTextViewBuilder;
 import bin.mt.plugin.api.util.Supplier;
@@ -188,11 +190,11 @@ public class ExampleUI implements PluginPreference {
                     .addTextView().text("① 这是一个文本")
                     .addTextView().text("② 设置了字体颜色和背景色").textColor(Color.WHITE).backgroundColor(Color.BLACK)
                     .addTextView().text("③ 文本右对齐").textGravity(Gravity.END).widthMatchParent().textColor(Color.WHITE).backgroundColor(Color.DKGRAY).marginVerticalDp(5)
-                    .addTextView().height(1).widthMatchParent().backgroundColor(pluginUI.colorDivider()) // 分割线
+                    .addView().height(1).widthMatchParent().backgroundColor(pluginUI.colorDivider()) // 分割线
                     .addTextView().text("④ 设置了内边距").paddingDp(24).textColor(0xFF000000).backgroundColor(0xFFAAAAAA)
-                    .addTextView().height(1).widthMatchParent().backgroundColor(pluginUI.colorDivider()) // 分割线
+                    .addView().height(1).widthMatchParent().backgroundColor(pluginUI.colorDivider()) // 分割线
                     .addTextView().text("⑤ 设置了外边距").marginDp(24).textColor(0xFF000000).backgroundColor(0xFFAAAAAA)
-                    .addTextView().height(1).widthMatchParent().backgroundColor(pluginUI.colorDivider()) // 分割线
+                    .addView().height(1).widthMatchParent().backgroundColor(pluginUI.colorDivider()) // 分割线
                     .addTextView().text("⑥ 字号48").textSize(48)
                     .addTextView().text("⑦ 字号12").textSize(12)
                     .addTextView().text("⑧ 粗斜体").textStyle(true, true)
@@ -243,6 +245,43 @@ public class ExampleUI implements PluginPreference {
                 .addTextView().text("调用 singleLine()\n12345678\n12345678").singleLine()
                 .build()
         );
+
+        add(builder, "图片视图", "PluginImageView", pluginUI -> pluginUI
+                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                    @Override
+                    protected void handleImageView(PluginUI pluginUI, PluginImageViewBuilder builder) {
+                        builder.background(pluginUI.selectableItemBackgroundBorderless())
+                                .paddingDp(6)
+                                .colorFilter(pluginUI.colorText())
+                                .onClick(view -> pluginUI.showToast(view.getId()));
+                    }
+                })
+                .buildVerticalLayout()
+                // 添加一行可点击图标
+                .addHorizontalLayout().children(subBuilder -> subBuilder
+                        .addImageView("search_icon").image(MaterialIcons.get("search"))
+                        .addView().layoutWeight(1)
+                        .addImageView("code_icon").image(MaterialIcons.get("code"))
+                        .addView().layoutWeight(1)
+                        .addImageView("copy_icon").image(MaterialIcons.get("content_copy"))
+                        .addView().layoutWeight(1)
+                        .addImageView("favorite_icon").image(MaterialIcons.get("favorite_border"))
+                )
+                // 分割线
+                .addView().backgroundColor(pluginUI.colorDivider()).height(1).widthMatchParent().marginVerticalDp(12)
+                // 添加一行可点击图标
+                .addHorizontalLayout().children(subBuilder -> subBuilder
+                        .addImageView("text_icon").image(MaterialIcons.get("text_snippet")).colorFilter(pluginUI.colorAccent())
+                        .addView().layoutWeight(1)
+                        .addImageView("image_icon").image(MaterialIcons.get("photo")).colorFilter(pluginUI.colorWarning())
+                        .addView().layoutWeight(1)
+                        .addImageView("music_icon").image(MaterialIcons.get("music_note")).colorFilter(pluginUI.colorError())
+                        .addView().layoutWeight(1)
+                        .addImageView("movie_icon").image(MaterialIcons.get("movie")).colorFilter(0xFF11CC11)
+                )
+                .build()
+        );
+
 
         add(builder, "普通按钮", "PluginButton", pluginUI -> pluginUI
                 .defaultStyle(pluginUI.getStyle().new Modifier() {
@@ -620,8 +659,8 @@ public class ExampleUI implements PluginPreference {
                 })
                 .buildVerticalLayout()
                 .addTextView().text("当前是否为深色主题（夜间模式）= " + pluginUI.isDarkTheme())
-                // 来一条分割线
-                .addTextView().widthMatchParent().height(1).backgroundColor(pluginUI.colorDivider()).marginVertical(12)
+                // 分割线
+                .addView().widthMatchParent().height(1).backgroundColor(pluginUI.colorDivider()).marginVerticalDp(12)
                 //
                 .addHorizontalLayout().children(subBuilder -> subBuilder
                         .addTextView("h1").text("colorPrimary")
@@ -652,8 +691,8 @@ public class ExampleUI implements PluginPreference {
                         .addTextView().backgroundColor(pluginUI.colorTextSecondary())
                 )
                 .unifyWidth("h1", "h2", "h3", "h4", "h5", "h6", "h7")
-                // 来一条分割线
-                .addTextView().widthMatchParent().height(1).backgroundColor(pluginUI.colorDivider()).marginVertical(12)
+                // 分割线
+                .addView().widthMatchParent().height(1).backgroundColor(pluginUI.colorDivider()).marginVerticalDp(12)
                 //
                 .addButton().text("colorTextStateList 启用").textColor(pluginUI.colorTextStateList())
                 .addButton().text("colorTextStateList 禁用").textColor(pluginUI.colorTextStateList()).enable(false)
