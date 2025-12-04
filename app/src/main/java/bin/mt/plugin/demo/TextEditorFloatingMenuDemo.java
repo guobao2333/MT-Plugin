@@ -13,7 +13,7 @@ public class TextEditorFloatingMenuDemo extends BaseTextEditorFloatingMenu {
     @NonNull
     @Override
     public String name() {
-        return "大小写反转";
+        return "{case_inversion}";
     }
 
     @NonNull

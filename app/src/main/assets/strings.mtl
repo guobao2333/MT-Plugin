@@ -1,6 +1,9 @@
 plugin_name: MT演示插件
 plugin_description: MT插件功能演示
 
+case_conversion: 大小写转换
+case_inversion: 大小写反转
+
 key: 这是一段来自\
 默认语言包\
 的文本

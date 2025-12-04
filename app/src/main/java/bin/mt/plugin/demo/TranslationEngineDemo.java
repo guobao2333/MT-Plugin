@@ -2,7 +2,6 @@ package bin.mt.plugin.demo;
 
 import androidx.annotation.NonNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 import bin.mt.plugin.api.translation.BaseTranslationEngine;
@@ -22,7 +21,7 @@ public class TranslationEngineDemo extends BaseTranslationEngine {
     @NonNull
     @Override
     public String name() {
-        return "大小写转换";
+        return "{case_conversion}";
     }
 
     /**
@@ -31,7 +30,7 @@ public class TranslationEngineDemo extends BaseTranslationEngine {
     @NonNull
     @Override
     public List<String> loadSourceLanguages() {
-        return Arrays.asList("src");
+        return List.of("src");
     }
 
     /**
@@ -40,7 +39,7 @@ public class TranslationEngineDemo extends BaseTranslationEngine {
     @NonNull
     @Override
     public List<String> loadTargetLanguages(String sourceLanguage) {
-        return Arrays.asList("upper", "lower");
+        return List.of("upper", "lower");
     }
 
     /**
@@ -49,15 +48,12 @@ public class TranslationEngineDemo extends BaseTranslationEngine {
     @NonNull
     @Override
     public String getLanguageDisplayName(String language) {
-        switch (language) {
-            case "src":
-                return "原文";
-            case "upper":
-                return "大写";
-            case "lower":
-                return "小写";
-        }
-        return "???";
+        return switch (language) {
+            case "src" -> "原文";
+            case "upper" -> "大写";
+            case "lower" -> "小写";
+            default -> "???";
+        };
     }
 
     /**
