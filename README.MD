@@ -53,6 +53,14 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 ## 更新记录
 
+### Gradle 插件 alpha5
+
+对应 MT 管理器版本号需大于 **25120200**
+
+- **[API接口]** plugin-api 升级至 alpha6:
+    - 新增弹出菜单 `PluginPopupMenu`
+    - `PluginUI` 新增 `createPopupMenu()` 方法用于创建弹出菜单
+
 ### Gradle 插件 alpha4
 
 对应 MT 管理器版本号需大于 **25110300**

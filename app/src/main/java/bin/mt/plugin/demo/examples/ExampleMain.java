@@ -17,5 +17,7 @@ public class ExampleMain implements PluginPreference {
                 .onClick((pluginUI, item) -> context.openPreference(ExampleUI.class));
         builder.addText("对话框").summary("PluginDialog")
                 .onClick((pluginUI, item) -> context.openPreference(ExampleDialog.class));
+        builder.addText("弹出菜单").summary("PluginPopupMenu")
+                .onClick((pluginUI, item) -> context.openPreference(ExamplePopupMenu.class));
     }
 }
