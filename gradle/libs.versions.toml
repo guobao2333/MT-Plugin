@@ -1,6 +1,6 @@
 [versions]
 agp = "8.13.1"
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 mt-plugin = "1.0.0-alpha5"
 desugarJdkLibs = "2.1.5"
 
