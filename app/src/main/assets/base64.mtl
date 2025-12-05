@@ -1,0 +1,9 @@
+encode: 编码
+decode: 解码
+exchange: 交换
+options: 选项
+flag_no_padding: 无填充
+flag_no_wrap: 不换行
+flag_url_safe: URL模式
+replace: 替换原文
+charset: 文本编码

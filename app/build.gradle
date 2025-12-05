@@ -101,5 +101,6 @@ mtPlugin {
             "bin.mt.plugin.demo.TranslationEngineDemo",
             "bin.mt.plugin.demo.TextEditorFunctionDemo",
             "bin.mt.plugin.demo.TextEditorFloatingMenuDemo",
+            "bin.mt.plugin.demo.TextEditorToolMenuDemo",
     ]
 }
