@@ -32,6 +32,7 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 - `app/src/main/java/bin/mt/plugin/demo/preference/ExampleUI.java`
 - `app/src/main/java/bin/mt/plugin/demo/preference/ExampleDialog.java`
+- `app/src/main/java/bin/mt/plugin/demo/preference/ExamplePopupMenu.java`
 
 ### 三、新增文本编辑器接口
 
@@ -39,7 +40,7 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 - [x] 底部快捷功能扩展接口
 - [x] 浮动菜单扩展接口
-- [ ] 工具菜单扩展接口
+- [x] 工具菜单扩展接口
 - [ ] 代码补全接口
 
 ### 四、增强的设置界面
@@ -55,88 +56,95 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 ### Gradle 插件 alpha5
 
-对应 MT 管理器版本号需大于 **25120200**
+对应 MT 管理器版本号需大于 **25120500**
 
-- **[API接口]** plugin-api 升级至 alpha6:
-    - 新增弹出菜单 `PluginPopupMenu`
-    - `PluginUI` 新增 `createPopupMenu()` 方法用于创建弹出菜单
+- 【升级】plugin-api 升级至 alpha6:
+- 【新增】完成文本编辑器工具菜单扩展接口 `TextEditorToolMenu`
+- 【新增】新增弹出菜单 `PluginPopupMenu`
+- 【新增】`PluginUI` 新增 `createPopupMenu()` 方法用于创建弹出菜单
+- 【调整】`PluginViewBuilder` 重命名为 `PluginUIBuilder`
+    - **注意！这是一个破坏性修改，会导致前面编写的 v3 插件无法运行，您需要重新编译插件并安装！**
+- 【新增】`PluginView` 普通视图，对应 `pluginUIBuilder.addView()`
+- 【新增】`PluginImageView` 图片视图，对应 `pluginUIBuilder.addImageView()`
 
 ### Gradle 插件 alpha4
 
 对应 MT 管理器版本号需大于 **25110300**
 
-- **[Gradle插件]** 打包 mtp 时会自动合并 dex 文件，以减少 dex 文件数量
-- **[API接口]** plugin-api 升级至 alpha5:
-  - 完成文本编辑器浮动菜单扩展接口 `TextEditorFloatingMenu`
-  - 调整 `TextEditor` 的获取选中位置方法，具体请看源码注释
-  - 新增 `MaterialIcons` 用于获取[内置 Material 图标](https://mt2.cn/icons)
-  - 新增 `VectorDrawableLoader` 用于加载外部矢量图
-  - `PluginContext` 新增 `getPluginName()` 方法
+- 【优化】Gradle插件 - 打包 mtp 时会自动合并 dex 文件，以减少 dex 文件数量
+- 【升级】plugin-api 升级至 alpha5:
+- 【调整】`TextEditor` 的获取选中位置方法，具体请看源码注释
+- 【新增】完成文本编辑器浮动菜单扩展接口 `TextEditorFloatingMenu`
+- 【新增】`MaterialIcons` 用于获取[内置 Material 图标](https://mt2.cn/icons)
+- 【新增】`VectorDrawableLoader` 用于加载外部矢量图
+- 【新增】`PluginContext` 新增 `getPluginName()` 方法
 
 ### Gradle 插件 alpha3
 
 对应 MT 管理器版本号需大于 **25101900**
 
-- Dex 打包模式支持多 dex 文件
-- 重构了 mtp 的打包与推送逻辑，增强与 AGP 的兼容性
-- 升级内置依赖 `plugin-pusher` 的版本到 `alpha2`
-- 打包插件的 gradle 任务 `packagePlugin` 重命名为 `packageReleaseMtp`
-- 通过 Android Studio 运行并推送到设备上安装的 mtp 文件，会被标记为 testOnly，无法二次安装，若要分享 mtp 文件给他人使用，请运行 `packageReleaseMtp` 任务
+- 【新增】Dex 打包模式支持多 dex 文件
+- 【优化】重构了 mtp 的打包与推送逻辑，增强与 AGP 的兼容性
+- 【升级】内置依赖 `plugin-pusher` 的版本升级到 `alpha2`
+- 【调整】打包插件的 gradle 任务 `packagePlugin` 重命名为 `packageReleaseMtp`
+- 【调整】通过 Android Studio 运行并推送到设备上安装的 mtp 文件，会被标记为 testOnly，无法二次安装，若要分享
+  mtp 文件给他人使用，请运行 `packageReleaseMtp` 任务
 
 ### Gradle 插件 alpha2
 
 对应 MT 管理器版本号需大于 **25101600**
 
-- **[MT管理器]** 支持 dex 打包模式与指定插件的最低安卓版本
-- **[MT管理器]** 修复 `PluginPreference.Builder` 的 `title` 和 `subtitle` 没有转为本地化文本的问题
-- **[Gradle插件]** 使用 dex 打包模式生成 mtp 文件（不支持设置成之前的源码打包模式）
-- **[Gradle插件]** 内置 `plugin-api:alpha4` 和 `plugin-pusher:alpha` 依赖，无需手动添加
-- **[Gradle插件]** 直接在 `build.gradle` 文件中配置 `manifest.json` 和 `pusher.conf` 文件，无需手动创建
+- 【新增】MT管理器 - 支持 dex 打包模式与指定插件的最低安卓版本
+- 【修复】MT管理器 - 修复 `PluginPreference.Builder` 的 `title` 和 `subtitle` 没有转为本地化文本的问题
+- 【新增】Gradle插件 - 使用 dex 打包模式生成 mtp 文件（不支持设置成之前的源码打包模式）
+- 【新增】Gradle插件 - 内置 `plugin-api:alpha4` 和 `plugin-pusher:alpha` 依赖，无需手动添加
+- 【新增】Gradle插件 - 直接在 `build.gradle` 文件中配置 `manifest.json` 和 `pusher.conf` 文件，无需手动创建
 
 使用 dex 打包模式的 mtp 文件，其内部不包含 .java 和 .jar 文件，只有一个 classes.dex 文件，因此开发方式不再受 MT
 管理器内置的 Java 编译器限制，您可以使用更高的 Java 版本甚至 Kotlin 进行开发，只要最后能生成 dex 文件即可。
 
-现在 plugin-api 依赖直接内置在 gradle 插件中，因此后续的更新标题以 Gradle 插件为主，而非 plugin-api
+**现在 plugin-api 依赖直接内置在 gradle 插件中，因此后续的更新标题以 Gradle 插件为主，而非 plugin-api
+**
 
 ### plugin-api alpha4
 
 对应 MT 管理器版本号需大于 **25092100**
 
-- `TextEditor` 的 `pushSelectPositionToUndoBuffer` 方法重命名为 `pushSelectionToUndoBuffer`
+- 【调整】`TextEditor` 的 `pushSelectPositionToUndoBuffer` 方法重命名为 `pushSelectionToUndoBuffer`
   - **因为这个改动，已安装的插件如果调用了此方法，需修改代码后重新安装**
-- `TextEditorFunction` 新增 `isEnabled()` 方法用于动态控制功能接口是否启用
-- 对大量注释文档进行优化，表述更加准确与清晰
+- 【新增】`TextEditorFunction` 新增 `isEnabled()` 方法用于动态控制功能接口是否启用
+- 【优化】对大量注释文档进行优化，表述更加准确与清晰
 
 ### plugin-api alpha3
 
 对应 MT 管理器版本号需大于 **25092000**
 
-- 安装插件时将检测安装包的 assets 目录内所有 mtl 文件格式是否正确，检测失败将无法安装
-- 语言包 mtl 文件支持多行文本，具体请参考文件：`app/src/main/assets/strings.mtl`
-- `PluginContext` 新增 `getPluginSdkVersion()` 方法用于获取插件 SDK 版本号
-- `PluginContext` 和 `PluginUI` 显示 Toast 方法的格式化参数支持自动转为本地化文本
-- `TextEditor` 的 `replace` 方法重命名为 `replaceText`
-- `TextEditor` 的 `replaceText` 和 `insertText` 方法的 text 参数类型调整为 `CharSequence`
-- `BaseTextEditorFunction` 的代码添加详细注释说明
+- 【优化】安装插件时将检测安装包的 assets 目录内所有 mtl 文件格式是否正确，检测失败将无法安装
+- 【新增】语言包 mtl 文件支持多行文本，具体请参考文件：`app/src/main/assets/strings.mtl`
+- 【新增】`PluginContext` 新增 `getPluginSdkVersion()` 方法用于获取插件 SDK 版本号
+- 【新增】`PluginContext` 和 `PluginUI` 显示 Toast 方法的格式化参数支持自动转为本地化文本
+- 【调整】`TextEditor` 的 `replace` 方法重命名为 `replaceText`
+- 【调整】`TextEditor` 的 `replaceText` 和 `insertText` 方法的 text 参数类型调整为 `CharSequence`
+- 【优化】`BaseTextEditorFunction` 的代码添加详细注释说明
 
 ### plugin-api alpha2
 
 对应 MT 管理器版本号需大于 **25091900**
 
-- `BufferedText` 类源码注释增加关于换行符的说明
-- `Regex` 类源码注释增加关于 MT 正则表达式库的说明
-- `PluginContext` 中剪贴板方法的文本类型改为 `CharSequence`
-- `PluginContext` 新增 `openLogViewer()` 方法用于打开插件日志查看器
-- `PluginContext` 和 `PluginUI` 显示 Toast 方法的消息参数类型改为 `CharSequence`
-- `PluginContext` 和 `PluginUI` 新增 `cancelToast()` 方法用于取消当前正在显示的 Toast
-- `PluginUI` 的 `isStrictIdModeEnabled()` 方法注释补充**默认开启** ID 严格模式的说明
-- `PluginUI` 新增多个获取颜色方法：
+- 【优化】`BufferedText` 类源码注释增加关于换行符的说明
+- 【优化】`Regex` 类源码注释增加关于 MT 正则表达式库的说明
+- 【调整】`PluginContext` 中剪贴板方法的文本类型改为 `CharSequence`
+- 【新增】`PluginContext` 新增 `openLogViewer()` 方法用于打开插件日志查看器
+- 【调整】`PluginContext` 和 `PluginUI` 显示 Toast 方法的消息参数类型改为 `CharSequence`
+- 【新增】`PluginContext` 和 `PluginUI` 新增 `cancelToast()` 方法用于取消当前正在显示的 Toast
+- 【优化】`PluginUI` 的 `isStrictIdModeEnabled()` 方法注释补充**默认开启** ID 严格模式的说明
+- 【新增】`PluginUI` 新增多个获取颜色方法：
   - 错误颜色：`colorError()`
   - 警告颜色：`colorWarning()`
   - 分割线颜色：`colorDivider()`
   - 带状态的主要文本颜色：`colorTextStateList()`
   - 带状态的次要文本颜色：`colorTextSecondaryStateList()`
-- 去除 `PluginUI.StyleWrapper` 新增 `PluginUI.Style.Modifier`，对于修改已有Style：
+- 【优化】去除 `PluginUI.StyleWrapper` 新增 `PluginUI.Style.Modifier`，对于修改已有Style：
   - 旧写法：`new PluginUI.StyleWrapper(pluginUi.getStyle()) { ... }`
   - 新写法：`pluginUi.getStyle().new Modifier() { ... }`
 
