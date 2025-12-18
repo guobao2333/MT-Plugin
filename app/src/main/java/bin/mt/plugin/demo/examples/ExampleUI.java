@@ -9,7 +9,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
@@ -26,6 +25,7 @@ import bin.mt.plugin.api.ui.PluginButton;
 import bin.mt.plugin.api.ui.PluginCheckBox;
 import bin.mt.plugin.api.ui.PluginCompoundButton;
 import bin.mt.plugin.api.ui.PluginEditText;
+import bin.mt.plugin.api.ui.PluginEditTextWatcher;
 import bin.mt.plugin.api.ui.PluginProgressBar;
 import bin.mt.plugin.api.ui.PluginRadioButton;
 import bin.mt.plugin.api.ui.PluginRadioGroup;
@@ -522,52 +522,48 @@ public class ExampleUI implements PluginPreference {
                 .build()
         );
 
-        add(builder, "内容监听", "监听编辑框文本内容变化", pluginUI -> {
-            PluginView pluginView = pluginUI
-                    .buildVerticalLayout()
-                    .addEditText("edit").hint("请输入数字").requestFocusAndShowIME()
-                    .addTextView("error").text("请输入数字！").textColor(Color.RED).gone()
-                    .addTextView("msg")
-                    .build();
-            PluginEditText editText = pluginView.requireViewById("edit");
-            PluginTextView error = pluginView.requireViewById("error");
-            PluginTextView msg = pluginView.requireViewById("msg");
-            editText.addTextChangedListener(new TextWatcher() {
-                String delete, insert;
+        add(builder, "内容监听", "监听编辑框文本内容变化", pluginUI -> pluginUI
+                .buildVerticalLayout()
+                .addEditText("edit").hint("请输入数字").requestFocusAndShowIME().addTextChangedListener(new PluginEditTextWatcher() {
+                    String delete, insert;
 
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    delete = s.subSequence(start, start + count).toString();
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    insert = s.subSequence(start, start + count).toString();
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (s.toString().matches("\\d*")) {
-                        error.setGone();
-                    } else {
-                        error.setVisible();
+                    @Override
+                    public void beforeTextChanged(PluginEditText editText, CharSequence s, int start, int count, int after) {
+                        delete = s.subSequence(start, start + count).toString();
                     }
-                    if (!delete.isEmpty() || !insert.isEmpty()) {
-                        StringBuilder sb = new StringBuilder("您刚刚");
-                        if (!delete.isEmpty()) {
-                            sb.append("删除了“").append(delete).append("”");
-                        }
-                        if (!insert.isEmpty()) {
-                            sb.append("输入了“").append(insert).append("”");
-                        }
-                        msg.setText(sb);
-                    } else {
-                        msg.setText(null);
+
+                    @Override
+                    public void onTextChanged(PluginEditText editText, CharSequence s, int start, int before, int count) {
+                        insert = s.subSequence(start, start + count).toString();
                     }
-                }
-            });
-            return pluginView;
-        });
+
+                    @Override
+                    public void afterTextChanged(PluginEditText editText, Editable s) {
+                        // RootView 的 findViewById() 和 requireViewById() 方法会缓存查找结果，不影响性能
+                        PluginTextView error = editText.getRootView().requireViewById("error");
+                        PluginTextView msg = editText.getRootView().requireViewById("msg");
+                        if (s.toString().matches("\\d*")) {
+                            error.setGone();
+                        } else {
+                            error.setVisible();
+                        }
+                        if (!delete.isEmpty() || !insert.isEmpty()) {
+                            StringBuilder sb = new StringBuilder("您刚刚");
+                            if (!delete.isEmpty()) {
+                                sb.append("删除了“").append(delete).append("”");
+                            }
+                            if (!insert.isEmpty()) {
+                                sb.append("输入了“").append(insert).append("”");
+                            }
+                            msg.setText(sb);
+                        } else {
+                            msg.setText(null);
+                        }
+                    }
+                })
+                .addTextView("error").text("请输入数字！").textColor(Color.RED).gone()
+                .addTextView("msg")
+                .build());
 
         add(builder, "单行模式", "关于 singleLine 和 inputType", pluginUI -> pluginUI
                 .defaultStyle(style)

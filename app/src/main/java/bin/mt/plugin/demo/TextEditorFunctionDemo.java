@@ -114,9 +114,10 @@ public class TextEditorFunctionDemo extends BaseTextEditorFunction {
             return VALIDATION_FAILED;
         }
         if (regexSwitch.isChecked()) {
+            Pattern pattern;
             try {
                 // 检查正则表达式
-                Regex.compile(findEditText.getText().toString());
+                pattern = Regex.compile(findEditText.getText().toString());
             } catch (Exception ex) {
                 pluginUI.showErrorMessage(ex);
                 findEditText.selectAll();
@@ -125,7 +126,7 @@ public class TextEditorFunctionDemo extends BaseTextEditorFunction {
             }
             try {
                 // 检查正则替换模板
-                Regex.checkReplacementTemplate(replaceEditText.getText().toString());
+                Regex.checkReplacementTemplate(pattern, replaceEditText.getText().toString());
             } catch (Exception ex) {
                 pluginUI.showErrorMessage(ex);
                 replaceEditText.selectAll();
@@ -181,7 +182,7 @@ public class TextEditorFunctionDemo extends BaseTextEditorFunction {
         try {
             pattern = Regex.compile(find, flags);
             if (regex) {
-                Regex.checkReplacementTemplate(replace);
+                Regex.checkReplacementTemplate(pattern, replace);
             }
         } catch (Exception e) {
             pluginUI.showToast(e.toString());

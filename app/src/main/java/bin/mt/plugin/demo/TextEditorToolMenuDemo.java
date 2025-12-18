@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.Gravity;
 
@@ -17,6 +16,7 @@ import bin.mt.plugin.api.editor.BaseTextEditorToolMenu;
 import bin.mt.plugin.api.editor.TextEditor;
 import bin.mt.plugin.api.ui.PluginButton;
 import bin.mt.plugin.api.ui.PluginEditText;
+import bin.mt.plugin.api.ui.PluginEditTextWatcher;
 import bin.mt.plugin.api.ui.PluginUI;
 import bin.mt.plugin.api.ui.PluginView;
 import bin.mt.plugin.api.ui.builder.PluginButtonBuilder;
@@ -177,19 +177,9 @@ public class TextEditorToolMenuDemo extends BaseTextEditorToolMenu {
         if (!selectedText.isEmpty()) {
             PluginView replaceButton = view.requireViewById("replace");
             // 第二个输入框内容不为空时才可点击替换原文按钮
-            input2.addTextChangedListener(new TextWatcher() {
+            input2.addTextChangedListener(new PluginEditTextWatcher.Simple() {
                 @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                public void afterTextChanged(PluginEditText editText, Editable s) {
                     replaceButton.setEnabled(!TextUtils.isEmpty(s));
                 }
             });
