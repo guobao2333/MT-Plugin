@@ -53,7 +53,7 @@ public class TextEditorToolMenuDemo extends BaseTextEditorToolMenu {
         int selEnd = editor.getSelectionEnd();
         String selectedText = editor.subText(selStart, selEnd);
         PluginEditTextBuilder builder = pluginUI
-                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                .defaultStyle(new PluginUI.StyleWrapper() {
                     @Override
                     protected void handleEditText(PluginUI pluginUI, PluginEditTextBuilder builder) {
                         super.handleEditText(pluginUI, builder);

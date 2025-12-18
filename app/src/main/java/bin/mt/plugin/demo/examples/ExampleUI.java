@@ -79,7 +79,7 @@ public class ExampleUI implements PluginPreference {
         );
 
         add(builder, "对齐方式", "设置线性布局对齐方式和单独指定对齐方式", pluginUI -> pluginUI
-                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                .defaultStyle(new PluginUI.StyleWrapper() {
                     @Override
                     protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
                         super.handleTextView(pluginUI, builder);
@@ -96,7 +96,7 @@ public class ExampleUI implements PluginPreference {
         );
 
         add(builder, "组合布局", "垂直布局嵌套水平布局", pluginUI -> pluginUI
-                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                .defaultStyle(new PluginUI.StyleWrapper() {
                     @Override
                     protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
                         super.handleTextView(pluginUI, builder);
@@ -133,7 +133,7 @@ public class ExampleUI implements PluginPreference {
         );
 
         add(builder, "统一宽度", "让多个 View 保持一样的宽度（以最宽者为准）", pluginUI -> pluginUI
-                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                .defaultStyle(new PluginUI.StyleWrapper() {
                     @Override
                     protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
                         super.handleTextView(pluginUI, builder);
@@ -223,7 +223,7 @@ public class ExampleUI implements PluginPreference {
         });
 
         add(builder, "多行文本", "PluginTextView 多行文本相关演示", pluginUI -> pluginUI
-                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                .defaultStyle(new PluginUI.StyleWrapper() {
                     int i = 0;
 
                     @Override
@@ -247,7 +247,7 @@ public class ExampleUI implements PluginPreference {
         );
 
         add(builder, "图片视图", "PluginImageView", pluginUI -> pluginUI
-                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                .defaultStyle(new PluginUI.StyleWrapper() {
                     @Override
                     protected void handleImageView(PluginUI pluginUI, PluginImageViewBuilder builder) {
                         builder.background(pluginUI.selectableItemBackgroundBorderless())
@@ -284,7 +284,7 @@ public class ExampleUI implements PluginPreference {
 
 
         add(builder, "普通按钮", "PluginButton", pluginUI -> pluginUI
-                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                .defaultStyle(new PluginUI.StyleWrapper() {
                     @Override
                     protected void handleButton(PluginUI pluginUI, PluginButtonBuilder builder) {
                         super.handleButton(pluginUI, builder);
@@ -446,7 +446,7 @@ public class ExampleUI implements PluginPreference {
     }
 
     private void addEditText(PluginContext context, Builder builder) {
-        PluginUI.Style style = STYLE.new Modifier() {
+        PluginUI.Style style = new PluginUI.StyleWrapper(STYLE) {
             boolean first = true;
 
             @Override
@@ -636,7 +636,7 @@ public class ExampleUI implements PluginPreference {
 
     private void addOthers(PluginContext context, Builder builder) {
         add(builder, "内置颜色", "PluginUI提供的一些颜色值", pluginUI -> pluginUI
-                .defaultStyle(pluginUI.getStyle().new Modifier() {
+                .defaultStyle(new PluginUI.StyleWrapper() {
                     @Override
                     protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
                         super.handleTextView(pluginUI, builder);
@@ -770,7 +770,7 @@ public class ExampleUI implements PluginPreference {
 
         add(builder, "JSON 数据转换", "快速将 JSON 数据赋值给 UI 组件以及保存回 JSON", pluginUI -> {
             PluginView pluginView = pluginUI
-                    .defaultStyle(STYLE.new Modifier() {
+                    .defaultStyle(new PluginUI.StyleWrapper(STYLE) {
                         @Override
                         protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
                             super.handleTextView(pluginUI, builder);
@@ -891,7 +891,7 @@ public class ExampleUI implements PluginPreference {
         return button == null ? "null" : button.getText().toString();
     }
 
-    private static final PluginUI.Style STYLE = PluginUI.DEFAULT_STYLE.new Modifier() {
+    private static final PluginUI.Style STYLE = new PluginUI.StyleWrapper(PluginUI.DEFAULT_STYLE) {
         @Override
         protected void handleRootLayout(PluginUI pluginUI, PluginRootLayoutBuilder builder) {
             super.handleRootLayout(pluginUI, builder);
