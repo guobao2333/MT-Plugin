@@ -36,12 +36,12 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 ### 三、新增文本编辑器接口
 
-目前计划新增 4 个接口，已完成 3 个：
+目前计划新增 4 个接口：
 
 - [x] 底部快捷功能扩展接口
 - [x] 浮动菜单扩展接口
 - [x] 工具菜单扩展接口
-- [ ] 代码补全接口
+- [x] 批量翻译接口
 
 ### 四、增强的设置界面
 
@@ -54,11 +54,77 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 ## 更新记录
 
+### Gradle 插件 alpha7
+
+对应 MT 管理器版本号需大于 **25121900**
+
+- 【升级】plugin-api 升级至 alpha7，Gradle 插件版本跳过 alpha6 与其同步，后续默认两者一起升级不再单列
+- 【新增】批量翻译接口 `BatchTranslationEngine` 用于在翻译模式功能中一次性翻译大量词条
+- 【新增】`TextEditor` 新增 `showFloatingMenu()` 方法用于显示浮动菜单
+- 【优化】`PluginEditText` 的文本变化监听器改为 `PluginEditTextWatcher`，可在回调方法中接收
+  `PluginEditText` 实例
+- 【新增】`PluginEditText` 新增了字符串常量 `SYNTAX_REGEX` 和 `SYNTAX_REGEX_REPLACEMENT`，具体请看注释说明
+- 【优化】去除 `PluginUI.Style.Modifier` 新增 `PluginUI.StyleWrapper`，支持无参构造
+
+**注意！该版本 API 进行了破坏性调整，前面编写的 v3 插件需要进行相应修改才可运行！**
+
+关于修改已有的风格，之前已调整过一次，最开始是带参数的StyleWrapper：
+
+```java
+pluginUI.defaultStyle(new PluginUI.StyleWrapper(pluginUI.getStyle()){
+
+@Override
+protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
+    // 先应用当前样式
+    super.handleTextView(pluginUI, builder);
+    // 然后进行部分修改
+    builder.textSize(14);
+}
+});
+```
+
+这种写法代码很长，后面改成了非静态内部类 Modifier：
+
+```java
+pluginUI.defaultStyle(pluginUI.getStyle().new
+
+Modifier() {
+    @Override
+    protected void handleTextView (PluginUI pluginUI, PluginTextViewBuilder builder){
+        // 先应用当前样式
+        super.handleTextView(pluginUI, builder);
+        // 然后进行部分修改
+        builder.textSize(14);
+    }
+});
+```
+
+代码虽然缩短了一点，但是写起来给人感觉很别扭。而现在终于有了一个比较完美的方案：
+
+```java
+pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
+    @Override
+    protected void handleTextView (PluginUI pluginUI, PluginTextViewBuilder builder){
+        // 先应用当前样式
+        super.handleTextView(pluginUI, builder);
+        // 然后进行部分修改
+        builder.textSize(14);
+    }
+});
+```
+
+与第一版相比，去掉了 `StyleWrapper` 的参数，其原理是在 `defaultStyle()` 方法内检测 `StyleWrapper`
+是否已经附加了 `Style` 实例，
+如果没有则让 `StyleWrapper` 附加当前 `PluginUI` 的 `Style` 实例。
+
+唯一的缺点就是只能附加一次，因此不要对无参构造的 `StyleWrapper` 进行复用，不然很容易出问题，如果要复用则使用有参构造函数来明确指定要附加的
+`Style` 实例。
+
 ### Gradle 插件 alpha5
 
 对应 MT 管理器版本号需大于 **25120500**
 
-- 【升级】plugin-api 升级至 alpha6:
+- 【升级】plugin-api 升级至 alpha6
 - 【新增】完成文本编辑器工具菜单扩展接口 `TextEditorToolMenu`
 - 【新增】新增弹出菜单 `PluginPopupMenu`
 - 【新增】`PluginUI` 新增 `createPopupMenu()` 方法用于创建弹出菜单
@@ -72,7 +138,7 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 对应 MT 管理器版本号需大于 **25110300**
 
 - 【优化】Gradle插件 - 打包 mtp 时会自动合并 dex 文件，以减少 dex 文件数量
-- 【升级】plugin-api 升级至 alpha5:
+- 【升级】plugin-api 升级至 alpha5
 - 【调整】`TextEditor` 的获取选中位置方法，具体请看源码注释
 - 【新增】完成文本编辑器浮动菜单扩展接口 `TextEditorFloatingMenu`
 - 【新增】`MaterialIcons` 用于获取[内置 Material 图标](https://mt2.cn/icons)
@@ -145,8 +211,8 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
   - 带状态的主要文本颜色：`colorTextStateList()`
   - 带状态的次要文本颜色：`colorTextSecondaryStateList()`
 - 【优化】去除 `PluginUI.StyleWrapper` 新增 `PluginUI.Style.Modifier`，对于修改已有Style：
-  - 旧写法：`new PluginUI.StyleWrapper(pluginUi.getStyle()) { ... }`
-  - 新写法：`pluginUi.getStyle().new Modifier() { ... }`
+    - 旧写法：`new PluginUI.StyleWrapper(pluginUI.getStyle()) { ... }`
+    - 新写法：`pluginUI.getStyle().new Modifier() { ... }`
 
 ## 如何运行本项目
 
