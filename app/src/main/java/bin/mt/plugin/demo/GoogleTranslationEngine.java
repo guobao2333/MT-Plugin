@@ -3,7 +3,6 @@ package bin.mt.plugin.demo;
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -11,6 +10,7 @@ import java.util.stream.Collectors;
 
 import bin.mt.json.JSONArray;
 import bin.mt.plugin.api.translation.BaseBatchTranslationEngine;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -45,13 +45,13 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
     }
 
     @Override
-    public int getMaxBatchSize() {
-        return 100;
-    }
-
-    @Override
-    public int getMaxBatchCharacters() {
-        return 4000;
+    public BatchingStrategy createBatchingStrategy() {
+        return new DefaultBatchingStrategy(100, 4500) { // 实际限制5000，留点余量
+            @Override
+            protected int getTextDataSize(String text) {
+                return text.length() + 10; // 默认分割线大小
+            }
+        };
     }
 
     /**
@@ -115,12 +115,16 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
         // 142.250.0.184
         // 172.217.4.108
         // 142.250.4.160
-        String url = "http://142.250.0.160/translate_a/single?client=gtx&dt=t" +
-                "&sl=" + sourceLanguage +
-                "&tl=" + targetLanguage +
-                "&q=" + URLEncoder.encode(text, "UTF-8");
+        String url = "http://142.250.0.160/translate_a/single";
+        FormBody formBody = new FormBody.Builder()
+                .add("client", "gtx")
+                .add("dt", "t")
+                .add("sl", sourceLanguage)
+                .add("tl", targetLanguage)
+                .add("q", text)
+                .build();
         Request request = new Request.Builder()
-                .get()
+                .post(formBody)
                 .url(url)
                 .header("Host", "translate.googleapis.com")
                 .header("User-Agent", "Mozilla/5.0 (Linux; Android 6.0;)")
