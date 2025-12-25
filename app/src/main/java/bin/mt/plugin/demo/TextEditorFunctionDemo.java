@@ -72,8 +72,8 @@ public class TextEditorFunctionDemo extends BaseTextEditorFunction {
                     PluginEditText find = rootView.requireViewById("find");
                     PluginEditText replace = rootView.requireViewById("replace");
                     // 设置正则语法高亮
-                    find.setSyntaxHighlight(isChecked ? "Regex" : null);
-                    replace.setSyntaxHighlight(isChecked ? "RegexReplacement" : null);
+                    find.setSyntaxHighlight(isChecked ? PluginEditText.SYNTAX_REGEX : null);
+                    replace.setSyntaxHighlight(isChecked ? PluginEditText.SYNTAX_REGEX_REPLACEMENT : null);
                 })
                 // 文本范围组
                 .addHorizontalLayout().children(builder -> builder

@@ -21,11 +21,6 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
             .callTimeout(8, TimeUnit.SECONDS)
             .build();
 
-    private final List<String> sourceLanguages = Arrays.asList("auto", "zh", "en", "ru");
-
-    private final List<String> targetLanguages = Arrays.asList("zh", "en", "ru");
-
-
     @NonNull
     @Override
     public String name() {
@@ -35,21 +30,22 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
     @NonNull
     @Override
     public List<String> loadSourceLanguages() {
-        return sourceLanguages;
+        return List.of("auto", "zh", "en", "ru");
     }
 
     @NonNull
     @Override
     public List<String> loadTargetLanguages(String sourceLanguage) {
-        return targetLanguages;
+        return List.of("zh", "en", "ru");
     }
 
     @Override
     public BatchingStrategy createBatchingStrategy() {
-        return new DefaultBatchingStrategy(100, 4500) { // 实际限制5000，留点余量
+        // 实际限制5000，留点余量
+        return new DefaultBatchingStrategy(100, 4500) {
             @Override
             protected int getTextDataSize(String text) {
-                return text.length() + 10; // 默认分割线大小
+                return text.length() + 10; // 预留分割线大小
             }
         };
     }
@@ -69,9 +65,13 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
         boolean tryAgain = true;
 
         while (true) {
-            // 拼接、翻译、分割
-            String originalText = Arrays.stream(texts).map(String::trim).collect(Collectors.joining("\n" + divider + "\n"));
-            String translatedText = translate(originalText, sourceLanguage, targetLanguage);
+            // 拼接所有文本
+            String mergedText = Arrays.stream(texts).collect(Collectors.joining("\n" + divider + "\n"));
+
+            // 调用单文本翻译接口
+            String translatedText = translate(mergedText, sourceLanguage, targetLanguage);
+
+            // 分割翻译结果
             String[] array = translatedText.split("\n" + divider + "\n");
 
             // 确保前后数量一致
@@ -79,7 +79,7 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
                 return array;
             }
 
-            // 增加分割线长度再试一次
+            // 如果不一致，增加分割线长度再试一次
             if (tryAgain) {
                 tryAgain = false;
                 //noinspection StringConcatenationInLoop
@@ -88,7 +88,7 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
             }
 
             // 输出错误数据
-            getContext().log("Original(" + texts.length + "):\n" + originalText);
+            getContext().log("Original(" + texts.length + "):\n" + mergedText);
             getContext().log("Translated(" + array.length + "):\n" + translatedText);
             if (translatedText.length() > 100) {
                 translatedText = translatedText.substring(0, 99) + "...";
@@ -109,12 +109,9 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
     @NonNull
     @Override
     public String translate(String text, String sourceLanguage, String targetLanguage) throws IOException {
-        // 142.250.0.160
-        // 142.250.0.161
-        // 142.250.0.183
-        // 142.250.0.184
-        // 172.217.4.108
-        // 142.250.4.160
+        // 中国大陆不支持直接访问 translate.googleapis.com，这里使用 IP 直连
+        // 142.250.0.160  142.250.0.161  142.250.0.183
+        // 142.250.0.184  172.217.4.108  142.250.4.160
         String url = "http://142.250.0.160/translate_a/single";
         FormBody formBody = new FormBody.Builder()
                 .add("client", "gtx")
