@@ -107,6 +107,8 @@ mtPlugin {
      */
     interfaces = [
         "guobao.plugin.editor.enhancer.TextEditorFunction",
-        "guobao.plugin.editor.enhancer.TextEditorFloatingMenu"
+        "guobao.plugin.editor.enhancer.Base64ToolMenu",
+        "guobao.plugin.editor.enhancer.ReindentFloatingMenu",
+        "guobao.plugin.editor.enhancer.CursorNavigatorFunction"
     ]
 }

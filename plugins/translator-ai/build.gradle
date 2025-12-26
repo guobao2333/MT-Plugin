@@ -26,9 +26,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled = true
             proguardFiles 'proguard-rules.pro'
         }
+    }
+
+    aaptOptions {
+        ignoreAssetsPattern = '!*.bak' // 忽略mt产生的备份文件
     }
 
     compileOptions {
@@ -74,7 +78,7 @@ mtPlugin {
     /**
      * 插件版本号，低版本插件无法覆盖安装高版本插件
      */
-    versionCode = 5
+    versionCode = 1
 
     /**
      * 插件版本名称
@@ -100,6 +104,6 @@ mtPlugin {
      * 插件对外接口，接口类型会自动判断
      */
     interfaces = [
-            "guobao.plugin.translator.ai.TranslationEngine"
+        "guobao.plugin.translator.ai.TranslationEngine"
     ]
 }

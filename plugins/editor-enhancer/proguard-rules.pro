@@ -1,4 +1,4 @@
-# 如果要发布插件到MT的插件中心，请保留以下两行以便审核
+# 如果要发布插件到MT的插件中心，请保留此配置以便审核
 -dontobfuscate
 
 -keepattributes SourceFile,LineNumberTable,*Annotation*
