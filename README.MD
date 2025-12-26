@@ -8,7 +8,7 @@
 
 ## V3 版本功能亮点
 
-v2 版本的插件仅提供了翻译接口和简易的设置界面功能，在 v3 版本中我们进行了以下升级：
+v2 版本仅提供了翻译接口和简易设置界面，v3 版本进行了以下升级：
 
 ### 一、使用 AGP 构建
 
@@ -25,9 +25,8 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 ### 二、新增 UI 组件接口
 
-提供了基本 UI 组件、对话框和弹出菜单的创建功能，而且并非直接提供安卓原生接口，而是通过 PluginUI 实例和各类
-UI
-组件的包装接口去创建，更加简单易用。
+提供了基本 UI 组件、对话框和弹出菜单的创建功能。并非直接暴露安卓原生接口，而是通过 PluginUI 实例和各类
+UI 组件的包装接口进行创建，更加简单易用。
 
 具体用法请参考代码文件：
 
@@ -113,7 +112,7 @@ Modifier() {
 });
 ```
 
-代码虽然缩短了一点，但是写感觉有点别扭。而现在终于有了一个比较完美的方案：
+代码虽然缩短了一点，但写起来感觉有点别扭。而现在终于有了一个比较完美的方案：
 
 ```java
 pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
@@ -237,7 +236,7 @@ pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
 
 ## 如何运行
 
-在这之前请安装正确版本的 MT 管理器
+运行前请先安装正确版本的 MT 管理器
 
 ### 通过 Android Studio
 
@@ -283,6 +282,8 @@ pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
 
 ## API 文档
 
-API 文档尚未完成，不过 API 源码中有详细的注释，可根据下图找到所有的 API 源码：
+v3 插件的完整[开发文档](https://mt2.cn/guide/pluginv3/plugin-intro.html)已发布在官网。
+
+开发时也可直接查看 API 源码，均已添加详细注释。源码位置如下图所示：
 
 <img src="./img/api_pos.webp" alt="api" width="300">
