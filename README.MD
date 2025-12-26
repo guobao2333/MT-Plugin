@@ -25,23 +25,37 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 ### 二、新增 UI 组件接口
 
-提供了基本 UI 组件与对话框创建功能，而且并非直接提供安卓原生接口，而是通过 PluginUI 实例和各类 UI
+提供了基本 UI 组件、对话框和弹出菜单的创建功能，而且并非直接提供安卓原生接口，而是通过 PluginUI 实例和各类
+UI
 组件的包装接口去创建，更加简单易用。
 
 具体用法请参考代码文件：
 
-- `app/src/main/java/bin/mt/plugin/demo/preference/ExampleUI.java`
-- `app/src/main/java/bin/mt/plugin/demo/preference/ExampleDialog.java`
-- `app/src/main/java/bin/mt/plugin/demo/preference/ExamplePopupMenu.java`
+- `demo/src/main/java/bin/mt/plugin/demo/example/ExampleUI.java`
+- `demo/src/main/java/bin/mt/plugin/demo/example/ExampleDialog.java`
+- `demo/src/main/java/bin/mt/plugin/demo/example/ExamplePopupMenu.java`
 
-### 三、新增文本编辑器接口
+### 三、新增接口
 
-目前计划新增 4 个接口：
+文本编辑器
 
-- [x] 底部快捷功能扩展接口
-- [x] 浮动菜单扩展接口
-- [x] 工具菜单扩展接口
-- [x] 批量翻译接口
+- 底部快捷功能扩展接口
+- 浮动菜单扩展接口
+- 工具菜单扩展接口
+
+具体用法请参考代码文件：
+
+- `demo/src/main/java/bin/mt/plugin/demo/TextEditorFunctionDemo.java`
+- `demo/src/main/java/bin/mt/plugin/demo/TextEditorFloatingMenuDemo.java`
+- `demo/src/main/java/bin/mt/plugin/demo/TextEditorToolMenuDemo.java`
+
+翻译模式
+
+- 批量翻译接口
+
+具体用法请参考代码文件：
+
+- `demo/src/main/java/bin/mt/plugin/demo/GoogleTranslationEngine.java`
 
 ### 四、增强的设置界面
 
@@ -49,14 +63,14 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 
 具体用法请参考代码文件：
 
-- `app/src/main/java/bin/mt/plugin/demo/preference/ExamplePreference.java`
-- `app/src/main/java/bin/mt/plugin/demo/preference/ExampleMain.java`
+- `demo/src/main/java/bin/mt/plugin/demo/example/ExamplePreference.java`
+- `demo/src/main/java/bin/mt/plugin/demo/example/ExampleMain.java`
 
 ## 更新记录
 
 ### Gradle 插件 alpha7
 
-对应 MT 管理器版本号需大于 **25121900**
+对应 MT 管理器版本号需大于 **25122600**
 
 - 【升级】plugin-api 升级至 alpha7，Gradle 插件版本跳过 alpha6 与其同步，后续默认两者一起升级不再单列
 - 【新增】批量翻译接口 `BatchTranslationEngine` 用于在翻译模式功能中一次性翻译大量词条
@@ -99,7 +113,7 @@ Modifier() {
 });
 ```
 
-代码虽然缩短了一点，但是写起来给人感觉很别扭。而现在终于有了一个比较完美的方案：
+代码虽然缩短了一点，但是写感觉有点别扭。而现在终于有了一个比较完美的方案：
 
 ```java
 pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
@@ -186,7 +200,7 @@ pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
 对应 MT 管理器版本号需大于 **25092000**
 
 - 【优化】安装插件时将检测安装包的 assets 目录内所有 mtl 文件格式是否正确，检测失败将无法安装
-- 【新增】语言包 mtl 文件支持多行文本，具体请参考文件：`app/src/main/assets/strings.mtl`
+- 【新增】语言包 mtl 文件支持多行文本，具体请参考文件：`demo/src/main/assets/strings.mtl`
 - 【新增】`PluginContext` 新增 `getPluginSdkVersion()` 方法用于获取插件 SDK 版本号
 - 【新增】`PluginContext` 和 `PluginUI` 显示 Toast 方法的格式化参数支持自动转为本地化文本
 - 【调整】`TextEditor` 的 `replace` 方法重命名为 `replaceText`
@@ -214,7 +228,14 @@ pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
     - 旧写法：`new PluginUI.StyleWrapper(pluginUI.getStyle()) { ... }`
     - 新写法：`pluginUI.getStyle().new Modifier() { ... }`
 
-## 如何运行本项目
+## 关于本项目
+
+本项目包含两个模块：demo 和 template
+
+- demo 模块提供了许多示例代码，您可直接运行该模块来了解插件的各个功能
+- template 模块提供了最基本代码模版，如果您要开发自己的插件，可基于此模块进行开发
+
+## 如何运行
 
 在这之前请安装正确版本的 MT 管理器
 
@@ -223,8 +244,8 @@ pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
 #### 一、自动打包插件并推送到设备上安装
 
 1. 使用最新版本的 Android Studio 打开本项目，本文编写时最新版本为
-   `Android Studio Narwhal 3 Feature Drop | 2025.1.3`
-2. 等待 Gradle 同步完成后直接运行 app 模块，将会有一个名为 `MT Plugin Plusher` 的应用程序被安装到您的设备上并自动启动
+   `Android Studio Otter | 2025.2.1 Patch 1`
+2. 等待 Gradle 同步完成后直接运行 demo 模块，将会有一个名为 `MT Plugin Plusher` 的应用程序被安装到您的设备上并自动启动
 3. `MT Plugin Plusher` 启动后将会打开 MT 管理器的插件安装界面，点击安装即可
 
 > 该方式仅供自己测试使用，生成的 mtp 文件无法复制到其它设备安装！
@@ -234,8 +255,8 @@ pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
 #### 二、仅打包插件
 
 1. 打开 Gradle 面板（一般在右上角的侧栏里）
-2. 运行 `app/Tasks/mt-plugin/packageReleaseMtp` 任务
-3. 任务运行成功后可以在 `app/build/outputs/mt-plugin` 目录找到打包好的 mtp 插件安装包
+2. 运行 `demo/Tasks/mt-plugin/packageReleaseMtp` 任务
+3. 任务运行成功后可以在 `demo/build/outputs/mt-plugin` 目录找到打包好的 mtp 插件安装包
 
 <p>
   <img src="./img/gradle_pos.webp" alt="gradle" width="270">
@@ -244,20 +265,19 @@ pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
 
 ### 通过命令行
 
-1. 在项目根目录执行 `./gradlew app:packageReleaseMtp`
-2. 命令执行成功后可以在 `app/build/outputs/mt-plugin` 目录找到打包好的 mtp 插件安装包
+1. 在项目根目录执行 `./gradlew demo:packageReleaseMtp`
+2. 命令执行成功后可以在 `demo/build/outputs/mt-plugin` 目录找到打包好的 mtp 插件安装包
 
 ## 如何测试插件功能
 
 插件安装成功后，进入 `MT 管理器主界面` > `侧边栏` > `工具分组` > `插件管理` > `MT演示插件` > `设置`
-即可看到关于插件上下文、设置界面、UI 组件、对话框的功能演示，相关代码在
-`app/src/main/java/bin/mt/plugin/demo/preference` 文件夹内
+即可看到关于插件上下文、设置界面、UI 组件、对话框、弹出菜单的功能演示，相关代码在
+`demo/src/main/java/bin/mt/plugin/demo/examples` 文件夹内
 
 <img src="./img/demo_preferences.webp" alt="gradle" width="270">
 
-进入 `文本编辑器` > `设置` > `功能分组` > `编辑快捷功能栏`，添加或者编辑一个功能，展开功能选项列表，点击
-`插件功能` > `参数设置` 即可看到插件提供的功能，相关代码在文件
-`app/src/main/java/bin/mt/plugin/demo/TextEditorFunctionDemo.java`
+进入 `文本编辑器` > `设置` > `自定义分组`，即可看到 `编辑快捷功能栏`、`编辑浮动菜单`、`编辑工具菜单`
+，进入即可看到插件相关功能：
 
 <img src="./img/demo_text_function.webp" alt="function" width="270">
 
