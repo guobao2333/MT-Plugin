@@ -2,7 +2,7 @@
 
 # 下载列表
 components=(
-"api" # 版本号：3.0.0-alpha5
+"api"
 #"gradle-plugin"
 #"pusher"
 )

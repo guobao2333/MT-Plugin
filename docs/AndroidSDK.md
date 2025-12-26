@@ -5,7 +5,7 @@
 如果你不想一步一步来，这里提供一个一键设置脚本，您可以在[这里](script/install-android-sdk.sh)查看源代码。它完全按照本文档中的手动设置步骤运行，所以您得到的效果几乎与手动设置一样！  
 我们正在改进它以便更好的在新环境中自动设置，欢迎贡献代码或报告问题来帮助我们改进！
 
-您还可以通过下面的命令一键运行它，不过在这之前你需要先手动下载 CLI Tool（命令行工具）  
+您还可以通过下面的命令一键运行它，不过在这之前你需要先手动下载 Android Studio CLI Tool（命令行工具）  
 请根据网络环境自行选择访问地址：
 | 全球 | 大陆 |
 | :---: | :---: |
@@ -36,21 +36,23 @@ curl -s "https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script
    mv ~/android_sdk/latest ~/android_sdk/cmdline-tools/latest
    ```
 
-3. 然后把sdk路径写入配置（如果用zsh就改成`.zshrc`）
+3. 然后把sdk路径写入配置
    ```bash
-   echo 'export ANDROID_HOME=$HOME/android_sdk' >> ~/.bashrc
-   echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools' >> ~/.bashrc
+   echo '\nexport ANDROID_HOME=$HOME/android_sdk' >> ~/.bashrc
+   echo '\nexport PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools' >> ~/.bashrc
    ```
+> [!IMPORTANT]
+> 本文档默认您的Shell为`Bash`，如果您使用其他Shell程序，请自行替换`.bashrc`
 
 4. 重载配置
    | Bash | Zsh | Fish |
    | :---: | :---: | :---: |
    | `source ~/.bashrc` | `source ~/.zshrc` | `source ~/.fishrc`
 5. 修改权限 `chmod -R 755 $ANDROID_HOME`
-6. 同意所有许可并安装平台工具和Android 4.0 SDK 
+6. 同意所有许可并安装平台工具和Android 16 SDK 
    ```bash
    yes | sdkmanager --licenses
-   sdkmanager "platform-tools" "platforms;android-14"
+   sdkmanager "platform-tools" "platforms;android-36"
    ```
 
 adb相关工具可以直接安装使用： `pkg install android-tools`
