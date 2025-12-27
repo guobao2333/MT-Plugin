@@ -27,6 +27,7 @@ public class ExamplePreference implements PluginPreference {
 
         builder.addInput("选项-输入内容", "key_input")
                 .summary("请输入内容")
+                .hint("提示内容")
                 .valueAsSummary()
                 .defaultValue("默认值");
 
