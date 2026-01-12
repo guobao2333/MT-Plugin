@@ -67,6 +67,17 @@ UI 组件的包装接口进行创建，更加简单易用。
 
 ## 更新记录
 
+### Gradle 插件 alpha8
+
+对应 MT 管理器版本号需大于 **26011200**
+
+- 【新增】Gradle 插件在打包 mtp 时会验证接口配置的正确性
+- 【新增】Gradle 插件在打包 mtp 时会验证语言文件 mtl 格式的正确性
+- 【新增】`PluginPreference.Input` 新增 `hint()` 方法
+- 【新增】`PluginContext` 新增获取 MT 管理器包名、版本名及版本号的方法
+- 【新增】`TextEditor` 新增文件名与路径、是否修改与保存、分页相关的方法
+- 【新增】`TextEditor` 位置可见相关方法新增了几个 `InCenter` 版本的方法
+
 ### Gradle 插件 alpha7
 
 对应 MT 管理器版本号需大于 **25122600**
