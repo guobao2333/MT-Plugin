@@ -2,7 +2,7 @@ package bin.mt.plugin.demo.examples
 
 import bin.mt.plugin.api.PluginContext
 import bin.mt.plugin.api.preference.PluginPreference
-import bin.mt.plugin.api.preference.PluginPreference.TextItem
+import bin.mt.plugin.api.preference.PluginPreference.PreferenceItem
 import bin.mt.plugin.api.ui.PluginUI
 import bin.mt.plugin.api.ui.PluginView
 import java.io.IOException
@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets
 class ExampleContextKotlin : PluginPreference {
     override fun onBuild(context: PluginContext, builder: PluginPreference.Builder) {
         builder.addText("基本信息（Kotlin）").summary("PluginContext")
-            .onClick { pluginUI: PluginUI, item: TextItem ->
+            .onClick { pluginUI: PluginUI, item: PreferenceItem ->
                 pluginUI.showMessage(
                     "基本信息",
                     "SDKVersion: ${PluginContext.SDK_VERSION}\n" +
@@ -22,7 +22,7 @@ class ExampleContextKotlin : PluginPreference {
                 )
             }
         builder.addText("获取本地化文本").summary("getString")
-            .onClick { pluginUI: PluginUI, item: TextItem ->
+            .onClick { pluginUI: PluginUI, item: PreferenceItem ->
                 var text = "getString('{key}') = '${context.getString("{key}")}'\n" +
                         "getString('key') = '${context.getString("key")}'\n" +
                         "getString('{example:key}') = '${context.getString("{example:key}")}'\n"
@@ -40,7 +40,7 @@ class ExampleContextKotlin : PluginPreference {
             }
 
         builder.addText("读取assets内文件").summary("getAssetsAsStream")
-            .onClick { pluginUI: PluginUI, item: TextItem ->
+            .onClick { pluginUI: PluginUI, item: PreferenceItem ->
                 var text: String
                 try {
                     context.getAssetsAsStream("strings.mtl").use { input ->
@@ -62,15 +62,15 @@ class ExampleContextKotlin : PluginPreference {
             }
 
         builder.addText("打开系统浏览器").summary("openBrowser")
-            .onClick { pluginUI: PluginUI, item: TextItem ->
+            .onClick { pluginUI: PluginUI, item: PreferenceItem ->
                 context.openBrowser("https://mt2.cn")
             }
         builder.addText("打开内置浏览器").summary("openBuiltinBrowser")
-            .onClick { pluginUI: PluginUI, item: TextItem ->
+            .onClick { pluginUI: PluginUI, item: PreferenceItem ->
                 context.openBuiltinBrowser("https://mt2.cn", false)
             }
         builder.addText("剪贴板操作").summary("has/get/setClipboardText")
-            .onClick { pluginUI: PluginUI, item: TextItem ->
+            .onClick { pluginUI: PluginUI, item: PreferenceItem ->
                 val pluginView = pluginUI.buildVerticalLayout()
                     .paddingHorizontal(pluginUI.dialogPaddingHorizontal())
                     .paddingTopDp(8f)
@@ -95,7 +95,7 @@ class ExampleContextKotlin : PluginPreference {
             }
         // PluginContext 和 PluginUI 中均有 toast 方法，两者没有区别，哪个调用方便就用哪个
         builder.addText("Toast消息").summary("showToast")
-            .onClick { pluginUI: PluginUI, item: TextItem ->
+            .onClick { pluginUI: PluginUI, item: PreferenceItem ->
                 val pluginView = pluginUI.buildVerticalLayout().paddingHorizontal(
                     pluginUI.dialogPaddingHorizontal()
                 ).paddingTopDp(8f)
@@ -119,13 +119,13 @@ class ExampleContextKotlin : PluginPreference {
                     .show()
             }
         builder.addText("写出日志").summary("log")
-            .onClick { pluginUI: PluginUI, item: TextItem ->
+            .onClick { pluginUI: PluginUI, item: PreferenceItem ->
                 context.log("这是一条日志")
                 context.log("这是一条错误日志", Exception())
                 pluginUI.showToast("日志写出成功")
             }
         builder.addText("查看日志").summary("openLogViewer")
-            .onClick { pluginUI: PluginUI, item: TextItem ->
+            .onClick { pluginUI: PluginUI, item: PreferenceItem ->
                 context.openLogViewer()
             }
     }

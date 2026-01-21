@@ -67,6 +67,24 @@ UI 组件的包装接口进行创建，更加简单易用。
 
 ## 更新记录
 
+### Gradle 插件 beta2
+
+对应 MT 管理器版本号需大于 **26012200**
+
+- 【新增】`BufferedText` 新增 `indexOf` 和 `lastIndexOf` 的范围搜索重载方法
+
+**增强 PluginPreference:**
+
+- 【新增】`Builder` 新增 `onCreated()` 回调，可获取 `PreferenceScreen` 实例动态修改标题、查找和修改设置项
+- 【新增】`Builder` 新增 `onPreferenceChange()` 回调，监听 Input、Switch、List 的值变化
+- 【新增】`PreferenceItem` 接口，用于动态访问和修改设置项的标题、摘要、启用状态、可见性等属性
+- 【新增】`addHeader()` 和 `addText()` 新增带 `key` 参数的重载方法，支持通过 key 查找
+- 【新增】`Header`、`Text`、`Input`、`Switch`、`List` 均支持设置 `visible()` 和 `enable()` 状态
+- 【新增】`Text`、`Input`、`Switch`、`List` 均支持 `interceptClick()` 点击拦截
+- 【调整】`addHeader()` 现在返回 `Header` 实例，可进一步配置
+- 【调整】`List.defaultValue()` 参数类型从 `CharSequence` 改为 `String`
+- 【调整】`TextItem` 接口移除，`OnTextItemClickListener` 参数类型改为 `PreferenceItem`
+
 ### Gradle 插件 beta1
 
 对应 MT 管理器版本号需大于 **26011300**

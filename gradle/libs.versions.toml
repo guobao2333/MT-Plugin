@@ -1,7 +1,7 @@
 [versions]
 agp = "8.13.2"
 kotlin = "2.3.0"
-mt-plugin = "1.0.0-beta1"
+mt-plugin = "1.0.0-beta2"
 desugarJdkLibs = "2.1.5"
 
 [libraries]
