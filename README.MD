@@ -67,6 +67,13 @@ UI 组件的包装接口进行创建，更加简单易用。
 
 ## 更新记录
 
+### Gradle 插件 beta3
+
+对应 MT 管理器版本号需大于 **26020300**
+
+- 【调整】`BufferedText` 的 `lastIndexOf` 的范围搜索方法的参数含义，由 `[start, last]` 调整为
+  `[start, end)`
+
 ### Gradle 插件 beta2
 
 对应 MT 管理器版本号需大于 **26012200**
