@@ -3,10 +3,8 @@ package bin.mt.plugin.demo;
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import bin.mt.json.JSONArray;
 import bin.mt.plugin.api.translation.BaseBatchTranslationEngine;
@@ -51,59 +49,12 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
     }
 
     /**
-     * 由于我们使用的谷歌翻译接口只能翻译单个文本，因此这里使用分割线组合文本，翻译完再拆分
+     * 调用内置的批量翻译桥接方法：将多条文本合并为一次单文本翻译请求，再按分隔线拆分结果。
      */
     @NonNull
     @Override
     public String[] batchTranslate(String[] texts, String sourceLanguage, String targetLanguage) throws IOException {
-        // 生成一个分割线，确保原文里面没有
-        String divider = "--------";
-        while (containsDivider(texts, divider)) {
-            divider += "--";
-        }
-
-        boolean tryAgain = true;
-
-        while (true) {
-            // 拼接所有文本
-            String mergedText = Arrays.stream(texts).collect(Collectors.joining("\n" + divider + "\n"));
-
-            // 调用单文本翻译接口
-            String translatedText = translate(mergedText, sourceLanguage, targetLanguage);
-
-            // 分割翻译结果
-            String[] array = translatedText.split("\n" + divider + "\n");
-
-            // 确保前后数量一致
-            if (array.length == texts.length) {
-                return array;
-            }
-
-            // 如果不一致，增加分割线长度再试一次
-            if (tryAgain) {
-                tryAgain = false;
-                //noinspection StringConcatenationInLoop
-                divider += "--";
-                continue;
-            }
-
-            // 输出错误数据
-            getContext().log("Original(" + texts.length + "):\n" + mergedText);
-            getContext().log("Translated(" + array.length + "):\n" + translatedText);
-            if (translatedText.length() > 100) {
-                translatedText = translatedText.substring(0, 99) + "...";
-            }
-            throw new IOException("Translation failed: " + translatedText);
-        }
-    }
-
-    private static boolean containsDivider(String[] texts, String divider) {
-        for (String s : texts) {
-            if (s.contains(divider)) {
-                return true;
-            }
-        }
-        return false;
+        return batchTranslateBySingleTranslate(texts, sourceLanguage, targetLanguage);
     }
 
     @NonNull
