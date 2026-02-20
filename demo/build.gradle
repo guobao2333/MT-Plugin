@@ -15,7 +15,8 @@ tasks.configureEach { task ->
 def javaVersion = JavaVersion.VERSION_17
 
 android {
-    namespace = 'bin.mt.plugin.demo'
+    // 固定这个就行，不需要改
+    namespace = 'bin.mt.plugin.pusher'
     compileSdk = 36
 
     defaultConfig {
