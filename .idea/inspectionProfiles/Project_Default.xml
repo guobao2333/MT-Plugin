@@ -2,5 +2,12 @@
   <profile version="1.0">
     <option name="myName" value="Project Default" />
     <inspection_tool class="CodeBlock2Expr" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="SizeReplaceableByIsEmpty" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredTypes">
+        <set>
+          <option value="java.lang.StringBuilder" />
+        </set>
+      </option>
+    </inspection_tool>
   </profile>
 </component>
