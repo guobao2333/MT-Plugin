@@ -10,6 +10,7 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven { url = 'https://maven.mt2.cn' }
+        mavenLocal()
     }
 }
 dependencyResolutionManagement {
@@ -18,10 +19,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url = 'https://maven.mt2.cn' }
+        mavenLocal()
     }
 }
 
 rootProject.name = "MTPluginDemo"
 include ':demo'
 include ':template'
+include ':translator-baidu'
 include ':translator-google-cn'
