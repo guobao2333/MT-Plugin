@@ -27,4 +27,5 @@ rootProject.name = "MTPluginDemo"
 include ':demo'
 include ':template'
 include ':translator-baidu'
+include ':translator-baidu-api'
 include ':translator-google-cn'
