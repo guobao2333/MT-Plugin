@@ -8,11 +8,11 @@ import bin.mt.plugin.api.translation.BaseTranslationEngine;
 
 public class TranslationEngineDemo extends BaseTranslationEngine {
 
-    public TranslationEngineDemo() {
-        super(new ConfigurationBuilder()
-                // 关闭「跳过已翻译词条」
-                .setForceNotToSkipTranslated(true)
-                .build());
+    @Override
+    protected void onBuildConfiguration(ConfigurationBuilder builder) {
+        // 这边不需要 AutoRepairFormatSpecifiersError，因此不调用 super 方法
+        // super.onBuildConfiguration(builder);
+        builder.setForceNotToSkipTranslated(true);
     }
 
     /**

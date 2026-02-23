@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import bin.mt.json.JSONArray;
 import bin.mt.json.JSONObject;
-import bin.mt.plugin.api.translation.BaseBatchTranslationEngine;
+import bin.mt.plugin.api.translation.BaseTranslationEngine;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,7 +30,7 @@ import okhttp3.ResponseBody;
  *
  * @author Bin
  */
-public class BaiduTranslationEngine extends BaseBatchTranslationEngine {
+public class BaiduTranslationEngine extends BaseTranslationEngine {
     private static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
             .callTimeout(8, TimeUnit.SECONDS)
             .build();
@@ -80,6 +80,13 @@ public class BaiduTranslationEngine extends BaseBatchTranslationEngine {
     private int minTranslationTime;
 
     private static long lastTranslationTime;
+
+    @Override
+    protected void onBuildConfiguration(ConfigurationBuilder builder) {
+        super.onBuildConfiguration(builder);
+        builder.setAllowBatchTranslationBySeparator(true);
+        builder.setMaxTranslationTextLength(6000);
+    }
 
     @NonNull
     @Override
@@ -138,23 +145,6 @@ public class BaiduTranslationEngine extends BaseBatchTranslationEngine {
             qps = 1;
         }
         minTranslationTime = (int) Math.ceil(1000f / qps);
-    }
-
-    @Override
-    public BatchingStrategy createBatchingStrategy() {
-        // 实际限制6000，留点余量
-        return new DefaultBatchingStrategy(100, 5500) {
-            @Override
-            protected int getTextDataSize(String text) {
-                return text.length() + 10; // 预留分割线大小
-            }
-        };
-    }
-
-    @NonNull
-    @Override
-    public String[] batchTranslate(String[] texts, String sourceLanguage, String targetLanguage) throws IOException {
-        return batchTranslateBySingleTranslate(texts, sourceLanguage, targetLanguage);
     }
 
     @NonNull

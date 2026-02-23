@@ -7,17 +7,26 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import bin.mt.json.JSONArray;
-import bin.mt.plugin.api.translation.BaseBatchTranslationEngine;
+import bin.mt.plugin.api.translation.BaseTranslationEngine;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
+public class GoogleTranslationEngine extends BaseTranslationEngine {
     private static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
             .callTimeout(8, TimeUnit.SECONDS)
             .build();
+
+    @Override
+    protected void onBuildConfiguration(ConfigurationBuilder builder) {
+        super.onBuildConfiguration(builder);
+        // 开启批量翻译功能（用于翻译模式功能）
+        builder.setAllowBatchTranslationBySeparator(true);
+        // 设置单次翻译最大文本长度，MT会自动拆分
+        builder.setMaxTranslationTextLength(5000);
+    }
 
     @NonNull
     @Override
@@ -35,26 +44,6 @@ public class GoogleTranslationEngine extends BaseBatchTranslationEngine {
     @Override
     public List<String> loadTargetLanguages(String sourceLanguage) {
         return List.of("zh", "en", "ru");
-    }
-
-    @Override
-    public BatchingStrategy createBatchingStrategy() {
-        // 实际限制5000，留点余量
-        return new DefaultBatchingStrategy(100, 4500) {
-            @Override
-            protected int getTextDataSize(String text) {
-                return text.length() + 10; // 预留分割线大小
-            }
-        };
-    }
-
-    /**
-     * 调用内置的批量翻译桥接方法：将多条文本合并为一次单文本翻译请求，再按分隔线拆分结果。
-     */
-    @NonNull
-    @Override
-    public String[] batchTranslate(String[] texts, String sourceLanguage, String targetLanguage) throws IOException {
-        return batchTranslateBySingleTranslate(texts, sourceLanguage, targetLanguage);
     }
 
     @NonNull

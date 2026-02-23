@@ -8,14 +8,14 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import bin.mt.plugin.api.translation.BaseBatchTranslationEngine;
+import bin.mt.plugin.api.translation.BaseTranslationEngine;
 
 /**
  * 谷歌翻译Web版
  *
  * @author Bin
  */
-public class GoogleCNTranslationEngine extends BaseBatchTranslationEngine {
+public class GoogleCNTranslationEngine extends BaseTranslationEngine {
     private final List<String> sourceLanguages = Arrays.asList("auto",
             "zh", "zh-TW", "en", "af", "am", "ar", "az", "be", "bg", "bn", "bs", "ca",
             "ceb", "co", "cs", "cy", "da", "de", "el", "eo", "es", "et", "eu", "fa",
@@ -39,6 +39,13 @@ public class GoogleCNTranslationEngine extends BaseBatchTranslationEngine {
             "ug", "uk", "ur", "uz", "vi", "xh", "yi", "yo", "zu");
 
     private IPLoader ipLoader;
+
+    @Override
+    protected void onBuildConfiguration(ConfigurationBuilder builder) {
+        super.onBuildConfiguration(builder);
+        builder.setAllowBatchTranslationBySeparator(true);
+        builder.setMaxTranslationTextLength(5000);
+    }
 
     @Override
     protected void init() {
@@ -102,26 +109,6 @@ public class GoogleCNTranslationEngine extends BaseBatchTranslationEngine {
     @Override
     public String translate(String text, String sourceLanguage, String targetLanguage) throws IOException {
         return GoogleCNTranslator.translate(ipLoader, text, sourceLanguage, targetLanguage);
-    }
-
-    @Override
-    public BatchingStrategy createBatchingStrategy() {
-        // 实际限制5000，留点余量
-        return new DefaultBatchingStrategy(100, 4500) {
-            @Override
-            protected int getTextDataSize(String text) {
-                return text.length() + 10; // 预留分割线大小
-            }
-        };
-    }
-
-    /**
-     * 调用内置的批量翻译桥接方法：将多条文本合并为一次单文本翻译请求，再按分隔线拆分结果。
-     */
-    @NonNull
-    @Override
-    public String[] batchTranslate(String[] texts, String sourceLanguage, String targetLanguage) throws IOException {
-        return batchTranslateBySingleTranslate(texts, sourceLanguage, targetLanguage);
     }
 
 }

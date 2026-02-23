@@ -18,12 +18,10 @@ public class FanjianTranslationEngine extends BaseTranslationEngine {
     private final List<String> targetLanguages1 = Collections.singletonList("zh-TW");
     private final List<String> targetLanguages2 = Collections.singletonList("zh-CN");
 
-    public FanjianTranslationEngine() {
-        super(new ConfigurationBuilder()
-                .setTargetLanguageMutable(true)
-                .setDisableAutoHideLanguage(true)
-                .build()
-        );
+    @Override
+    protected void onBuildConfiguration(ConfigurationBuilder builder) {
+        builder.setTargetLanguageMutable(true);
+        builder.setDisableAutoHideLanguage(true);
     }
 
     @NonNull

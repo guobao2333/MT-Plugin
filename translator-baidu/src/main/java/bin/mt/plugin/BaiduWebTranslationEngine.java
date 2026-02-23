@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import bin.mt.plugin.api.translation.BaseBatchTranslationEngine;
+import bin.mt.plugin.api.translation.BaseTranslationEngine;
 
 /**
  * 百度翻译Web版
  *
  * @author Bin
  */
-public class BaiduWebTranslationEngine extends BaseBatchTranslationEngine {
+public class BaiduWebTranslationEngine extends BaseTranslationEngine {
     /* http://api.fanyi.baidu.com/api/trans/product/apidoc
        auto    自动检测
        zh      中文
@@ -57,6 +57,13 @@ public class BaiduWebTranslationEngine extends BaseBatchTranslationEngine {
     private final List<String> ios_639_1_LanguageCodes = Arrays.asList("auto",
             "zh", "en", "ja", "ko", "fr", "es", "th", "ar", "ru", "pt", "de", "it", "el", "nl",
             "pl", "bg", "et", "da", "fi", "cs", "ro", "sl", "sv", "hu", "zh-TW", "vi");
+
+    @Override
+    protected void onBuildConfiguration(ConfigurationBuilder builder) {
+        super.onBuildConfiguration(builder);
+        builder.setAllowBatchTranslationBySeparator(true);
+        builder.setMaxTranslationTextLength(5000);
+    }
 
     @Override
     protected void init() {
@@ -108,9 +115,4 @@ public class BaiduWebTranslationEngine extends BaseBatchTranslationEngine {
         BaiduWebTranslator.saveState(getContext().getPreferences());
     }
 
-    @NonNull
-    @Override
-    public String[] batchTranslate(String[] texts, String sourceLanguage, String targetLanguage) throws IOException {
-        return batchTranslateBySingleTranslate(texts, sourceLanguage, targetLanguage);
-    }
 }
