@@ -23,7 +23,22 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 - 支持一键打包出 mtp 文件
 - 支持一键将 mtp 文件推送到手机上安装
 
-### 二、新增 UI 组件接口
+### 二、增强翻译引擎接口
+
+- 支持限制单次翻译的最大文本长度：翻译大文本时 MT 会自动对文本进行智能拆分，依次翻译后再进行合并
+- 支持在翻译模式中进行批量翻译：将多个词条通过分割线拼接后统一翻译，再按分割线拆分结果，减少网络往返请求次数，提升在线翻译效率
+- 以上两个功能只需设置 `TranslationEngine.Configuration` 中的相关属性即可一键开启
+
+### 三、增强设置界面
+
+支持自定义点击事件和打开其它设置界面
+
+具体用法请参考代码文件：
+
+- `demo/src/main/java/bin/mt/plugin/demo/example/ExamplePreference.java`
+- `demo/src/main/java/bin/mt/plugin/demo/example/ExampleMain.java`
+
+### 四、新增 UI 组件接口
 
 提供了基本 UI 组件、对话框和弹出菜单的创建功能。并非直接暴露安卓原生接口，而是通过 PluginUI 实例和各类
 UI 组件的包装接口进行创建，更加简单易用。
@@ -34,7 +49,7 @@ UI 组件的包装接口进行创建，更加简单易用。
 - `demo/src/main/java/bin/mt/plugin/demo/example/ExampleDialog.java`
 - `demo/src/main/java/bin/mt/plugin/demo/example/ExamplePopupMenu.java`
 
-### 三、新增接口
+### 五、新增接口
 
 文本编辑器
 
@@ -48,24 +63,20 @@ UI 组件的包装接口进行创建，更加简单易用。
 - `demo/src/main/java/bin/mt/plugin/demo/TextEditorFloatingMenuDemo.java`
 - `demo/src/main/java/bin/mt/plugin/demo/TextEditorToolMenuDemo.java`
 
-翻译模式
-
-- 批量翻译接口
-
-具体用法请参考代码文件：
-
-- `demo/src/main/java/bin/mt/plugin/demo/GoogleTranslationEngine.java`
-
-### 四、增强的设置界面
-
-支持自定义点击事件和打开其它设置界面
-
-具体用法请参考代码文件：
-
-- `demo/src/main/java/bin/mt/plugin/demo/example/ExamplePreference.java`
-- `demo/src/main/java/bin/mt/plugin/demo/example/ExampleMain.java`
-
 ## 更新记录
+
+### Gradle 插件 beta4
+
+对应 MT 管理器版本号需大于 **26022600**
+
+- 【新增】Gradle 插件会自动根据插件接口配置生成混淆 keep 规则，无需手动添加
+- 【新增】插件 manifest 文件新增 `minHostVersion` 属性用于指定该插件所需的最低 MT 管理器版本号
+- 【调整】`PluginContext` 用于获取 MT 管理器包名、版本名及版本号的方法名前缀改为 `getHost*`
+- 【新增】`TranslationEngine.Configuration` 新增 `maxTranslationTextLength`，翻译长文本时支持自动拆分翻译再合并
+- 【调整】简化批量翻译功能的实现：`TranslationEngine.Configuration` 新增
+  `allowBatchTranslationBySeparator` 属性
+- 【调整】去除批量翻译接口 `BatchTranslationEngine`，由 `allowBatchTranslationBySeparator` 属性取代
+- 【优化】`BaseTranslationEngine` 新增 `onBuildConfiguration()`，无参构造函数会调用此方法创建翻译配置
 
 ### Gradle 插件 beta3
 
