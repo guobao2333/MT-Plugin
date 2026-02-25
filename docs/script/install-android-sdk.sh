@@ -1,5 +1,10 @@
 #!/bin/bash
 
+######## 下载CLI tool #########
+# 技术有限，还请自行手动下载
+# URL="https://developer.android.com/studio#command-line-tools-only"
+# URL_CN="https://developer.android.google.cn/studio#command-line-tools-only"
+
 if [ "$1" = "-h" ]; then
     echo "欢迎使用自动设置Android SDK CLI Tool的脚本 (by 是果宝呐)"
     echo "以下是可用参数："
@@ -22,11 +27,6 @@ if [ ! -d "$DOWNLOAD_DIR" ]; then
   echo "错误：无法访问 $DOWNLOAD_DIR"
   exit 1
 fi
-
-######## 下载CLI tool #########
-# 技术有限，还请自行手动下载
-# URL="https://developer.android.com/studio#command-line-tools-only"
-# URL_CN="https://developer.android.google.cn/studio#command-line-tools-only"
 
 ########## 设置shell ##########
 echo "请选择你的Shell以准确配置："
