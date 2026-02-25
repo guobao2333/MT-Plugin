@@ -21,12 +21,16 @@ android {
     defaultConfig {
         //noinspection ExpiredTargetSdkVersion
         targetSdk = 28
-        minSdk = 21
+        minSdk = 24
     }
 
     buildTypes {
         release {
             minifyEnabled = true
+            proguardFiles 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
             proguardFiles 'proguard-rules.pro'
         }
     }
@@ -83,7 +87,7 @@ mtPlugin {
     /**
      * 插件版本名称
      */
-    versionName = "v1.0"
+    versionName = "v0.1"
 
     /**
      * 插件名称

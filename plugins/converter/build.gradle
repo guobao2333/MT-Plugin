@@ -24,8 +24,8 @@ android {
         minSdk = 24 // 改24加快打包速度，发布时改21才能安装
     }
 
-    /* bin还没适配用不了
-    flavorDimensions "environment"
+    // bin还没适配用不了
+    /* flavorDimensions "environment"
     productFlavors {
         dev {
             dimension "environment"
@@ -60,19 +60,41 @@ android {
         targetCompatibility = javaVersion
     }
 
+    packagingOptions {
+        exclude 'META-INF/LICENSE-LGPL-2.1.txt'
+        exclude 'META-INF/LICENSE-LGPL-3.txt'
+        exclude 'META-INF/LICENSE-W3C-TEST'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+
     if (project.plugins.hasPlugin(libs.plugins.kotlin.android.get().pluginId)) {
         kotlin.jvmToolchain(javaVersion.majorVersion.toInteger())
     }
 }
 
 dependencies {
-    implementation('org.commonmark:commonmark:0.27.0')
-    implementation('org.commonmark:commonmark-ext-gfm-strikethrough:0.27.0')
-    implementation('org.commonmark:commonmark-ext-gfm-tables:0.27.0')
+    def cmJavaVer = '0.27.1'
+    //def flexmarkVer = '0.64.8'
+    
+    implementation("org.commonmark:commonmark:$cmJavaVer")
+    implementation("org.commonmark:commonmark-ext-gfm-strikethrough:$cmJavaVer")
+    implementation("org.commonmark:commonmark-ext-gfm-tables:$cmJavaVer")
+
+    // https://github.com/vsch/flexmark-java
+    /*implementation("com.vladsch.flexmark:flexmark:$flexmarkVer")
+    implementation("com.vladsch.flexmark:flexmark-ext-tables:$flexmarkVer")
+    implementation("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:$flexmarkVer")
+    implementation("com.vladsch.flexmark:flexmark-ext-gfm-tasklist:$flexmarkVer")
+    implementation("com.vladsch.flexmark:flexmark-ext-autolink:$flexmarkVer")
+    implementation("com.vladsch.flexmark:flexmark-ext-footnotes:$flexmarkVer")
+    implementation("com.vladsch.flexmark:flexmark-ext-toc:$flexmarkVer")
+    implementation("com.vladsch.flexmark:flexmark-ext-abbreviation:$flexmarkVer")
+    implementation("com.vladsch.flexmark:flexmark-ext-definition:$flexmarkVer")*/
+
     // jsoup HTML parser library @ https://jsoup.org/
     implementation('org.jsoup:jsoup:1.21.2')
 
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation("junit:junit:4.13.2")
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
 
@@ -102,12 +124,12 @@ mtPlugin {
     /**
      * 插件版本号，低版本插件无法覆盖安装高版本插件
      */
-    versionCode = 9
+    versionCode = 10
 
     /**
      * 插件版本名称
      */
-    versionName = "v1.5"
+    versionName = "v0.2"
 
     /**
      * 插件名称
