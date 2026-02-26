@@ -1,0 +1,16 @@
+plugin_name: DeepSeek Translator
+plugin_description: Uses the DeepSeek Chat API for translation. You need to provide your own API Key.
+
+reg_url: API Key URL
+reg_url_summary: Create and manage your API Key here: https://platform.deepseek.com/api_keys
+
+ds_api_key_summary: DeepSeek API Key
+ds_api_key_empty: API Key is empty. Please set your API Key in plugin settings.
+ds_api_key: API Key
+
+ds_test_title: Translation Test
+ds_test_summary: Fill in API Key and click to verify availability
+ds_test_loading: Testing...
+ds_test_success: Test succeeded, translation result: 
+ds_test_failed: Test failed: 
+ds_test_empty_result: Test failed: Empty translation result

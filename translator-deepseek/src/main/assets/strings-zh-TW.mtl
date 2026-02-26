@@ -1,0 +1,16 @@
+plugin_name: DeepSeek 翻譯
+plugin_description: 使用 DeepSeek Chat API 進行翻譯，需要自行填寫 API Key。
+
+reg_url: 申請地址
+reg_url_summary: 在此建立和管理 API Key：https://platform.deepseek.com/api_keys
+
+ds_api_key_summary: DeepSeek API Key
+ds_api_key_empty: API Key 為空，請先在插件設置中填寫 API Key！
+ds_api_key: API Key
+
+ds_test_title: 翻譯測試
+ds_test_summary: 填寫 API Key 後點擊測試可用性
+ds_test_loading: 正在測試...
+ds_test_success: 測試成功，翻譯結果：
+ds_test_failed: 測試失敗：
+ds_test_empty_result: 測試失敗：翻譯結果為空
