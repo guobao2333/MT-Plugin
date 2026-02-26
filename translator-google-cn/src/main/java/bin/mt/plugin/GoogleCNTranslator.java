@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import bin.mt.json.JSONArray;
+import bin.mt.plugin.util.UserAgentInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -21,6 +22,7 @@ import okhttp3.ResponseBody;
 public class GoogleCNTranslator {
     private static String okIP;
     static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
+            .addInterceptor(UserAgentInterceptor.INSTANCE)
             .callTimeout(8, TimeUnit.SECONDS)
             .build();
 
@@ -40,7 +42,6 @@ public class GoogleCNTranslator {
                             .get()
                             .url(url)
                             .header("Host", "translate.googleapis.com")
-                            .header("User-Agent", "Mozilla/5.0 (Linux; Android 6.0;)")
                             .build();
                     try (Response response = HTTP_CLIENT.newCall(request).execute()) {
                         if (response.isSuccessful()) {
@@ -99,7 +100,6 @@ public class GoogleCNTranslator {
                     .get()
                     .url(url)
                     .header("Host", "translate.googleapis.com")
-                    .header("User-Agent", "Mozilla/5.0 (Linux; Android 6.0;)")
                     .build();
             try (Response response = HTTP_CLIENT.newCall(request).execute()) {
                 if (!response.isSuccessful()) {

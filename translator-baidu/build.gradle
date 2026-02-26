@@ -45,6 +45,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring libs.desugar.jdk.libs
+    implementation project(":translator-util")
 }
 
 /**
@@ -89,6 +90,8 @@ mtPlugin {
      * 插件描述
      */
     description = "{plugin_description}"
+
+//    mainPreference = "bin.mt.plugin.TesterPreference"
 
     /**
      * 插件对外接口，接口类型会自动判断

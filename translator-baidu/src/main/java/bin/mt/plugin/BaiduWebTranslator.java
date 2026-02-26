@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import bin.mt.json.JSONArray;
 import bin.mt.json.JSONObject;
+import bin.mt.plugin.util.UserAgentInterceptor;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,13 +29,9 @@ public class BaiduWebTranslator {
     private static String token;
     private static String cookie = "";
     private static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
+            .addInterceptor(UserAgentInterceptor.INSTANCE)
             .addInterceptor(chain -> {
-                String ua = System.getProperty("http.agent");
-                if (ua == null) {
-                    ua = "Mozilla/5.0 (Linux; Android 8.0;)";
-                }
                 Request request = chain.request().newBuilder()
-                        .header("User-Agent", ua)
                         .header("Cookie", cookie)
                         .build();
                 return chain.proceed(request);

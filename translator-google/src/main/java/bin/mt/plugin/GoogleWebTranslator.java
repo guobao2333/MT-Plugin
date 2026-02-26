@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 import bin.mt.json.JSONArray;
+import bin.mt.plugin.util.UserAgentInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -15,17 +16,7 @@ import okhttp3.ResponseBody;
  */
 public class GoogleWebTranslator {
     private static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
-            .addInterceptor(chain -> {
-                Request request = chain.request();
-                String ua = System.getProperty("http.agent");
-                if (ua == null) {
-                    ua = "Mozilla/5.0 (Linux; Android 8.0;)";
-                }
-                request = chain.request().newBuilder()
-                        .header("User-Agent", ua)
-                        .build();
-                return chain.proceed(request);
-            })
+            .addInterceptor(UserAgentInterceptor.INSTANCE)
             .callTimeout(8, TimeUnit.SECONDS)
             .build();
 

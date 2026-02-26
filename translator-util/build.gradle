@@ -1,0 +1,26 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.mt.plugin)
+}
+
+// 定义 Java 版本
+def javaVersion = JavaVersion.VERSION_17
+
+android {
+    namespace 'bin.mt.plugin.util'
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk 21
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled = true
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring libs.desugar.jdk.libs
+}

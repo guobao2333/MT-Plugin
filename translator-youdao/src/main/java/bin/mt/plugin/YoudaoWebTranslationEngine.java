@@ -24,7 +24,7 @@ public class YoudaoWebTranslationEngine extends BaseTranslationEngine {
     protected void onBuildConfiguration(ConfigurationBuilder builder) {
         super.onBuildConfiguration(builder);
         builder.setAllowBatchTranslationBySeparator(true);
-        builder.setMaxTranslationTextLength(5000);
+        builder.setMaxTranslationTextLength(20000);
         builder.setTargetLanguageMutable(true);
     }
 

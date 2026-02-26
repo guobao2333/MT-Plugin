@@ -45,6 +45,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring libs.desugar.jdk.libs
+    implementation project(":translator-util")
 }
 
 /**

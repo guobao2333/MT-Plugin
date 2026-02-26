@@ -12,6 +12,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import bin.mt.json.JSONArray;
 import bin.mt.json.JSONObject;
+import bin.mt.plugin.util.UserAgentInterceptor;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,16 +27,7 @@ import okhttp3.ResponseBody;
 @SuppressWarnings("CharsetObjectCanBeUsed")
 public class YoudaoWebTranslator {
     private static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
-            .addInterceptor(chain -> {
-                String ua = System.getProperty("http.agent");
-                if (ua == null) {
-                    ua = "Mozilla/5.0 (Linux; Android 8.0;)";
-                }
-                Request request = chain.request().newBuilder()
-                        .header("User-Agent", ua)
-                        .build();
-                return chain.proceed(request);
-            })
+            .addInterceptor(UserAgentInterceptor.INSTANCE)
             .callTimeout(8, TimeUnit.SECONDS)
             .build();
 
@@ -137,7 +129,12 @@ public class YoudaoWebTranslator {
             switch (result.getInt("code")) {
                 case 0:
                     JSONArray array = result.getJSONArray("translateResult");
-                    return array.getJSONArray(0).getJSONObject(0).getString("tgt");
+                    StringBuilder sb = new StringBuilder();
+                    int size = array.size();
+                    for (int i = 0; i < size; i++) {
+                        sb.append(array.getJSONArray(i).getJSONObject(0).getString("tgt"));
+                    }
+                    return sb.toString();
                 case 50:
                     cookie = null;
                     break;

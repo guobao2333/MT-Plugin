@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import bin.mt.json.JSONArray;
 import bin.mt.json.JSONObject;
+import bin.mt.plugin.util.UserAgentInterceptor;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -14,16 +15,7 @@ import okhttp3.ResponseBody;
 
 public class YandexWebTranslator {
     private static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
-            .addInterceptor(chain -> {
-                String ua = System.getProperty("http.agent");
-                if (ua == null) {
-                    ua = "Mozilla/5.0 (Linux; Android 8.0;)";
-                }
-                Request request = chain.request().newBuilder()
-                        .header("User-Agent", ua)
-                        .build();
-                return chain.proceed(request);
-            })
+            .addInterceptor(UserAgentInterceptor.INSTANCE)
             .callTimeout(8, TimeUnit.SECONDS)
             .build();
 

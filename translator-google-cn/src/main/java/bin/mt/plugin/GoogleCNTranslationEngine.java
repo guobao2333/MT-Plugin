@@ -44,7 +44,7 @@ public class GoogleCNTranslationEngine extends BaseTranslationEngine {
     protected void onBuildConfiguration(ConfigurationBuilder builder) {
         super.onBuildConfiguration(builder);
         builder.setAllowBatchTranslationBySeparator(true);
-        builder.setMaxTranslationTextLength(5000);
+        builder.setMaxTranslationTextLength(10000);
     }
 
     @Override
