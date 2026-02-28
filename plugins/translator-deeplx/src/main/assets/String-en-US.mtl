@@ -1,0 +1,20 @@
+name: DeepLX Translator
+description: Free DeepL translation API plugin, no authkey required.\n\
+\n\
+Update plan:\n\
+  1. add settings\n\
+  2. add custom api\n\
+\n\
+The server side of this project has been in github open source:\n\
+https://github.com/guobao2333/DeepLX-Serverless\n\
+Welcome click to Star~\n\
+Since the server has been blocked by DeepL, the new version of the plugin has built-in direct access to DeepL service via your local network. If you can't get the translation, please adjust your own network environment to access deepl.com
+
+interface_name_web: DeepL (Web Nokey)
+interface_name_free: DeepL (Free API)
+interface_name_pro: DeepL (PRO API)
+
+general_options: General Options
+plugin_info: Plugin Info
+
+error_isempty: Content cannot be empty!

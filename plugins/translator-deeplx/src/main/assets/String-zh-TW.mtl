@@ -1,0 +1,19 @@
+name: DeepLX 翻譯
+description: 免費的DeepL翻譯API插件，無需authkey。\n\
+\n\
+更新計畫：\n\
+  1. 增加設定介面\n\
+  2. 增加自訂api\n\
+插件服務端已在github開源：\n\
+https://github.com/guobao2333/DeepLX-Serverless\n\
+歡迎前往Star~\n\
+由於舊版插件服務端已被DeepL封鎖，因此新版插件內建了該服務透過您的本機網路直接翻譯。如果您無法取得翻譯，請自行調整網路環境以造訪 deepl.com
+
+interface_name_web: DeepL (WEB Nokey)
+interface_name_free: DeepL (Free API)
+interface_name_pro: DeepL (PRO API)
+
+general_options: 常規選項
+plugin_info: 插件資訊
+
+error_isempty: 內容不能為空！

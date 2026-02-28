@@ -1,0 +1,28 @@
+name: DeepLX 翻译
+description: 国内可用的免费DeepL翻译API插件，无需authkey。\n\
+\n\
+更新计划：\n\
+  1. 增加设置界面\n\
+  2. 增加自定义api\n\
+\n\
+插件旧版服务端已在github开源：\n\
+https://github.com/guobao2333/DeepLX-Serverless\n\
+欢迎前往Star~\n\
+由于旧版插件服务端已被DeepL屏蔽，且DeepL服务现已可在内陆访问，因此新版直接访问DeepL获取翻译。如果您无法正常访问DeepL服务，请自行调整网络环境。
+
+interface_name_web: DeepL (网页端无需令牌)
+interface_name_free: DeepL (免费 API)
+interface_name_pro: DeepL (付费 API)
+
+general_options: 常规选项
+plugin_info: 插件信息
+
+error_isempty: 内容不能为空！
+
+########### Abouts ###########
+about: 关于插件
+
+author: by 果宝
+github: Github仓库
+github_info: 您可以在此反馈问题、请求功能或贡献代码
+github_url: https://github.com/guobao2333/MT-Plugin

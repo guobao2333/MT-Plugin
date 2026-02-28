@@ -1,0 +1,127 @@
+package guobao.plugin.translator.deeplx;
+
+import bin.mt.plugin.api.PluginContext;
+import android.content.SharedPreferences;
+
+import org.json.JSONObject;
+import org.json.JSONException;
+
+import java.util.Arrays;
+import java.util.List;
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import okhttp3.*;
+import okio.Buffer;
+
+public class DeepLXTranslator {
+    // public static String domain = "https://deeplx.duanx.cn";
+    // private static String domain = "https://deeplx-serverless.vercel.app";
+    private static final List<String> urls = Arrays.asList("https://deeplx.vercel.app", "https://deeplx-serverless.vercel.app", "https://deeplx.shiguobaona.workers.dev");
+    private String domain;
+    private static final String WEB = "/translate";
+    private static final String FREE = "/v1" + WEB;
+    private static final String PRO = "/v2" + WEB;
+    private PluginContext context;
+
+    public DeepLXTranslator(PluginContext context) {
+        this.context = context;
+    }
+
+    public void init() throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        for (String url : urls) {
+            Request request = new Request.Builder()
+              .url(url+"/translate")
+              .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                if (response.code() == 200) {
+                    domain = url;
+                    break;
+                }
+            } catch (IOException e) {
+                context.log("Error checking URL " + url + ": " + e.getMessage());
+            }
+        }
+
+        if (domain == null) {
+            throw new IOException("Failed to connect to server.");
+        }
+    }
+
+    public String translate(String query, String from, String to) throws IOException {
+        init();
+        String API_URL = domain + WEB;
+        OkHttpClient client = new OkHttpClient();
+        JSONObject jsonBody = new JSONObject();
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                throw new IllegalArgumentException("Content cannot be empty!");
+            }
+            jsonBody.put("text", query);
+            context.log("文本： "+jsonBody.toString());
+            jsonBody.put("source_lang", from);
+            jsonBody.put("target_lang", to);
+        } catch (IllegalArgumentException e) {
+            context.log(e);
+            throw new IOException(e);
+        } catch (JSONException e) {
+            context.log(e);
+            e.printStackTrace();
+        }
+        // 将JSONObject对象转换为字符串作为请求体
+        String requestBody = jsonBody.toString();
+        // 创建请求体
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), requestBody);
+
+        // 创建和发送请求
+        Request request = new Request.Builder()
+          .url(API_URL)
+          // .addHeader("Authorization", "Bearer " + accessToken)
+          .post(body)
+          .build();
+
+        Response response = client.newCall(request).execute();
+
+        if (!response.isSuccessful()) {
+            context.log("Request failed with code: " + response.code());
+            throw new IOException("Request failed with code: " + response.code());
+        }
+        String responseData = response.body().string();
+        context.log("DeepLXTranslator Response: " + responseData);
+
+        return getResult(responseData, request);
+    }
+
+    private String getResult(String string, Request request) throws IOException {
+        context.log("返回内容："+string);
+
+        // 必须在try外面初始化
+        String data = null;
+
+        try {
+            JSONObject jsonObject = new JSONObject(string);
+            data = jsonObject.getString("data");
+
+            if (data == null || data.isEmpty()) {
+                throw new JSONException("Parse result failed: " + jsonObject);
+            }
+        } catch (JSONException e) {
+            context.log("JSON数据错误： "+e);
+            e.printStackTrace();
+        } catch (Exception e) {
+            context.log("发生未知错误： "+e);
+            e.printStackTrace();
+        }
+
+        Buffer buffer = new Buffer();
+        request.body().writeTo(buffer);
+        String body = buffer.readUtf8();
+        context.log("请求地址："+request.url()+"\n请求体："+body);
+
+        return data;
+    }
+
+}
