@@ -4,11 +4,11 @@
 -keepattributes SourceFile, LineNumberTable
 -renamesourcefileattribute SourceFile
 
--keepattributes *Annotation*, Signature, InnerClasses
+#-keepattributes *Annotation*, Signature, InnerClasses
 
--keep class com.fasterxml.jackson.databind.ObjectMapper {
-    <init>();
-}
--keep class com.fasterxml.jackson.core.JsonFactory {
-    <init>();
-}
+#-keep class com.fasterxml.jackson.databind.ObjectMapper {
+#    <init>();
+#}
+#-keep class com.fasterxml.jackson.core.JsonFactory {
+#    <init>();
+#}

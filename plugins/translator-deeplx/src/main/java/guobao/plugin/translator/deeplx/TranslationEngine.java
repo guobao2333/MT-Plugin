@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-
 import bin.mt.plugin.api.PluginContext;
 import bin.mt.plugin.api.LocalString;
 import bin.mt.plugin.api.translation.BaseTranslationEngine;
@@ -20,30 +18,28 @@ public class TranslationEngine extends BaseTranslationEngine {
     );
 
     private final List<String> targetLanguages = Arrays.asList(
-        "zh-CN", "zh-TW", "en-US", "en-GB", "ja", "ru", "ko", "de", "fr", "es", "it", "pt-BR", "pt-PT",
+        "zh", "zh-CN", "zh-TW", "en-US", "en-GB", "ja", "ru", "ko", "de", "fr", "es", "it", "pt-BR", "pt-PT",
         "nl", "pl", "ar", "tr", "id", "vi", "th", "sv", "da", "fi", "el", "cs",
         "hu", "ro", "nb", "uk", "bg", "sk", "sl", "lt", "lv", "et", "he", "hi"
     );
 
     private PluginContext context;
-    private OkHttpClient httpClient;
 
     @Override
     protected void init() {
         context = getContext();
-        httpClient = new OkHttpClient.Builder().build();
     }
 
     protected void onBuildConfiguration(ConfigurationBuilder builder) {
-        /*super.onBuildConfiguration(builder);
+        super.onBuildConfiguration(builder);
         builder.setAllowBatchTranslationBySeparator(true);
-        builder.setMaxTranslationTextLength(4000);
-        builder.setTargetLanguageMutable(true);*/
+        builder.setMaxTranslationTextLength(10000);
+        //builder.setTargetLanguageMutable(true);
     }
 
     @Override
     public String name() {
-        return "{name}";
+        return "{interface_name_web}";
     }
 
     @Override
@@ -61,14 +57,12 @@ public class TranslationEngine extends BaseTranslationEngine {
         try (var translator = new DeepLWebTranslator(context)) {
             DeepLWebTranslator.TranslationResult result =
                     translator.translate(text, sourceLanguage, targetLanguage);
-            context.log(result.text());
+            context.log(result.toString());
             return result.text();
         } catch (DeepLWebTranslator.DeepLException e) {
-            context.log(e.getMessage());
+            context.log(e);
             throw new IOException(e.getMessage(), e);
         }
-        /*DeepLXTranslator DeepLX = new DeepLXTranslator(context);
-        return DeepLX.translate(text, sourceLanguage, targetLanguage);*/
     }
 
     @Override

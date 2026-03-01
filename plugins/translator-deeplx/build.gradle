@@ -21,7 +21,7 @@ android {
     defaultConfig {
         //noinspection ExpiredTargetSdkVersion
         targetSdk = 28
-        minSdk = 24
+        minSdk = 21
     }
 
     buildTypes {
@@ -48,10 +48,7 @@ android {
         exclude "org/**"
         exclude "kotlin/**"
         exclude "mozilla/**"
-        exclude 'META-INF/LICENSE-LGPL-2.1.txt'
-        exclude 'META-INF/LICENSE-LGPL-3.txt'
-        exclude 'META-INF/LICENSE-W3C-TEST'
-        exclude 'META-INF/DEPENDENCIES'
+        exclude "META-INF/**"
     }
 
     if (project.plugins.hasPlugin(libs.plugins.kotlin.android.get().pluginId)) {
@@ -61,7 +58,7 @@ android {
 
 dependencies {
     //implementation "com.deepl.api:deepl-java:1.14.0"
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.21.1"
+    //implementation "com.fasterxml.jackson.core:jackson-databind:2.21.1"
     implementation 'com.squareup.okhttp3:okhttp:5.3.0'
 
     coreLibraryDesugaring(libs.desugar.jdk.libs)
@@ -72,7 +69,7 @@ dependencies {
  */
 mtPlugin {
     /**
-     * 插件安装包 mtp 文件会被打包到当前 app 模块生成的 apk 文件内，
+     * 插件安装包 mtp 文件会被打包到当前模块生成的 apk 文件内，
      * 当 apk 在您的设备上运行后会自动将 mtp 文件自动推送给 MT 管理器，
      * 因此您只需在 AS 中点击右上角菜单运行当前模块，即可实现插件的快速安装。
      *
@@ -85,6 +82,11 @@ mtPlugin {
     pushTarget = "bin.mt.plus.canary"
 
     /**
+     * 最低mt版本号
+     */
+     minHostVersion = 26022600
+
+    /**
      * 插件ID，插件的唯一标识，类似于packageName
      * 只能由字母、数字、下划线和点组成
      */
@@ -93,12 +95,12 @@ mtPlugin {
     /**
      * 插件版本号，低版本插件无法覆盖安装高版本插件
      */
-    versionCode = 5
+    versionCode = 6
 
     /**
      * 插件版本名称
      */
-    versionName = "v1.2.0"
+    versionName = "v1.2.1"
 
     /**
      * 插件名称
@@ -111,7 +113,7 @@ mtPlugin {
     description = "{description}"
 
     /**
-     * 主设置界面，可不填
+     * 主设置界面
      */
     mainPreference = "guobao.plugin.translator.deeplx.pref.Config"
 
