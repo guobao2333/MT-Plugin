@@ -153,7 +153,7 @@ public class BaiduTranslationEngine extends BaseTranslationEngine {
         String salt = getRandomText(10);
         String sign = md5((appid + text + salt + key).getBytes(StandardCharsets.UTF_8));
         //noinspection CharsetObjectCanBeUsed
-        String url = "http://api.fanyi.baidu.com/api/trans/vip/translate"
+        String url = "https://fanyi-api.baidu.com/api/trans/vip/translate"
                 + "?q=" + URLEncoder.encode(text, "UTF-8")
                 + "&from=" + sourceLanguage
                 + "&to=" + targetLanguage
