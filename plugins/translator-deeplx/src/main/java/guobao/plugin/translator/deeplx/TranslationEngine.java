@@ -12,14 +12,18 @@ import bin.mt.plugin.api.LocalString;
 import bin.mt.plugin.api.translation.BaseTranslationEngine;
 
 public class TranslationEngine extends BaseTranslationEngine {
-    private final List<String> sourceLanguages = Arrays.asList("auto",
-            "en","ja","ru","zh","ar","bg","cs","da","de","el","es","et","fi","fr","hu",
-            "id","it","ko","lt","lv","nb","nl","pl","pt","ro","sk","sl","sv","tr","uk");
+    // 源语言列表（按使用量排序）
+    private final List<String> sourceLanguages = Arrays.asList(
+        "auto", "en", "zh-TW", "zh-CN", "zh", "ja", "ru", "ko", "de", "fr", "es", "it", "pt",
+        "nl", "pl", "ar", "tr", "id", "vi", "th", "sv", "da", "fi", "el", "cs", "hu",
+        "ro", "no", "uk", "bg", "sk", "sl", "lt", "lv", "et", "he", "hi"
+    );
 
     private final List<String> targetLanguages = Arrays.asList(
-            "zh-hans","zh-hant","en","zh","ru","ja","en-gb","en-us","ar","bg","cs","da",
-            "de","el","es","et","fi","fr","hu","id","it","ko","lt","lv","nb","nl","pl",
-            "pt","pt-br","pt-pt","ro","sk","sl","sv","tr","uk");
+        "zh-CN", "zh-TW", "en-US", "en-GB", "ja", "ru", "ko", "de", "fr", "es", "it", "pt-BR", "pt-PT",
+        "nl", "pl", "ar", "tr", "id", "vi", "th", "sv", "da", "fi", "el", "cs",
+        "hu", "ro", "nb", "uk", "bg", "sk", "sl", "lt", "lv", "et", "he", "hi"
+    );
 
     private PluginContext context;
     private OkHttpClient httpClient;

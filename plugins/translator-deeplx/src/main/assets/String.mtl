@@ -8,6 +8,7 @@ description: 国内可用的免费DeepL翻译API插件，无需authkey。\n\
 插件旧版服务端已在github开源：\n\
 https://github.com/guobao2333/DeepLX-Serverless\n\
 欢迎前往Star~\n\
+\n\
 由于旧版插件服务端已被DeepL屏蔽，且DeepL服务现已可在内陆访问，因此新版直接访问DeepL获取翻译。如果您无法正常访问DeepL服务，请自行调整网络环境。
 
 interface_name_web: DeepL (网页端无需令牌)

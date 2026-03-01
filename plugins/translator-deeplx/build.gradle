@@ -27,12 +27,14 @@ android {
     buildTypes {
         release {
             minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     aaptOptions {
         ignoreAssetsPattern = '!*.bak' // 忽略mt产生的备份文件
+        ignoreAssetsPattern = '!PublicSuffixDatabase.list'
     }
 
     compileOptions {
@@ -43,7 +45,6 @@ android {
 
     packagingOptions {
         // 打包时排除
-        exclude "assets/PublicSuffixDatabase.list"
         exclude "org/**"
         exclude "kotlin/**"
         exclude "mozilla/**"

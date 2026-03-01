@@ -31,20 +31,26 @@ public class DeepLWebTranslator implements AutoCloseable {
 
     // 语言代码映射
     private static final Map<String, String> LANG_MAP = Map.ofEntries(
-            Map.entry("auto", "auto"),
-            Map.entry("de",   "DE"), Map.entry("en", "EN"),
-            Map.entry("es",   "ES"), Map.entry("fr", "FR"),
-            Map.entry("it",   "IT"), Map.entry("ja", "JA"),
-            Map.entry("ko",   "KO"), Map.entry("nl", "NL"),
-            Map.entry("pl",   "PL"), Map.entry("pt", "PT"),
-            Map.entry("ru",   "RU"), Map.entry("zh", "ZH"),
-            Map.entry("bg",   "BG"), Map.entry("cs", "CS"),
-            Map.entry("da",   "DA"), Map.entry("el", "EL"),
-            Map.entry("et",   "ET"), Map.entry("fi", "FI"),
-            Map.entry("hu",   "HU"), Map.entry("lt", "LT"),
-            Map.entry("lv",   "LV"), Map.entry("ro", "RO"),
-            Map.entry("sk",   "SK"), Map.entry("sl", "SL"),
-            Map.entry("sv",   "SV")
+        Map.entry("auto", "auto"),
+        Map.entry("en", "EN"), Map.entry("en-US", "EN-US"), Map.entry("en-GB", "EN-GB"),
+        Map.entry("zh", "ZH"), Map.entry("zh-CN", "ZH-HANS"), Map.entry("zh-TW", "ZH-HANT"),
+        Map.entry("ja", "JA"), Map.entry("ru", "RU"),
+        Map.entry("ko", "KO"), Map.entry("de", "DE"),
+        Map.entry("fr", "FR"), Map.entry("es", "ES"),
+        Map.entry("pt", "PT"), Map.entry("pt-BR", "PT-BR"), Map.entry("pt-PT", "PT-PT"),
+        Map.entry("it", "IT"), Map.entry("nl", "NL"),
+        Map.entry("pl", "PL"), Map.entry("ar", "AR"),
+        Map.entry("tr", "TR"), Map.entry("id", "ID"),
+        Map.entry("vi", "VI"), Map.entry("th", "TH"),
+        Map.entry("sv", "SV"), Map.entry("da", "DA"),
+        Map.entry("fi", "FI"), Map.entry("el", "EL"),
+        Map.entry("cs", "CS"), Map.entry("hu", "HU"),
+        Map.entry("ro", "RO"), Map.entry("nb", "NB"),
+        Map.entry("uk", "UK"), Map.entry("bg", "BG"),
+        Map.entry("sk", "SK"), Map.entry("sl", "SL"),
+        Map.entry("lt", "LT"), Map.entry("lv", "LV"),
+        Map.entry("et", "ET"), Map.entry("he", "HE"),
+        Map.entry("hi", "HI")
     );
 
     private static final String     DEEPL_URL    = "https://www2.deepl.com/jsonrpc";
@@ -66,7 +72,7 @@ public class DeepLWebTranslator implements AutoCloseable {
                     .append("翻译结果: ").append(text)
                     .append("\n检测语言: ").append(detectedLang);
             if (!alternatives.isEmpty()) {
-                sb.append("\n备选翻译:");
+                sb.append("\n备选翻译：");
                 alternatives.forEach(alt -> sb.append("\n  - ").append(alt));
             }
             return sb.toString();
