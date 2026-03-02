@@ -17,12 +17,8 @@ public class UserAgentInterceptor implements Interceptor {
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
-        String ua = System.getProperty("http.agent");
-        if (ua == null) {
-            ua = "Mozilla/5.0 (Linux; Android 8.0;)";
-        }
         Request request = chain.request().newBuilder()
-                .header("User-Agent", ua)
+                .header("User-Agent", "Mozilla/5.0 (Linux; Android 6.0;)")
                 .build();
         return chain.proceed(request);
     }

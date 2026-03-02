@@ -28,7 +28,6 @@ public class IPLoader {
         Request request = new Request.Builder()
                 .get()
                 .url("https://bbs.binmt.cc/google_translate_ips.txt")
-                .header("User-Agent", "Mozilla/5.0 (Linux; Android 6.0;)")
                 .build();
         try (Response response = HTTP_CLIENT.newCall(request).execute()) {
             if (response.isSuccessful()) {
