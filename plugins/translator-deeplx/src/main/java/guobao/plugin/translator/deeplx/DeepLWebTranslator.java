@@ -23,6 +23,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import guobao.plugin.translator.deeplx.pref.*;
+
 /**
  * DeepL 非官方 JSON-RPC 翻译客户端
  *
@@ -64,8 +66,6 @@ public class DeepLWebTranslator implements AutoCloseable {
             "pt-PT", "PT-PT"
     );
 
-    // TODO: 在插件设置中开关调试模式
-    private static boolean           DEBUG      = false;
     private static final   String    DEEPL_URL  = "https://www2.deepl.com/jsonrpc";
     private static final   MediaType MEDIA_JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -149,6 +149,8 @@ public class DeepLWebTranslator implements AutoCloseable {
 
     // 字段
 
+    // TODO: 在插件设置中开关调试模式
+    private        boolean         debug;
     private        PluginContext   context;
     private final  OkHttpClient    httpClient;
     private final  Random          random;
@@ -164,6 +166,7 @@ public class DeepLWebTranslator implements AutoCloseable {
     public DeepLWebTranslator(PluginContext context) {
         this(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2));
         this.context = context;
+        this.debug   = DeepLConstant.DEBUG;
     }
 
     /** 允许外部传入自定义线程池 */
@@ -181,8 +184,8 @@ public class DeepLWebTranslator implements AutoCloseable {
      * 翻译单条文本（阻塞，须在子线程调用）。
      *
      * @param text 待翻译文本
-     * @param from 源语言（BCP-47 小写，"auto" 自动检测）
-     * @param to   目标语言（BCP-47 小写）
+     * @param from 源语言（"auto" 自动检测）
+     * @param to   目标语言
      * @return 翻译结果
      * @throws DeepLException 包含具体 {@link DeepLError} 子类型
      */
@@ -193,7 +196,7 @@ public class DeepLWebTranslator implements AutoCloseable {
         LanguageCode lang = resolveLanguage(from, to);
         long id = generateId();
         String reqBody = buildRequestBody(id, lang, text);
-        if (DEBUG) context.log("请求体：" + reqBody);
+        if (debug) context.log("请求体：" + reqBody);
 
         try {
             TranslationResult result = parseResponse(post(reqBody));
@@ -328,7 +331,7 @@ public class DeepLWebTranslator implements AutoCloseable {
     private String post(String body) throws IOException {
         var request = new Request.Builder()
                 .url(DEEPL_URL)
-                .post(RequestBody.create(body, MEDIA_JSON))
+                .post(RequestBody.create(MEDIA_JSON, body))
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -340,7 +343,7 @@ public class DeepLWebTranslator implements AutoCloseable {
     }
 
     private TranslationResult parseResponse(String body) throws IOException, DeepLException {
-        if (DEBUG) context.log("原始响应：" + body);
+        if (debug) context.log("原始响应：" + body);
         JSONObject root   = new JSONObject(body);
         JSONObject result = root.getJSONObject("result");  // 不存在时返回 null
         if (result == null) {
@@ -377,7 +380,7 @@ public class DeepLWebTranslator implements AutoCloseable {
             }
 
             // 批量翻译
-            var results = translator.translateBatch(List.of(
+            /*var results = translator.translateBatch(List.of(
                     TranslateRequest.of("Good morning",    "en", "zh"),
                     TranslateRequest.of("Bonne nuit",      "fr", "zh"),
                     TranslateRequest.of("おはようございます", "ja", "zh")
@@ -385,7 +388,7 @@ public class DeepLWebTranslator implements AutoCloseable {
             results.stream()
                     .filter(r -> r != null)
                     .map(TranslationResult::text)
-                    .forEach(context::log);
+                    .forEach(context::log);*/
         }
     }
 }

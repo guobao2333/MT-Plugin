@@ -1,27 +1,20 @@
 package guobao.plugin.translator.deeplx;
 
+import androidx.annotation.NonNull;
+
 import android.content.SharedPreferences;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import bin.mt.plugin.api.PluginContext;
-import bin.mt.plugin.api.LocalString;
 import bin.mt.plugin.api.translation.BaseTranslationEngine;
 
-public class TranslationEngine extends BaseTranslationEngine {
-    // 源语言列表（按使用量排序）
-    private final List<String> sourceLanguages = Arrays.asList(
-        "auto", "en", "zh-TW", "zh-CN", "zh", "ja", "ru", "ko", "de", "fr", "es", "it", "pt",
-        "nl", "pl", "ar", "tr", "id", "vi", "th", "sv", "da", "fi", "el", "cs", "hu",
-        "ro", "no", "uk", "bg", "sk", "sl", "lt", "lv", "et", "he", "hi"
-    );
+import guobao.plugin.translator.deeplx.pref.*;
 
-    private final List<String> targetLanguages = Arrays.asList(
-        "zh", "zh-CN", "zh-TW", "en-US", "en-GB", "ja", "ru", "ko", "de", "fr", "es", "it", "pt-BR", "pt-PT",
-        "nl", "pl", "ar", "tr", "id", "vi", "th", "sv", "da", "fi", "el", "cs",
-        "hu", "ro", "nb", "uk", "bg", "sk", "sl", "lt", "lv", "et", "he", "hi"
-    );
+public class TranslationEngine extends BaseTranslationEngine {
+    private List<String> sourceLanguages = Arrays.asList(DeepLConstant.SOURCE_LANGUAGES);
+    private List<String> targetLanguages = Arrays.asList(DeepLConstant.TARGET_LANGUAGES);
 
     private PluginContext context;
 
@@ -52,6 +45,7 @@ public class TranslationEngine extends BaseTranslationEngine {
         return targetLanguages;
     }
 
+    @NonNull
     @Override
     public String translate(String text, String sourceLanguage, String targetLanguage) throws IOException {
         try (var translator = new DeepLWebTranslator(context)) {

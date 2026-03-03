@@ -21,7 +21,7 @@ android {
     defaultConfig {
         //noinspection ExpiredTargetSdkVersion
         targetSdk = 28
-        minSdk = 21
+        minSdk = 24
     }
 
     buildTypes {
@@ -58,8 +58,8 @@ android {
 
 dependencies {
     //implementation "com.deepl.api:deepl-java:1.14.0"
-    //implementation "com.fasterxml.jackson.core:jackson-databind:2.21.1"
-    implementation 'com.squareup.okhttp3:okhttp:5.3.0'
+    //implementation 'com.squareup.okhttp3:okhttp:5.3.0'
+    //implementation project(":plugin-util")
 
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
@@ -69,17 +69,13 @@ dependencies {
  */
 mtPlugin {
     /**
-     * 插件安装包 mtp 文件会被打包到当前模块生成的 apk 文件内，
-     * 当 apk 在您的设备上运行后会自动将 mtp 文件自动推送给 MT 管理器，
-     * 因此您只需在 AS 中点击右上角菜单运行当前模块，即可实现插件的快速安装。
-     *
-     * 您可在这里设置推送给哪个MT管理器：
+     * 推送到MT管理器：
      * - 自动检测请填写：auto
      * - 正式版请填写：bin.mt.plus
      * - 测试版/共存请填写：bin.mt.plus.canary
      * 默认为自动检测
      */
-    pushTarget = "bin.mt.plus.canary"
+    pushTarget = "auto"
 
     /**
      * 最低mt版本号
@@ -95,12 +91,12 @@ mtPlugin {
     /**
      * 插件版本号，低版本插件无法覆盖安装高版本插件
      */
-    versionCode = 6
+    versionCode = 7
 
     /**
      * 插件版本名称
      */
-    versionName = "v1.2.1"
+    versionName = "v1.2.2"
 
     /**
      * 插件名称

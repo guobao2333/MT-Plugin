@@ -13,7 +13,7 @@ Since the server has been blocked by DeepL, the new version of the plugin has bu
 
 interface_name_web: DeepL (Web NoKey)
 interface_name_free: DeepL (Free API)
-interface_name_pro: DeepL (PRO API)
+interface_name_pro: DeepL (Pro API)
 
 general_options: General Options
 plugin_info: Plugin Info
@@ -23,5 +23,6 @@ error_isempty: Content cannot be empty!
 ########### Abouts ###########
 about: About Plugin
 
+author: Contact author
 github: Github Repository
 github_info: Here you can feedback issues, request features, or contribute code.

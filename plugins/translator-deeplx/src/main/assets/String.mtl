@@ -11,7 +11,7 @@ https://github.com/guobao2333/DeepLX-Serverless\n\
 \n\
 由于旧版插件服务端已被DeepL屏蔽，且DeepL服务现已可在内陆访问，因此新版直接访问DeepL获取翻译。如果您无法正常访问DeepL服务，请自行调整网络环境。
 
-interface_name_web: DeepL (网页端无需令牌)
+interface_name_web: DeepL (无需令牌)
 interface_name_free: DeepL (免费 API)
 interface_name_pro: DeepL (付费 API)
 
@@ -23,7 +23,9 @@ error_isempty: 内容不能为空！
 ########### Abouts ###########
 about: 关于插件
 
-author: by 果宝
+author: 联系作者
+author_info: 是果宝呐 (bbs.binmt.cc)
+author_url: https://bbs.binmt.cc/home.php?mod=space&uid=126939&do=profile
 github: Github仓库
 github_info: 您可以在此反馈问题、请求功能或贡献代码
 github_url: https://github.com/guobao2333/MT-Plugin

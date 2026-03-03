@@ -22,5 +22,6 @@ error_isempty: 內容不能為空！
 ########### Abouts ###########
 about: 關於插件
 
+author: 聯絡作者
 github: Github 儲存庫
 github_info: 您可以在這裡回饋問題、請求功能或貢獻程式碼。
