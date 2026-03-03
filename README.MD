@@ -329,7 +329,7 @@ pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
 
 ## API 文档
 
-v3 插件的完整[开发文档](https://mt2.cn/guide/pluginv3/plugin-intro.html)已发布在官网。
+v3 插件的完整[开发文档](https://mt2.cn/guide/plugin-v3/plugin-intro.html)已发布在官网。
 
 开发时也可直接查看 API 源码，均已添加详细注释。源码位置如下图所示：
 
