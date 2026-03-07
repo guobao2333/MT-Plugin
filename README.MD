@@ -65,6 +65,17 @@ UI 组件的包装接口进行创建，更加简单易用。
 
 ## 更新记录
 
+### Gradle 插件 beta5
+
+对应 MT 管理器版本号需大于 **26030700**
+
+- 【新增】翻译接口新增 `TextLengthCalculator` 配置项用于自定义文本长度计算器
+- 【新增】`BatchTranslationEngine` 批量翻译接口经过重新设计现已回归
+- 【新增】`PluginEditText` 支持设置与获取文本颜色、背景、字体
+- 【新增】`TextEditor` 新增 `getHighlightColorAt` 和 `getSyntaxStyleColor` 方法
+- 【新增】`TextEditor` 新增 `getPositionFromLineColumn` 和 `getLineColumnFromPosition` 方法
+- 【新增】`PluginView` 新增 `performClick` 和 `performLongClick` 方法
+
 ### Gradle 插件 beta4
 
 对应 MT 管理器版本号需大于 **26022600**

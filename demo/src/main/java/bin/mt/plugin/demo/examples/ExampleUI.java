@@ -461,10 +461,12 @@ public class ExampleUI implements PluginPreference {
             }
         };
 
-        add(builder, "两种风格的输入框", "PluginEditText", pluginUI -> pluginUI
+        add(builder, "两种内置风格和自定义风格", "PluginEditText", pluginUI -> pluginUI
                 .buildVerticalLayout()
-                .addEditText().text("普通风格输入框 - 默认单行模式")
+                .addEditText().text("Line风格输入框 - 默认单行模式")
                 .addEditBox().text("Box风格输入框 - 默认多行模式").lines(5)
+                .addView().height(1).backgroundColor(pluginUI.colorDivider()).marginVerticalDp(10)
+                .addEditText().text("可通过覆盖背景自定义风格").lines(5).inputTypeMultiline().backgroundColor(0xFFDDDDDD).textColor(0xFF002222).typeface(Typeface.MONOSPACE)
                 .build()
         );
 
