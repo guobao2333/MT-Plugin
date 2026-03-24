@@ -1,7 +1,5 @@
 # MT Plugin V3 Demo
 
-当前插件 SDK 还在测试阶段，并非稳定版，后续仍会对 API 进行优化与调整，具体请查看下面的更新记录。
-
 欢迎加入 MT 插件开发 QQ 交流群：422326626
 
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=1YJW16amVeB2cxKigvz3PvKFwtWGtsGH&jump_from=webapi&authKey=JkV7Vu7fjcu39wYmgD3dMfXqW7l2tCEE1BLxSPK1NWr9x1WIRHyzQBq5kW8Gjcea"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="MT插件V3交流群" title="MT插件V3交流群"></a>
@@ -28,6 +26,7 @@ v3 版本插件新增 dex 打包模式，可将 AGP 编译生成的 classes.dex 
 - 支持限制单次翻译的最大文本长度：翻译大文本时 MT 会自动对文本进行智能拆分，依次翻译后再进行合并
 - 支持在翻译模式中进行批量翻译：将多个词条通过分割线拼接后统一翻译，再按分割线拆分结果，减少网络往返请求次数，提升在线翻译效率
 - 以上两个功能只需设置 `TranslationEngine.Configuration` 中的相关属性即可一键开启
+- 也可以通过 `BatchTranslationEngine` 实现自定义的批量翻译逻辑
 
 ### 三、增强设置界面
 
@@ -49,9 +48,7 @@ UI 组件的包装接口进行创建，更加简单易用。
 - `demo/src/main/java/bin/mt/plugin/demo/example/ExampleDialog.java`
 - `demo/src/main/java/bin/mt/plugin/demo/example/ExamplePopupMenu.java`
 
-### 五、新增接口
-
-文本编辑器
+### 五、新增文本编辑器接口
 
 - 底部快捷功能扩展接口
 - 浮动菜单扩展接口
@@ -63,238 +60,15 @@ UI 组件的包装接口进行创建，更加简单易用。
 - `demo/src/main/java/bin/mt/plugin/demo/TextEditorFloatingMenuDemo.java`
 - `demo/src/main/java/bin/mt/plugin/demo/TextEditorToolMenuDemo.java`
 
-## 更新记录
+## 项目模块
 
-### Gradle 插件 beta5
+- **demo** 模块提供了许多示例代码，您可直接运行该模块来了解插件的各个功能
+- **template** 模块提供了最基本代码模版，如果您要开发自己的插件，可基于此模块进行开发
+- **translator-xxx** 为官方翻译插件模块源码
 
-对应 MT 管理器版本号需大于 **26030700**
+## 如何运行 Demo（其它模块同理）
 
-- 【新增】翻译接口新增 `TextLengthCalculator` 配置项用于自定义文本长度计算器
-- 【新增】`BatchTranslationEngine` 批量翻译接口经过重新设计现已回归
-- 【新增】`PluginEditText` 支持设置与获取文本颜色、背景、字体
-- 【新增】`TextEditor` 新增 `getHighlightColorAt` 和 `getSyntaxStyleColor` 方法
-- 【新增】`TextEditor` 新增 `getPositionFromLineColumn` 和 `getLineColumnFromPosition` 方法
-- 【新增】`PluginView` 新增 `performClick` 和 `performLongClick` 方法
-
-### Gradle 插件 beta4
-
-对应 MT 管理器版本号需大于 **26022600**
-
-- 【新增】Gradle 插件会自动根据插件接口配置生成混淆 keep 规则，无需手动添加
-- 【新增】插件 manifest 文件新增 `minHostVersion` 属性用于指定该插件所需的最低 MT 管理器版本号
-- 【调整】`PluginContext` 用于获取 MT 管理器包名、版本名及版本号的方法名前缀改为 `getHost*`
-- 【新增】`TranslationEngine.Configuration` 新增 `maxTranslationTextLength`，翻译长文本时支持自动拆分翻译再合并
-- 【调整】简化批量翻译功能的实现：`TranslationEngine.Configuration` 新增
-  `allowBatchTranslationBySeparator` 属性
-- 【调整】去除批量翻译接口 `BatchTranslationEngine`，由 `allowBatchTranslationBySeparator` 属性取代
-- 【优化】`BaseTranslationEngine` 新增 `onBuildConfiguration()`，无参构造函数会调用此方法创建翻译配置
-
-### Gradle 插件 beta3
-
-对应 MT 管理器版本号需大于 **26020300**
-
-- 【调整】`BufferedText` 的 `lastIndexOf` 的范围搜索方法的参数含义，由 `[start, last]` 调整为
-  `[start, end)`
-
-### Gradle 插件 beta2
-
-对应 MT 管理器版本号需大于 **26012200**
-
-- 【新增】`BufferedText` 新增 `indexOf` 和 `lastIndexOf` 的范围搜索重载方法
-
-**增强 PluginPreference:**
-
-- 【新增】`Builder` 新增 `onCreated()` 回调，可获取 `PreferenceScreen` 实例动态修改标题、查找和修改设置项
-- 【新增】`Builder` 新增 `onPreferenceChange()` 回调，监听 Input、Switch、List 的值变化
-- 【新增】`PreferenceItem` 接口，用于动态访问和修改设置项的标题、摘要、启用状态、可见性等属性
-- 【新增】`addHeader()` 和 `addText()` 新增带 `key` 参数的重载方法，支持通过 key 查找
-- 【新增】`Header`、`Text`、`Input`、`Switch`、`List` 均支持设置 `visible()` 和 `enable()` 状态
-- 【新增】`Text`、`Input`、`Switch`、`List` 均支持 `interceptClick()` 点击拦截
-- 【调整】`addHeader()` 现在返回 `Header` 实例，可进一步配置
-- 【调整】`List.defaultValue()` 参数类型从 `CharSequence` 改为 `String`
-- 【调整】`TextItem` 接口移除，`OnTextItemClickListener` 参数类型改为 `PreferenceItem`
-
-### Gradle 插件 beta1
-
-对应 MT 管理器版本号需大于 **26011300**
-
-- 【新增】Gradle 插件在打包 mtp 时会验证接口配置的正确性
-- 【新增】Gradle 插件在打包 mtp 时会验证语言文件 mtl 格式的正确性
-- 【新增】`PluginPreference.Input` 新增 `hint()` 方法
-- 【新增】`PluginContext` 新增获取 MT 管理器包名、版本名及版本号的方法
-- 【新增】`TextEditor` 新增文件名与路径、是否修改与保存、分页相关的方法
-- 【新增】`TextEditor` 位置可见相关方法新增了几个 `InCenter` 版本的方法
-
-### Gradle 插件 alpha7
-
-对应 MT 管理器版本号需大于 **25122600**
-
-- 【升级】plugin-api 升级至 alpha7，Gradle 插件版本跳过 alpha6 与其同步，后续默认两者一起升级不再单列
-- 【新增】批量翻译接口 `BatchTranslationEngine` 用于在翻译模式功能中一次性翻译大量词条
-- 【新增】`TextEditor` 新增 `showFloatingMenu()` 方法用于显示浮动菜单
-- 【优化】`PluginEditText` 的文本变化监听器改为 `PluginEditTextWatcher`，可在回调方法中接收
-  `PluginEditText` 实例
-- 【新增】`PluginEditText` 新增了字符串常量 `SYNTAX_REGEX` 和 `SYNTAX_REGEX_REPLACEMENT`，具体请看注释说明
-- 【优化】去除 `PluginUI.Style.Modifier` 新增 `PluginUI.StyleWrapper`，支持无参构造
-
-**注意！该版本 API 进行了破坏性调整，前面编写的 v3 插件需要进行相应修改才可运行！**
-
-关于修改已有的风格，之前已调整过一次，最开始是带参数的StyleWrapper：
-
-```java
-pluginUI.defaultStyle(new PluginUI.StyleWrapper(pluginUI.getStyle()){
-
-@Override
-protected void handleTextView(PluginUI pluginUI, PluginTextViewBuilder builder) {
-    // 先应用当前样式
-    super.handleTextView(pluginUI, builder);
-    // 然后进行部分修改
-    builder.textSize(14);
-}
-});
-```
-
-这种写法代码很长，后面改成了非静态内部类 Modifier：
-
-```java
-pluginUI.defaultStyle(pluginUI.getStyle().new
-
-Modifier() {
-    @Override
-    protected void handleTextView (PluginUI pluginUI, PluginTextViewBuilder builder){
-        // 先应用当前样式
-        super.handleTextView(pluginUI, builder);
-        // 然后进行部分修改
-        builder.textSize(14);
-    }
-});
-```
-
-代码虽然缩短了一点，但写起来感觉有点别扭。而现在终于有了一个比较完美的方案：
-
-```java
-pluginUI.defaultStyle(new PluginUI.StyleWrapper() {
-    @Override
-    protected void handleTextView (PluginUI pluginUI, PluginTextViewBuilder builder){
-        // 先应用当前样式
-        super.handleTextView(pluginUI, builder);
-        // 然后进行部分修改
-        builder.textSize(14);
-    }
-});
-```
-
-与第一版相比，去掉了 `StyleWrapper` 的参数，其原理是在 `defaultStyle()` 方法内检测 `StyleWrapper`
-是否已经附加了 `Style` 实例，
-如果没有则让 `StyleWrapper` 附加当前 `PluginUI` 的 `Style` 实例。
-
-唯一的缺点就是只能附加一次，因此不要对无参构造的 `StyleWrapper` 进行复用，不然很容易出问题，如果要复用则使用有参构造函数来明确指定要附加的
-`Style` 实例。
-
-### Gradle 插件 alpha5
-
-对应 MT 管理器版本号需大于 **25120500**
-
-- 【升级】plugin-api 升级至 alpha6
-- 【新增】完成文本编辑器工具菜单扩展接口 `TextEditorToolMenu`
-- 【新增】新增弹出菜单 `PluginPopupMenu`
-- 【新增】`PluginUI` 新增 `createPopupMenu()` 方法用于创建弹出菜单
-- 【调整】`PluginViewBuilder` 重命名为 `PluginUIBuilder`
-    - **注意！这是一个破坏性修改，会导致前面编写的 v3 插件无法运行，您需要重新编译插件并安装！**
-- 【新增】`PluginView` 普通视图，对应 `pluginUIBuilder.addView()`
-- 【新增】`PluginImageView` 图片视图，对应 `pluginUIBuilder.addImageView()`
-
-### Gradle 插件 alpha4
-
-对应 MT 管理器版本号需大于 **25110300**
-
-- 【优化】Gradle插件 - 打包 mtp 时会自动合并 dex 文件，以减少 dex 文件数量
-- 【升级】plugin-api 升级至 alpha5
-- 【调整】`TextEditor` 的获取选中位置方法，具体请看源码注释
-- 【新增】完成文本编辑器浮动菜单扩展接口 `TextEditorFloatingMenu`
-- 【新增】`MaterialIcons` 用于获取[内置 Material 图标](https://mt2.cn/icons)
-- 【新增】`VectorDrawableLoader` 用于加载外部矢量图
-- 【新增】`PluginContext` 新增 `getPluginName()` 方法
-
-### Gradle 插件 alpha3
-
-对应 MT 管理器版本号需大于 **25101900**
-
-- 【新增】Dex 打包模式支持多 dex 文件
-- 【优化】重构了 mtp 的打包与推送逻辑，增强与 AGP 的兼容性
-- 【升级】内置依赖 `plugin-pusher` 的版本升级到 `alpha2`
-- 【调整】打包插件的 gradle 任务 `packagePlugin` 重命名为 `packageReleaseMtp`
-- 【调整】通过 Android Studio 运行并推送到设备上安装的 mtp 文件，会被标记为 testOnly，无法二次安装，若要分享
-  mtp 文件给他人使用，请运行 `packageReleaseMtp` 任务
-
-### Gradle 插件 alpha2
-
-对应 MT 管理器版本号需大于 **25101600**
-
-- 【新增】MT管理器 - 支持 dex 打包模式与指定插件的最低安卓版本
-- 【修复】MT管理器 - 修复 `PluginPreference.Builder` 的 `title` 和 `subtitle` 没有转为本地化文本的问题
-- 【新增】Gradle插件 - 使用 dex 打包模式生成 mtp 文件（不支持设置成之前的源码打包模式）
-- 【新增】Gradle插件 - 内置 `plugin-api:alpha4` 和 `plugin-pusher:alpha` 依赖，无需手动添加
-- 【新增】Gradle插件 - 直接在 `build.gradle` 文件中配置 `manifest.json` 和 `pusher.conf` 文件，无需手动创建
-
-使用 dex 打包模式的 mtp 文件，其内部不包含 .java 和 .jar 文件，只有一个 classes.dex 文件，因此开发方式不再受 MT
-管理器内置的 Java 编译器限制，您可以使用更高的 Java 版本甚至 Kotlin 进行开发，只要最后能生成 dex 文件即可。
-
-**现在 plugin-api 依赖直接内置在 gradle 插件中，因此后续的更新标题以 Gradle 插件为主，而非 plugin-api
-**
-
-### plugin-api alpha4
-
-对应 MT 管理器版本号需大于 **25092100**
-
-- 【调整】`TextEditor` 的 `pushSelectPositionToUndoBuffer` 方法重命名为 `pushSelectionToUndoBuffer`
-  - **因为这个改动，已安装的插件如果调用了此方法，需修改代码后重新安装**
-- 【新增】`TextEditorFunction` 新增 `isEnabled()` 方法用于动态控制功能接口是否启用
-- 【优化】对大量注释文档进行优化，表述更加准确与清晰
-
-### plugin-api alpha3
-
-对应 MT 管理器版本号需大于 **25092000**
-
-- 【优化】安装插件时将检测安装包的 assets 目录内所有 mtl 文件格式是否正确，检测失败将无法安装
-- 【新增】语言包 mtl 文件支持多行文本，具体请参考文件：`demo/src/main/assets/strings.mtl`
-- 【新增】`PluginContext` 新增 `getPluginSdkVersion()` 方法用于获取插件 SDK 版本号
-- 【新增】`PluginContext` 和 `PluginUI` 显示 Toast 方法的格式化参数支持自动转为本地化文本
-- 【调整】`TextEditor` 的 `replace` 方法重命名为 `replaceText`
-- 【调整】`TextEditor` 的 `replaceText` 和 `insertText` 方法的 text 参数类型调整为 `CharSequence`
-- 【优化】`BaseTextEditorFunction` 的代码添加详细注释说明
-
-### plugin-api alpha2
-
-对应 MT 管理器版本号需大于 **25091900**
-
-- 【优化】`BufferedText` 类源码注释增加关于换行符的说明
-- 【优化】`Regex` 类源码注释增加关于 MT 正则表达式库的说明
-- 【调整】`PluginContext` 中剪贴板方法的文本类型改为 `CharSequence`
-- 【新增】`PluginContext` 新增 `openLogViewer()` 方法用于打开插件日志查看器
-- 【调整】`PluginContext` 和 `PluginUI` 显示 Toast 方法的消息参数类型改为 `CharSequence`
-- 【新增】`PluginContext` 和 `PluginUI` 新增 `cancelToast()` 方法用于取消当前正在显示的 Toast
-- 【优化】`PluginUI` 的 `isStrictIdModeEnabled()` 方法注释补充**默认开启** ID 严格模式的说明
-- 【新增】`PluginUI` 新增多个获取颜色方法：
-  - 错误颜色：`colorError()`
-  - 警告颜色：`colorWarning()`
-  - 分割线颜色：`colorDivider()`
-  - 带状态的主要文本颜色：`colorTextStateList()`
-  - 带状态的次要文本颜色：`colorTextSecondaryStateList()`
-- 【优化】去除 `PluginUI.StyleWrapper` 新增 `PluginUI.Style.Modifier`，对于修改已有Style：
-    - 旧写法：`new PluginUI.StyleWrapper(pluginUI.getStyle()) { ... }`
-    - 新写法：`pluginUI.getStyle().new Modifier() { ... }`
-
-## 关于本项目
-
-本项目包含两个模块：demo 和 template
-
-- demo 模块提供了许多示例代码，您可直接运行该模块来了解插件的各个功能
-- template 模块提供了最基本代码模版，如果您要开发自己的插件，可基于此模块进行开发
-
-## 如何运行
-
-运行前请先安装正确版本的 MT 管理器
+运行前请先安装最新版本的 MT 管理器（2.26.3+）
 
 ### 通过 Android Studio
 
