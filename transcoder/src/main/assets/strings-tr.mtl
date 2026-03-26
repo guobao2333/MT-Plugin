@@ -1,0 +1,28 @@
+plugin_name: Kodlayıcı ve Çözücü
+plugin_description: Base64, Base32, URL, Unicode ve Hex metinleri için kodlama ve çözme işlemlerini destekler
+function_name: Kodla / Çöz
+button_encode: Kodla
+button_decode: Çöz
+button_replace: Orijinali değiştir
+exchange: Yer değiştir
+options: Seçenekler
+not_selected_hint: Hiçbir metin seçilmedi. Metni buraya elle girebilirsiniz
+charset: Metin kodlaması
+uppercase: Büyük harfler
+url_space_as_plus: Boşluklar için + kullan
+flag_no_padding: Dolgu yok
+flag_no_wrap: Satır kaydırma yok
+flag_url_safe: URL modu
+
+function_entry: Özellik erişimi
+function_entry_tip: Önemli not
+function_entry_tip_summary: Araç menüsü ve yüzen menü varsayılan olarak gizlidir. Etkinleştirdikten sonra bu özelliği özel menü ekranına da eklemeniz gerekir
+
+enable_in_editor_tool_menu: Editör araç menüsünde etkinleştir
+enable_in_editor_tool_menu_summary: Bu özelliğe editörün üst araç çubuğundaki Düzenle menüsünden erişin
+
+enable_in_editor_floating_menu: Editör yüzen menüsünde etkinleştir
+enable_in_editor_floating_menu_summary: Bu özelliğe editörün yüzen menüsünden erişin
+
+enable_in_editor_function: Editör hızlı işlevlerinde etkinleştir
+enable_in_editor_function_summary: Bu özelliği editörün alt kısmındaki hızlı işlev çubuğuna ekleyin

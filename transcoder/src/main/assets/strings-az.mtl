@@ -1,0 +1,28 @@
+plugin_name: Kodlayıcı və Dekodlayıcı
+plugin_description: Base64, Base32, URL, Unicode və Hex mətnlərinin kodlaşdırılması və dekodlaşdırılmasını dəstəkləyir
+function_name: Kodlaşdır / Dekodlaşdır
+button_encode: Kodlaşdır
+button_decode: Dekodlaşdır
+button_replace: Orijinalı əvəz et
+exchange: Yerlərini dəyiş
+options: Seçimlər
+not_selected_hint: Heç bir mətn seçilməyib. Mətni buraya əl ilə daxil edə bilərsiniz
+charset: Mətn kodlaşdırması
+uppercase: Böyük hərflər
+url_space_as_plus: Boşluqlar üçün + istifadə et
+flag_no_padding: Doldurma yoxdur
+flag_no_wrap: Sətirə keçirmə yoxdur
+flag_url_safe: URL rejimi
+
+function_entry: Funksiyaya giriş
+function_entry_tip: Vacib qeyd
+function_entry_tip_summary: Alət menyusu və üzən menyu standart olaraq gizlidir. Aktiv etdikdən sonra bu funksiyanı fərdi menyu ekranına da əlavə etməlisiniz
+
+enable_in_editor_tool_menu: Mətn redaktorunun alət menyusunda aktiv et
+enable_in_editor_tool_menu_summary: Bu funksiyadan redaktorun yuxarı alətlər panelindəki Redaktə menyusu vasitəsilə istifadə edin
+
+enable_in_editor_floating_menu: Mətn redaktorunun üzən menyusunda aktiv et
+enable_in_editor_floating_menu_summary: Bu funksiyadan redaktorun üzən menyusu vasitəsilə istifadə edin
+
+enable_in_editor_function: Mətn redaktorunun sürətli funksiyalarında aktiv et
+enable_in_editor_function_summary: Bu funksiyanı redaktorun aşağı hissəsindəki sürətli funksiya panelinə əlavə edin

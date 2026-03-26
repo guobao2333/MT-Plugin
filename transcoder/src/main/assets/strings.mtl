@@ -1,0 +1,28 @@
+plugin_name: Encoder Decoder
+plugin_description: Supports text encoding and decoding for Base64, Base32, URL, Unicode, and Hex
+function_name: Encode Decode
+button_encode: Encode
+button_decode: Decode
+button_replace: Replace Original
+exchange: Swap
+options: Options
+not_selected_hint: No text is selected. You can enter text here manually
+charset: Text Encoding
+uppercase: Uppercase
+url_space_as_plus: Use + for Spaces
+flag_no_padding: No Padding
+flag_no_wrap: No Wrap
+flag_url_safe: URL Mode
+
+function_entry: Feature Entry
+function_entry_tip: Important Note
+function_entry_tip_summary: The tool menu and floating menu are hidden by default. After enabling them, you also need to add this feature on the custom menu screen
+
+enable_in_editor_tool_menu: Enable in the Editor Tool Menu
+enable_in_editor_tool_menu_summary: Access this feature from the Edit menu in the editor's top toolbar
+
+enable_in_editor_floating_menu: Enable in the Editor Floating Menu
+enable_in_editor_floating_menu_summary: Access this feature from the editor's floating menu
+
+enable_in_editor_function: Enable in Editor Quick Functions
+enable_in_editor_function_summary: Add this feature to the quick function bar at the bottom of the editor

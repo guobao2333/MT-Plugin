@@ -1,0 +1,28 @@
+plugin_name: Codificatore e decodificatore
+plugin_description: Supporta la codifica e la decodifica del testo per Base64, Base32, URL, Unicode ed Hex
+function_name: Codifica / Decodifica
+button_encode: Codifica
+button_decode: Decodifica
+button_replace: Sostituisci l'originale
+exchange: Scambia
+options: Opzioni
+not_selected_hint: Nessun testo selezionato. Puoi inserire qui il testo manualmente
+charset: Codifica del testo
+uppercase: Maiuscole
+url_space_as_plus: Usa + per gli spazi
+flag_no_padding: Senza padding
+flag_no_wrap: Senza a capo
+flag_url_safe: Modalità URL
+
+function_entry: Accesso alla funzione
+function_entry_tip: Nota importante
+function_entry_tip_summary: Il menu degli strumenti e il menu flottante sono nascosti per impostazione predefinita. Dopo averli abilitati, devi aggiungere questa funzione anche nella schermata del menu personalizzato
+
+enable_in_editor_tool_menu: Abilita nel menu degli strumenti dell'editor
+enable_in_editor_tool_menu_summary: Usa questa funzione dal menu Modifica nella barra superiore dell'editor
+
+enable_in_editor_floating_menu: Abilita nel menu flottante dell'editor
+enable_in_editor_floating_menu_summary: Usa questa funzione dal menu flottante dell'editor
+
+enable_in_editor_function: Abilita nelle funzioni rapide dell'editor
+enable_in_editor_function_summary: Aggiungi questa funzione alla barra delle funzioni rapide nella parte inferiore dell'editor

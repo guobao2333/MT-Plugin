@@ -1,0 +1,28 @@
+plugin_name: 編碼解碼器
+plugin_description: 支援以下格式文字的編碼與解碼：Base64、Base32、URL、Unicode、Hex
+function_name: 編碼解碼
+button_encode: 編碼
+button_decode: 解碼
+button_replace: 替換原文
+exchange: 交換
+options: 選項
+not_selected_hint: 您未選取任何文字，可在這裡手動輸入
+charset: 文字編碼
+uppercase: 大寫字母
+url_space_as_plus: 空格使用 +
+flag_no_padding: 無填充
+flag_no_wrap: 不換行
+flag_url_safe: URL 模式
+
+function_entry: 功能入口
+function_entry_tip: 重要提示
+function_entry_tip_summary: 工具選單與浮動選單預設隱藏，啟用後也需在自訂選單介面新增
+
+enable_in_editor_tool_menu: 在文字編輯器工具選單中啟用
+enable_in_editor_tool_menu_summary: 可在文字編輯器頂部工具列點擊編輯選單使用本功能
+
+enable_in_editor_floating_menu: 在文字編輯器浮動選單中啟用
+enable_in_editor_floating_menu_summary: 可在文字編輯器浮動選單中使用本功能
+
+enable_in_editor_function: 在文字編輯器快捷功能中啟用
+enable_in_editor_function_summary: 可將本功能新增到文字編輯器底部的快捷功能列

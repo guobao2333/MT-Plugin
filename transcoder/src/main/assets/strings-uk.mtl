@@ -1,0 +1,28 @@
+plugin_name: Кодувальник і декодувальник
+plugin_description: Підтримує кодування та декодування тексту у форматах Base64, Base32, URL, Unicode і Hex
+function_name: Кодувати / Декодувати
+button_encode: Кодувати
+button_decode: Декодувати
+button_replace: Замінити оригінал
+exchange: Поміняти місцями
+options: Параметри
+not_selected_hint: Текст не вибрано. Ви можете ввести його тут вручну
+charset: Кодування тексту
+uppercase: Великі літери
+url_space_as_plus: Використовувати + для пробілів
+flag_no_padding: Без доповнення
+flag_no_wrap: Без перенесення рядків
+flag_url_safe: Режим URL
+
+function_entry: Точка входу функції
+function_entry_tip: Важлива примітка
+function_entry_tip_summary: Меню інструментів і плаваюче меню приховані за замовчуванням. Після ввімкнення вам також потрібно додати цю функцію на екран налаштування меню
+
+enable_in_editor_tool_menu: Увімкнути в меню інструментів редактора
+enable_in_editor_tool_menu_summary: Використовуйте цю функцію через меню редагування на верхній панелі редактора
+
+enable_in_editor_floating_menu: Увімкнути в плаваючому меню редактора
+enable_in_editor_floating_menu_summary: Використовуйте цю функцію через плаваюче меню редактора
+
+enable_in_editor_function: Увімкнути у швидких функціях редактора
+enable_in_editor_function_summary: Додайте цю функцію на панель швидких функцій унизу редактора

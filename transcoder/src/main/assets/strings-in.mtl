@@ -1,0 +1,28 @@
+plugin_name: Alat Enkode dan Dekode
+plugin_description: Mendukung enkode dan dekode teks untuk Base64, Base32, URL, Unicode, dan Hex
+function_name: Enkode / Dekode
+button_encode: Enkode
+button_decode: Dekode
+button_replace: Ganti teks asli
+exchange: Tukar
+options: Opsi
+not_selected_hint: Tidak ada teks yang dipilih. Anda dapat memasukkan teks secara manual di sini
+charset: Pengodean teks
+uppercase: Huruf kapital
+url_space_as_plus: Gunakan + untuk spasi
+flag_no_padding: Tanpa padding
+flag_no_wrap: Tanpa pemenggalan baris
+flag_url_safe: Mode URL
+
+function_entry: Akses fitur
+function_entry_tip: Catatan penting
+function_entry_tip_summary: Menu alat dan menu mengambang disembunyikan secara default. Setelah diaktifkan, Anda juga perlu menambahkan fitur ini di layar menu kustom
+
+enable_in_editor_tool_menu: Aktifkan di menu alat editor
+enable_in_editor_tool_menu_summary: Gunakan fitur ini dari menu Edit di bilah alat atas editor
+
+enable_in_editor_floating_menu: Aktifkan di menu mengambang editor
+enable_in_editor_floating_menu_summary: Gunakan fitur ini dari menu mengambang editor
+
+enable_in_editor_function: Aktifkan di fungsi cepat editor
+enable_in_editor_function_summary: Tambahkan fitur ini ke bilah fungsi cepat di bagian bawah editor

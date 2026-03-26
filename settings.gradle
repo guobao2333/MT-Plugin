@@ -26,6 +26,7 @@ dependencyResolutionManagement {
 rootProject.name = "MTPluginDemo"
 include ':demo'
 include ':template'
+include ':transcoder'
 include ':translator-baidu'
 include ':translator-baidu-api'
 include ':translator-bing'

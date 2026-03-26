@@ -1,0 +1,28 @@
+plugin_name: Кадавальнік і дэкадавальнік
+plugin_description: Падтрымлівае кадаванне і дэкадаванне тэксту ў фарматах Base64, Base32, URL, Unicode і Hex
+function_name: Кадаваць / Дэкадаваць
+button_encode: Кадаваць
+button_decode: Дэкадаваць
+button_replace: Замяніць зыходны тэкст
+exchange: Памяняць месцамі
+options: Параметры
+not_selected_hint: Тэкст не выбраны. Вы можаце ўвесці яго тут уручную
+charset: Кадзіроўка тэксту
+uppercase: Вялікія літары
+url_space_as_plus: Выкарыстоўваць + для прабелаў
+flag_no_padding: Без дапаўнення
+flag_no_wrap: Без пераносу радкоў
+flag_url_safe: Рэжым URL
+
+function_entry: Спосаб доступу
+function_entry_tip: Важная заўвага
+function_entry_tip_summary: Меню інструментаў і плаваючае меню схаваныя па змаўчанні. Пасля ўключэння трэба таксама дадаць гэту функцыю на экран наладжвання меню
+
+enable_in_editor_tool_menu: Уключыць у меню інструментаў рэдактара
+enable_in_editor_tool_menu_summary: Выкарыстоўвайце гэту функцыю праз меню рэдагавання на верхняй панэлі рэдактара
+
+enable_in_editor_floating_menu: Уключыць у плаваючым меню рэдактара
+enable_in_editor_floating_menu_summary: Выкарыстоўвайце гэту функцыю праз плаваючае меню рэдактара
+
+enable_in_editor_function: Уключыць у хуткіх функцыях рэдактара
+enable_in_editor_function_summary: Дадайце гэту функцыю на панэль хуткіх функцый унізе рэдактара
