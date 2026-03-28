@@ -72,3 +72,28 @@ APIv3已经迎来了官方文档，您可以[点此前往查看](https://mt2.cn/
 3. 提交合并请求后，接下来请等待代码审查，如果审查结束将会合并代码。
 
 如果合并完成，恭喜你🎉您完成了对本项目的贡献！我们由衷的感谢为每个开源项目做出贡献的人。
+
+## License | 开源许可
+若无特殊说明，所有代码均采用[Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0)协议发布，详情请查看[LICENSE](./LICENSE)文件。
+
+附带条款：  
+1. `resource/`目录下的所有资源同样使用Apache2.0许可发布。
+2. `dcos/`目录下的文档使用`CC-BY-SA 4.0`许可发布。
+3. 您不必完整复制License文件，但必须保留署名、指向许可证源文件及本仓库的链接。
+4. 保留所有解释权。
+
+任何疑问或异议请在`Issues`中提出。
+
+    Copyright (c) 2025-2026 shiguobaona
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use any code except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    mtsx file distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
