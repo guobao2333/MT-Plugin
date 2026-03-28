@@ -2,7 +2,6 @@ package guobao.plugin.translator.deeplx;
 
 import bin.mt.plugin.api.PluginContext;
 
-//import com.deepl.api.DeepLClient;
 import bin.mt.json.JSON;
 import bin.mt.json.JSONArray;
 import bin.mt.json.JSONObject;
@@ -16,7 +15,6 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,46 +24,11 @@ import java.util.concurrent.TimeUnit;
 import guobao.plugin.translator.deeplx.pref.*;
 
 /**
- * DeepL 非官方 JSON-RPC 翻译客户端
+ * DeepL JSON-RPC 翻译客户端
  *
  * <p>注意：网络请求须在子线程发起，不能在主线程直接调用 translate()
  */
 public class DeepLWebTranslator implements AutoCloseable {
-
-    // 语言代码映射 → target_lang（变体语言统一映射到基础码）
-    private static final Map<String, String> LANG_MAP = Map.ofEntries(
-            Map.entry("auto",  "auto"),
-            Map.entry("en",    "EN"),  Map.entry("en-US", "EN"),  Map.entry("en-GB", "EN"),
-            Map.entry("zh",    "ZH"),  Map.entry("zh-CN", "ZH"),  Map.entry("zh-TW", "ZH"),
-            Map.entry("ja",    "JA"),  Map.entry("ru",    "RU"),
-            Map.entry("ko",    "KO"),  Map.entry("de",    "DE"),
-            Map.entry("fr",    "FR"),  Map.entry("es",    "ES"),
-            Map.entry("pt",    "PT"),  Map.entry("pt-BR", "PT"),  Map.entry("pt-PT", "PT"),
-            Map.entry("it",    "IT"),  Map.entry("nl",    "NL"),
-            Map.entry("pl",    "PL"),  Map.entry("ar",    "AR"),
-            Map.entry("tr",    "TR"),  Map.entry("id",    "ID"),
-            Map.entry("vi",    "VI"),  Map.entry("th",    "TH"),
-            Map.entry("sv",    "SV"),  Map.entry("da",    "DA"),
-            Map.entry("fi",    "FI"),  Map.entry("el",    "EL"),
-            Map.entry("cs",    "CS"),  Map.entry("hu",    "HU"),
-            Map.entry("ro",    "RO"),  Map.entry("nb",    "NB"),
-            Map.entry("uk",    "UK"),  Map.entry("bg",    "BG"),
-            Map.entry("sk",    "SK"),  Map.entry("sl",    "SL"),
-            Map.entry("lt",    "LT"),  Map.entry("lv",    "LV"),
-            Map.entry("et",    "ET"),  Map.entry("he",    "HE"),
-            Map.entry("hi",    "HI")
-    );
-
-    // 与API不同，网页端通过 commonJobParams.regionalVariant 传递变体
-    private static final Map<String, String> VARIANT_MAP = Map.of(
-            "zh-CN", "ZH-HANS",
-            "zh-TW", "ZH-HANT",
-            "en-US", "EN-US",
-            "en-GB", "EN-GB",
-            "pt-BR", "PT-BR",
-            "pt-PT", "PT-PT"
-    );
-
     private static final   String    DEEPL_URL  = "https://www2.deepl.com/jsonrpc";
     private static final   MediaType MEDIA_JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -108,8 +71,11 @@ public class DeepLWebTranslator implements AutoCloseable {
         }
     }
 
-    /** 内部用，构建请求参数。targetVariant 非 null 时写入 commonJobParams.regionalVariant */
+    /** 内部用，构建请求参数。变体语言会额外携带 commonJobParams.regionalVariant */
     private record LanguageCode(String source, String target, String targetVariant) {}
+
+    /** 目标语言的基础码与可选变体。 */
+    private record TargetLanguage(String target, String targetVariant) {}
 
     // 错误体系
     public sealed interface DeepLError
@@ -265,11 +231,41 @@ public class DeepLWebTranslator implements AutoCloseable {
     }
 
     private LanguageCode resolveLanguage(String from, String to) throws DeepLException {
-        String target = LANG_MAP.get(to);
-        if (target == null) throw new DeepLException(new DeepLError.UnsupportedLanguage(to));
-        String source  = LANG_MAP.getOrDefault(from, "ZH");
-        String variant = VARIANT_MAP.get(to);  // 无变体时为 null
-        return new LanguageCode(source, target, variant);
+        String source = resolveSourceLanguage(from);
+        TargetLanguage target = resolveTargetLanguage(to);
+        return new LanguageCode(source, target.target(), target.targetVariant());
+    }
+
+    private String resolveSourceLanguage(String from) throws DeepLException {
+        if (from == null || from.isBlank() || "auto".equalsIgnoreCase(from)) {
+            return "auto";
+        }
+        for (String lang : DeepLConstant.SOURCE_LANGUAGES) {
+            if (lang.equalsIgnoreCase(from)) {
+                return lang;
+            }
+        }
+        throw new DeepLException(new DeepLError.UnsupportedLanguage(from));
+    }
+
+    private TargetLanguage resolveTargetLanguage(String to) throws DeepLException {
+        if (to == null || to.isBlank() || "auto".equalsIgnoreCase(to)) {
+            throw new DeepLException(new DeepLError.UnsupportedLanguage(to));
+        }
+
+        if ("en-US".equalsIgnoreCase(to)) return new TargetLanguage("EN", "en-US");
+        if ("en-GB".equalsIgnoreCase(to)) return new TargetLanguage("EN", "en-GB");
+        if ("pt-BR".equalsIgnoreCase(to)) return new TargetLanguage("PT", "pt-BR");
+        if ("pt-PT".equalsIgnoreCase(to)) return new TargetLanguage("PT", "pt-PT");
+        if ("zh-Hans".equalsIgnoreCase(to)) return new TargetLanguage("ZH", "ZH-HANS");
+        if ("zh-Hant".equalsIgnoreCase(to)) return new TargetLanguage("ZH", "ZH-HANT");
+
+        for (String lang : DeepLConstant.TARGET_LANGUAGES) {
+            if (lang.equalsIgnoreCase(to)) {
+                return new TargetLanguage(lang, null);
+            }
+        }
+        throw new DeepLException(new DeepLError.UnsupportedLanguage(to));
     }
 
     private long generateId() {

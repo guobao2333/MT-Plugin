@@ -54,7 +54,7 @@ public class TranslationEngine extends BaseTranslationEngine {
             context.log(result.toString());
             return result.text();
         } catch (DeepLWebTranslator.DeepLException e) {
-            context.log(e);
+            //context.log(e);
             throw new IOException(e.getMessage(), e);
         }
     }

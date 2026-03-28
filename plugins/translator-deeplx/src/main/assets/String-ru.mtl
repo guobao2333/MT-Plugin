@@ -11,7 +11,7 @@ https://github.com/guobao2333/DeepLX-Serverless\n\
 \n\
 Поскольку сервер был заблокирован DeepL, в новой версии плагина встроен прямой доступ к сервису DeepL через вашу локальную сеть. Если вы не можете получить перевод, пожалуйста, настройте свое сетевое окружение для доступа к deepl.com
 
-interface_name_web: DeepL (ВЕБ NoKey)
+interface_name_web: DeepL (NonAPI)
 interface_name_free: DeepL (бесплатно API)
 interface_name_pro: DeepL (Про API)
 
