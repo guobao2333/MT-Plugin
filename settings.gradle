@@ -23,9 +23,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "MT-Plugin"
 
-file("plugins").listFiles()?.findAll { 
-    it.isDirectory() && file("$it/build.gradle").exists() 
-}?.each {
-    include ":plugins:${it.name}"
-    project(":plugins:${it.name}").projectDir = it
+def pluginsDir = file('plugins')
+if (pluginsDir.exists()) {
+    pluginsDir.eachDir { dir ->
+        if (new File(dir, 'build.gradle').exists()) {include ":plugins:${dir.name}"}
+    }
 }
+include 'plugin-util'
