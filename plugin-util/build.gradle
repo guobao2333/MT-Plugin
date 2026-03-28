@@ -1,0 +1,27 @@
+plugins {
+    id "com.android.library" // alias写法报错，不要改
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.mt.plugin)
+}
+
+// 定义 Java 版本
+def javaVersion = JavaVersion.VERSION_17
+
+android {
+    namespace = 'guobao.plugin.util'
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 21
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled = true
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring libs.desugar.jdk.libs
+}
