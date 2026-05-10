@@ -5,11 +5,11 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/guobao2333/MT-Plugin"><img alt="Github" src="https://img.shields.io/badge/Github-black?logo=Github&logoColor=white"></a>
-<a href="https://github.com/guobao2333/MT-Plugin/LICENSE"><img alt="License" src="https://img.shields.io/github/license/guobao2333/MT-Plugin?logo=apache&label=License&labelColor=black&color=blue"></a>
-<a href="https://creativecommons.org/licenses/by-sa/4.0/"><img alt="Docs License" src="https://img.shields.io/badge/BY--SA-4.0-blue?logo=creativecommons&logoColor=white&labelColor=black"></a>
+<a href="https://github.com/guobao2333/MT-Plugin"><img alt="Github" src="https://img.shields.io/badge/Github-Repo-blue?labelColor=black&logo=Github&logoColor=white"></a>
+<a href="https://github.com/guobao2333/MT-Plugin/tree/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/guobao2333/MT-Plugin?logo=apache&label=License&labelColor=black&color=blue"></a>
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"><img alt="Docs License" src="https://img.shields.io/badge/CC-BY--SA--4.0-blue?logo=creativecommons&logoColor=white&labelColor=black"></a>
 
-基于[官方项目](https://github.com/L-JINBIN/MT-Translation-Plugin)修改而来。虽然最新[插件V3版本demo](https://mt2.cn/guide/plugin/introduction.html#v3-%E7%89%88%E6%9C%AC)仅发布至[gitee仓库](https://gitee.com/L-JINBIN/mt-plugin-v3-demo)，不过代码会同步至[`upstream-v3`](https://github.com/guobao2333/MT-Plugin/tree/upstream-v3)分支，您可以切换分支查看。
+基于[官方项目](https://github.com/L-JINBIN/MT-Translation-Plugin)修改而来。虽然插件V3版本demo仅发布至[gitee仓库](https://gitee.com/L-JINBIN/mt-plugin-v3-demo)，不过代码会同步至[`upstream-v3`](https://github.com/guobao2333/MT-Plugin/tree/upstream-v3)分支。
 
 ## Develop | 开发
 > [!IMPORTANT]
@@ -20,46 +20,48 @@
 如果不想包含某些插件模块，请将该模块`build.gradle`文件重命名为其他名字。
 
 ## Prerequisites | 基本要求
-1. Java 8+ (推荐Java 17，可以但不推荐更旧版本)
-> 官方推荐 Java 11+
-2. Gradle 9.1 (可选，推荐较新的版本)
+1. Java 8+ (推荐Java 17+，可以但不推荐更旧版本)
+> 官方推荐 Java 11+，但为了正常编译请使用JDK17
+2. Gradle 9.1+ (可选，推荐较新的版本)
 > 直接运行gradlew脚本则无需提前安装。
 3. Kotlin (可选，但只能使用 **dex模式** 打包)
 
 > [!IMPORTANT]
 > 项目要求`Java 17`是为了使用很多高级语法特性，通过AGP语法脱糖(dex模式)能够使用java8以上的语法。脱糖相关配置已包含在项目中，无需修改开箱即用。
 
-构建插件后将会自动打包到 `plugins/<plugin>/build/outputs/mt-plugin/` 这个目录中。
+构建插件后将会自动打包到 `plugins/PLUGIN/build/outputs/mt-plugin/` 这个目录中。
 
 ### Android Studio
 打开项目后等待 Gradle 同步完成后运行 某个插件模块，将会有一个名为 `MT Plugin Pusher` 的应用程序安装到您的设备上，这时它会自启动并打开MT管理器的插件安装界面，点击安装即可。
 
 ### Command Line | 命令行
-在项目根目录执行 `./gradlew :plugins:PLUGIN:packageReleaseMtp` 把`PLUGIN`替换为指定插件模块即可打包该插件。
+在项目根目录执行：
+```bash
+chmod +x gradlew
+./gradlew plugins:PLUGIN:packageReleaseMtp
+```
+把`PLUGIN`替换为指定插件模块即可打包该插件。
+
+> [!NOTE]
+> 如果权限不足（比如 android termux）请使用bash启动gradle任务：  
+> `bash gradlew plugins:PLUGIN:packageReleaseMtp`
 
 还可以一次性打包所有插件：
 ```bash
 ./gradlew packageReleaseMtpAll
 ```
-> [!NOTE]
-> 如果权限不足，请运行以下代码启动gradle任务：  
-> `bash gradlew packageReleaseMtpAll`
+> 开发时不推荐使用该方法，某个插件打包失败会直接终止，导致无法进行剩余插件的打包任务。
 
-如果使用termux/AIDE，你需要先安装`JDK`:
-```bash
-pkg install openjdk-17
-```
-
-### Setup development environment | 设置开发环境
+### Setup Development Environment | 设置开发环境
 如果你是一个初学者，不知道如何设置插件的开发环境，请看[这篇教程](docs/AndroidSDK.md)。不过由于针对于termux编写，它并不能适用于其他Linux系统，您需要修改或移除其中的termux特有命令和环境路径以适用您的系统。
 
-### API development docs | API开发文档
-APIv3已经迎来了官方文档，您可以[点此前往查看](https://mt2.cn/guide/pluginv3/plugin-intro.html)。
+### API Develop Docs | API开发文档
+APIv3已经迎来了官方文档，您可以[点此前往查看](https://mt2.cn/guide/plugin-v3/plugin-intro.html)。
 
-我们已经为您准备好了一个脚本，它用于快速下载官方插件API的jar包，您可以查看[脚本使用教程](docs/APIDownload.md)或<a href="https://github.com/guobao2333/MT-Plugin/raw/main/docs/mtp-api-latest-dl.sh" download>下载脚本源码</a>
+我们已经为您准备好了一个脚本，它用于快速下载官方插件API的jar包，您可以查看[脚本使用教程](docs/APIDownload.md)或<a href="https://github.com/guobao2333/MT-Plugin/raw/main/docs/script/mtp-api-latest-dl.sh" download>下载脚本源码</a>
 
-> [!IMPORTANT]
-> 由于官方文档已上线，我们不会再继续更新该脚本。
+> [!WARNING]
+> 由于官方文档已上线，且脚本几乎完全向后兼容，因此我们不会再继续更新该脚本。
 
 ## Push to device | 推送到设备
 在Android Studio运行Android编译任务，只需要安装构建好的`.apk`并打开，会自动调用mt的插件安装界面，因此还可以在Android Studio之外的其他IDE(甚至命令行)中编译并打包插件。
@@ -94,7 +96,7 @@ APIv3已经迎来了官方文档，您可以[点此前往查看](https://mt2.cn/
        http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing,
-    mtsx file distributed under the License is distributed on an "AS IS" BASIS,
+    code distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
