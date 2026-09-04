@@ -17,17 +17,17 @@
 
 所有插件都放 `plugins` 这个目录下，要增加新的插件直接丢进去就行了，可以通过[该模块](https://github.com/guobao2333/MT-Plugin/tree/upstream-v3/template)启动一个新的插件项目，不需要动任何 **项目级配置**。
 
-如果不想包含某些插件模块，请将该模块`build.gradle`文件重命名为其他名字。
+如果不想在全部编译时包含某些插件模块，请将该模块内`build.gradle`文件重命名为其他名字。
 
 ## Prerequisites | 基本要求
-1. Java 8+ (推荐Java 17+，可以但不推荐更旧版本)
-> 官方推荐 Java 11+，但为了正常编译请使用JDK17
-2. Gradle 9.1+ (可选，推荐较新的版本)
+1. JDK 17+
+2. AGP 8+
+3. Gradle 9.1+ (可选，推荐较新的版本)
 > 直接运行gradlew脚本则无需提前安装。
-3. Kotlin (可选，但只能使用 **dex模式** 打包)
+4. Kotlin (可选，但只能使用 **dex模式** 打包)
 
 > [!IMPORTANT]
-> 项目要求`Java 17`是为了使用很多高级语法特性，通过AGP语法脱糖(dex模式)能够使用java8以上的语法。脱糖相关配置已包含在项目中，无需修改开箱即用。
+> AGP 8.0 开始强制要求必须使用`JDK 17`，脱糖相关配置已包含在项目中，无需修改开箱即用。
 
 构建插件后将会自动打包到 `plugins/PLUGIN/build/outputs/mt-plugin/` 这个目录中。
 
@@ -43,8 +43,10 @@ chmod +x gradlew
 把`PLUGIN`替换为指定插件模块即可打包该插件。
 
 > [!NOTE]
-> 如果权限不足（比如 android termux）请使用bash启动gradle任务：  
-> `bash gradlew plugins:PLUGIN:packageReleaseMtp`
+> 如果权限不足（e.g. android termux）请使用bash启动gradle任务：
+> ```bash
+> bash gradlew plugins:PLUGIN:packageReleaseMtp
+> ```
 
 还可以一次性打包所有插件：
 ```bash
@@ -67,7 +69,7 @@ APIv3已经迎来了官方文档，您可以[点此前往查看](https://mt2.cn/
 在Android Studio运行Android编译任务，只需要安装构建好的`.apk`并打开，会自动调用mt的插件安装界面，因此还可以在Android Studio之外的其他IDE(甚至命令行)中编译并打包插件。
 
 > [!WARNING]
-> 此方法构建的插件推送app被标记为仅测试，包含了冗余测试代码，不应作为release发布，且无法上传插件中心。请使用 `packageReleaseMtp` 任务打包用于发布的插件安装包。
+> 此方法构建的插件推送app被标记为仅测试，包含了冗余测试代码，不应作为release发布，且无法上传插件中心。请使用 `packageReleaseMtp` 任务打包用于发布的插件安装包 `.mtp`
 
 ## Contribute | 贡献
 1. 点击上方`Fork`仓库后，修改或添加你的代码
