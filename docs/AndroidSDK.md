@@ -2,22 +2,14 @@
 我们正在改进本教程以便新手更易理解，欢迎贡献或提问以帮助我们改进！
 
 ## Automatically setup | 自动设置
-如果你不想一步一步来，这里提供一个一键设置脚本，您可以在[这里](script/install-android-sdk.sh)查看源代码。它完全按照本文档中的手动设置步骤运行，所以您得到的效果几乎与手动设置一样！  
+如果你不想一步一步来，这里提供一个一键设置脚本，您可以[查看源代码](script/install-android-sdk.sh)或[下载脚本](https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script/install-android-sdk.sh)。它完全按照本文档中的手动设置步骤运行，所以您得到的效果几乎与手动设置一样！  
 我们正在改进它以便更好的在新环境中自动设置，欢迎贡献代码或报告问题来帮助我们改进！
 
-您还可以通过下面的命令一键运行它，不过在这之前你需要先手动下载 Android Studio CLI Tool（命令行工具）  
-请根据网络环境自行选择访问地址：
-| 全球 | 大陆 |
-| :---: | :---: |
-| <https://developer.android.com/studio#command-line-tools-only> | <https://developer.android.google.cn/studio#command-line-tools-only> |
-> [!NOTE]
-> 如果访问后没看到下载链接，请继续下滑页面，应该在页面接近底部的部分可以找到。
-
-接下来你可以运行脚本开始自动设置了，运行失败请检查错误信息，如果有未知错误信息请在`Issues`中报告。
+您还可以通过下面的命令一键运行它，脚本运行失败时请检查错误信息，如果有未知错误信息请在`Issues`中报告。
 ```bash
 curl -s "https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script/install-android-sdk.sh" | bash
 ```
-💡添加参数`-h`可查看所有参数
+💡添加参数`-h`可查看帮助
 
 ## Manually setup in termux | 在termux中手动设置
 0. 在开始之前你需要授予权限并安装依赖：
@@ -27,7 +19,14 @@ curl -s "https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script
    pkg install unzip git openjdk-17 aapt2
    ```
 
-1. 首先下载[命令行工具](https://developer.android.google.cn/studio?hl=zh-cn#command-line-tools-only)
+1. 首先下载[命令行工具](https://developer.android.google.cn/studio?hl=zh-cn#command-line-tools-only)(Android Studio CLI Tool)  
+   请根据网络环境自行选择访问地址：
+   | 全球 | 大陆 |
+   | :---: | :---: |
+   | <https://developer.android.com/studio#command-line-tools-only> | <https://developer.android.google.cn/studio#command-line-tools-only> |
+   > [!NOTE]
+   > 如果访问后没看到下载链接，请继续下滑页面，应该在页面接近底部的部分可以找到。
+
 2. 接下来解压并删除压缩包，以下命令中的压缩包位于`/sdcard/Download/`，将SDK的根目录设置在`~/android_sdk/`其等同于`/data/data/com.termux/files/home/android_sdk/`
    ```bash
    unzip -o /sdcard/Download/commandlinetools-linux-*.zip -d ~/android_sdk && rm -v "$(ls /sdcard/Download/commandlinetools-linux-*.zip | head -1)"
@@ -65,10 +64,9 @@ echo "sdk.dir=$ANDROID_HOME" > local.properties
 ### 关于 AAPT2
 在 Termux 中构建 Android 项目时，Gradle 自动下载的 AAPT2 可能因架构不兼容而报错。建议在全局 Gradle 配置中添加覆盖：
 ```bash
-echo 'android.aapt2FromMavenOverride=/data/data/com.termux/files/usr/bin/aapt2' >> ~/.gradle/gradle.properties
+echo 'android.aapt2FromMavenOverride=/data/data/com.termux/files/usr/bin/aapt2\n' >> ~/.gradle/gradle.properties
 ```
 > 写入全局 `~/.gradle/gradle.properties` 而非项目级文件，可以避免在每个项目中重复配置。
 
-### 常见问题
-- **AAPT2 错误**：若遇到 `AAPT2 aapt2-*-linux Daemon: Unexpected error`，请确认已添加上面的 `android.aapt2FromMavenOverride` 配置。
-- **adb 无线调试**：首次配对需通过执行 `adb tcpip 5555` 完成初始化。
+> [!note]
+> 若遇到 `AAPT2 aapt2-*-linux Daemon: Unexpected error`，请确认已添加上面的 `android.aapt2FromMavenOverride` 配置。

@@ -15,7 +15,7 @@
 > [!IMPORTANT]
 > 部分插件使用`beta API`，在MT正式版中可能无法使用，推荐切换至测试版进行开发。
 
-所有插件都放 `plugins` 这个目录下，要增加新的插件直接丢进去就行了，可以通过[该模块](https://github.com/guobao2333/MT-Plugin/tree/upstream-v3/template)启动一个新的插件项目，不需要动任何 **项目级配置**。
+所有插件都放 `plugins` 这个目录下，要增加新的插件直接丢进去就行了，可以通过[该模块](https://github.com/guobao2333/MT-Plugin/tree/upstream-v3/template)启动一个新的插件项目，***不需要动任何_项目级配置_。***
 
 如果不想在全部编译时包含某些插件模块，请将该模块内`build.gradle`文件重命名为其他名字。
 
