@@ -2,7 +2,7 @@
 我们正在改进本教程以便新手更易理解，欢迎贡献或提问以帮助我们改进！
 
 ## Automatically setup | 自动设置
-如果你不想一步一步来，这里提供一个一键设置脚本，您可以[查看源代码](script/install-android-sdk.sh)或[下载脚本](https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script/install-android-sdk.sh)。它完全按照本文档中的手动设置步骤运行，所以您得到的效果几乎与手动设置一样！  
+如果你不想一步一步来，这里提供一个一键设置脚本，您可以[查看源代码](script/install-android-sdk.sh) 或 <a href="https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script/install-android-sdk.sh" target="_blank">下载脚本</a>。它完全按照本文档中的手动设置步骤运行，所以您得到的效果几乎与手动设置一样！  
 我们正在改进它以便更好的在新环境中自动设置，欢迎贡献代码或报告问题来帮助我们改进！
 
 您还可以通过下面的命令一键运行它，脚本运行失败时请检查错误信息，如果有未知错误信息请在`Issues`中报告。

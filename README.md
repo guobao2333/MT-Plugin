@@ -15,7 +15,7 @@
 > [!IMPORTANT]
 > 部分插件使用`beta API`，在MT正式版中可能无法使用，推荐切换至测试版进行开发。
 
-所有插件都放 `plugins` 这个目录下，要增加新的插件直接丢进去就行了，可以通过[该模块](https://github.com/guobao2333/MT-Plugin/tree/upstream-v3/template)启动一个新的插件项目，***不需要动任何_项目级配置_。***
+所有插件都放 `plugins` 这个目录下，要增加新的插件直接丢进去就行了，可以通过[该模块](https://github.com/guobao2333/MT-Plugin/tree/upstream-v3/template)启动一个新的插件项目，**不需要动任何 _项目级配置_**。
 
 如果不想在全部编译时包含某些插件模块，请将该模块内`build.gradle`文件重命名为其他名字。
 
@@ -60,7 +60,7 @@ chmod +x gradlew
 ### API Develop Docs | API开发文档
 APIv3已经迎来了官方文档，您可以[点此前往查看](https://mt2.cn/guide/plugin-v3/plugin-intro.html)。
 
-我们已经为您准备好了一个脚本，它用于快速下载官方插件API的jar包，您可以查看[脚本使用教程](docs/APIDownload.md)或<a href="https://github.com/guobao2333/MT-Plugin/raw/main/docs/script/mtp-api-latest-dl.sh" download>下载脚本源码</a>
+我们已经为您准备好了一个脚本，它用于快速下载官方插件API的jar包，您可以查看[脚本使用教程](docs/APIDownload.md)或<a href="https://github.com/guobao2333/MT-Plugin/raw/main/docs/script/mtp-api-latest-dl.sh" target="_blank">下载脚本源码</a>
 
 > [!WARNING]
 > 由于官方文档已上线，且脚本几乎完全向后兼容，因此我们不会再继续更新该脚本。

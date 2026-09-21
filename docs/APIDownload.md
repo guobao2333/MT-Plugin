@@ -3,7 +3,7 @@
 > MT插件v3版本的官方开发文档已经上线了，我们不会再继续更新该脚本，移动端开发者请移步[官方文档](https://mt2.cn/guide/pluginv3/plugin-intro.html)
 ## What Its Use | 有啥用
 它是一个用来下载插件接口jar的shell脚本，jar中包含了api的使用方式和(部分)实现，您可以通过它更好的开发MT插件。
-- [查看脚本代码](script/mtp-api-latest-dl.sh) 或 <a href="https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script/mtp-api-latest-dl.sh" download>下载脚本</a>
+- [查看脚本代码](script/mtp-api-latest-dl.sh) 或 <a href="https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script/mtp-api-latest-dl.sh" target="_blank">下载脚本</a>
 > 如果没有自动触发浏览器下载，请在github中点击下载按钮
 
 脚本实现较为简陋，如果您有更好的想法，欢迎帮助我们改进它！
