@@ -28,9 +28,9 @@ curl -s "https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script
    ```
 
 1. 首先下载[命令行工具](https://developer.android.google.cn/studio?hl=zh-cn#command-line-tools-only)
-2. 接下来解压并删除压缩包，以下命令中的压缩包位于`/sdcard/Download/`，将SDK的根目录设置在`~/android_sdk/`其等同于`/data/data/com.termux/files/home/`
+2. 接下来解压并删除压缩包，以下命令中的压缩包位于`/sdcard/Download/`，将SDK的根目录设置在`~/android_sdk/`其等同于`/data/data/com.termux/files/home/android_sdk/`
    ```bash
-   unzip /sdcard/Download/commandlinetools-linux-*.zip -d ~/android_sdk && rm -v "$(ls /sdcard/Download/commandlinetools-linux-*.zip | head -1)"
+   unzip -o /sdcard/Download/commandlinetools-linux-*.zip -d ~/android_sdk && rm -v "$(ls /sdcard/Download/commandlinetools-linux-*.zip | head -1)"
    mv ~/android_sdk/cmdline-tools ~/android_sdk/latest
    mkdir -p ~/android_sdk/cmdline-tools
    mv ~/android_sdk/latest ~/android_sdk/cmdline-tools/latest
@@ -45,9 +45,9 @@ curl -s "https://raw.githubusercontent.com/guobao2333/MT-Plugin/main/docs/script
 > 本文档默认您的Shell为`Bash`，如果您使用其他Shell程序，请自行替换`.bashrc`
 
 4. 重载配置
-   | Bash | Zsh | Fish |
-   | :---: | :---: | :---: |
-   | `source ~/.bashrc` | `source ~/.zshrc` | `source ~/.fishrc`
+   | Bash | Zsh |
+   | :---: | :---: |
+   | `source ~/.bashrc` | `source ~/.zshrc` |
 5. 修改权限 `chmod -R 755 $ANDROID_HOME`
 6. 同意所有许可并安装平台工具和Android 16 SDK 
    ```bash
@@ -61,3 +61,14 @@ adb相关工具可以直接安装使用： `pkg install android-tools`
 ```bash
 echo "sdk.dir=$ANDROID_HOME" > local.properties
 ```
+
+### 关于 AAPT2
+在 Termux 中构建 Android 项目时，Gradle 自动下载的 AAPT2 可能因架构不兼容而报错。建议在全局 Gradle 配置中添加覆盖：
+```bash
+echo 'android.aapt2FromMavenOverride=/data/data/com.termux/files/usr/bin/aapt2' >> ~/.gradle/gradle.properties
+```
+> 写入全局 `~/.gradle/gradle.properties` 而非项目级文件，可以避免在每个项目中重复配置。
+
+### 常见问题
+- **AAPT2 错误**：若遇到 `AAPT2 aapt2-*-linux Daemon: Unexpected error`，请确认已添加上面的 `android.aapt2FromMavenOverride` 配置。
+- **adb 无线调试**：首次配对需通过执行 `adb tcpip 5555` 完成初始化。
